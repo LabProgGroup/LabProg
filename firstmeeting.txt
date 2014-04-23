@@ -1,0 +1,19 @@
+23/04
+
+> quanto vale o tick do relogio?
+
+-Vamos usar o idioma ingles para definir nomes de variáveis e funções.
+-Decidimos que a nave deve se movimentar e mirar independentemente, portanto adicionamos o atributo de aim a ship.c
+-As definições de structs serão feitas nos arquivos .h
+-Passaremos nossos programas por checkstyle.c
+-life: um inteiro de 0 a 100
+-precison: um inteiro de 0 a 10
+-Teremos um arquivo ultils.h e/ou utills.c que terá, por enquanto, uma estrutura que define a posicao de alguma coisa.
+-A struct de posicao também será usada para velocidade.
+-Nosso cenário será representado por uma fila. Adicionaremos os arquivos queue.c e queue.h
+-Também teremos uma função distance em utils.c
+-Incluiremos a biblioteca matematica em utils.h
+
+-Nikolai fez os arquivos utils.h e "tiro.c" (o nome mudará)
+-Gustavo fez o arquivo defesa.h
+-
