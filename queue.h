@@ -10,4 +10,4 @@ typedef struct {
 typedef struct {
     Enemy *enemy;
     Node *next;
-}   
+} Node;
