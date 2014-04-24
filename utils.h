@@ -1,12 +1,12 @@
+
+
+#ifndef _UTILS_HEADER_
+#define _UTILS_HEADER_ 
+/*Incluir <math.h> .*/
+
 /*Essa struct define uma coordenada horizontal x, vertical y
  * e na direção da tela z.
  */
-
-#ifndef _UTILS_HEADER
-#define _UTILS_HEADER 
-/*Incluir <math.h> .*/
-
-
 struct coordinates {
     float x; 
     float y;
