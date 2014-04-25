@@ -4,14 +4,14 @@ typedef struct enemy Enemy;
 struct enemy {
     int life;           /*de 0 a 100*/
     Position position;  /*X, Y e Z  */
-    int precision;       /*de 0 a 10 */
+    Velocity velocity		/*Em m/s sem valor definido por enquanto :/ */
 };
 
 /*
 Recebe uma posicao e precisao e retorna um ponteiro para
 um novo inimigo com esses atributos
 */
-int shouldShoot(Position shipP, Position enemyP);
+int Shoot(Position shipP, Position shotP);
 
 /*
 Recebe uma posicao e precisao e retorna um ponteiro para

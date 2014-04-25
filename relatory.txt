@@ -20,3 +20,10 @@
 
 24/04
 AVISO: Retirar definição de NULL desnecessaria em utils.h pois já está definida na <stdlib.h>
+-arquivos enemy.c e enemy.h com primeira versões prontas
+
+25/04
+-Gustavo começou a fazer ship.c e ship.h
+-Adicionei a função gotShot em enemy.h
+-Adicionei a função isAlive em enemy.h
+-Usaremos unidades de metro e segundos para grandezas de posição e velocidade

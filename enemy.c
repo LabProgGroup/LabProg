@@ -2,6 +2,7 @@
 #include <stdio.h>   /* printf(), scanf()*/
 
 #include "enemy.h"
+#include "utils.h"
 
 /*
 Recebe uma posicao e precisao e retorna um ponteiro para
@@ -34,4 +35,23 @@ memoria
 int killEnemy(Enemy* dead) {
     free(dead);
     return 1;
+}
+
+/*
+Recebe um inteiro com o valor do damage recebido e um
+ponteiro para um inimigo. Tira essa quantidade 
+*/
+void gotShot(Enemy* en, int damage) {
+    en->life -= damage;
+}
+
+/*
+Recebe um ponteiro para um inimigo e retorna TRUE se estiver
+vivo ou FALSE se tiver morto.
+*/
+int isAlive(Enemy* en) {
+    if (en->life <= 0)
+        return FALSE;
+    else
+        return TRUE;
 }
