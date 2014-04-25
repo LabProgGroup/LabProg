@@ -24,6 +24,7 @@ Enemy* createEnemy(Position myPosition, int precision) {
     newEnemy->position.y = myPosition.y;
     newEnemy->position.z = myPosition.z;
     newEnemy->precision = precision;
+    return newEnemy;
 }
 
 /*
