@@ -9,7 +9,7 @@ typedef struct shot {
 
 } Shot;
 
-
+#define SHOOT_NORM 60
 
 /*Recebe uma struct contendo as posições espaciais (x,y,z)
  * e as velocidades desses eixos (x,y,z) e retorna um ponteiro para
