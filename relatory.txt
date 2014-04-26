@@ -27,6 +27,7 @@ AVISO: Retirar definição de NULL desnecessaria em utils.h pois já está defin
 -Adicionei a função gotShot em enemy.h
 -Adicionei a função isAlive em enemy.h
 -Usaremos unidades de metro e segundos para grandezas de posição e velocidade
+<<<<<<< HEAD
 -Qual a relação X e Y??? Por onde a nave começa?
 
 26/04
@@ -40,3 +41,8 @@ Os eixos:
 -Definimos uma variável com a norma do vetor velocidade do tiro.
 -Definir em algum lugar as variaveis xSize e ySize que correspondem ao tamanho da tela
 -O inimigo, por enquanto vai atirar exatamente onde a nave está. Decidimos que o tiro vai ser bem rápido.
+=======
+
+26/04
+-Defininos o fps como 20 por default, usuário poderá escolher outro, se desejar
+>>>>>>> b0035b19219dc52ba8605ac5c65644fe35214dcd

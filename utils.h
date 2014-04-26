@@ -30,9 +30,16 @@ typedef struct coordinates Velocity;
   eucliana.
 */ 
 float distance(Position a, Position b);
- 
+
+/*
+ Define o tick do relógio em segundos.
+ clockTick = 1/fps.
+*/
+extern float clockTick;
 
 
-
+/*Recebe a posição da nave e de algum outro objeto (tiro, inimigo) e verifica se ele ainda
+ * está na tela, retornando TRUE em case afirmativo e FALSE, caso contrário. */
+int isAtScreen(Position shipP, Position objectP);
 
 #endif
