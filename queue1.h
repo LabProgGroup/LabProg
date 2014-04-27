@@ -50,7 +50,7 @@ Queue newQueue();
 int queueIsEmpty(Queue q);
 
 /*Recebe uma struct Elements representando algum elemento do cenário e uma fila q. Essa
- * função enfila o elemento na fila q.
+ * função enfileira o elemento na fila q.
  */
 void enqueue(Elements data, Queue q);
 

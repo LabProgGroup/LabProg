@@ -41,3 +41,10 @@ Os eixos:
 -Definir em algum lugar as variaveis xSize e ySize que correspondem ao tamanho da tela
 -O inimigo, por enquanto vai atirar exatamente onde a nave está. Decidimos que o tiro vai ser bem rápido.
 -Defininos o fps como 20 por default, usuário poderá escolher outro, se desejar
+
+27/04-Dificuldade em decidir qual tipo de fila usar
+     -Arquivo utils.h contém agora a declaração das variáveis globais:
+      clockTick, largura e altura da janela. 
+     -Decisão de dar ao tiro velocidade (x, y, z) constante, sem aceleração.
+     -
+     

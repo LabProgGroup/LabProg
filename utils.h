@@ -49,4 +49,9 @@ extern int xSize;
  * está na tela, retornando TRUE em case afirmativo e FALSE, caso contrário. */
 int isItAtScreen(Position shipP, Position objectP);
 
+/*
+  Recebe uma posição So, velocidade v e retorna a nova 
+  posição após o tempo de atualização da tela.
+ */
+float spaceTimeEquation(float initialPosition, float v);
 #endif

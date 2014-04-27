@@ -48,7 +48,7 @@ int queueIsEmpty(Queue q) {
 }
 
 /*Recebe um ponteiro genérico e uma fila q. Essa
- * função enfila o ponteiro na fila q.
+ * função enfileira o ponteiro na fila q.
  */
 void enqueue(void* data, Queue q) {
     if (queueIsEmpty(q)) {
