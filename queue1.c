@@ -1,32 +1,21 @@
 
-
 #include <stdio.h>
 #include <stdlib.h>
+#include "queue1.h"
 
-typedef struct queueNode* Link;
-struct queueNode {
-    void* data;
-    Link next;
-};
 
-struct queue {
-    Link first;
-    Link last;
-};
-
-typedef struct queue* Queue;
-/*Recebe um ponteiro genérico e um ponteiro em uma lista ligada, que compõe uma fila.
+/*Recebe uma struct Elements representando algum elemento do cenário e um ponteiro em uma lista ligada, que compõe uma fila.
  *Ela aloca uma nova célula e insere na fila.
  */
-static Link new(void* data, Link next);
+static Link new(Elements data, Link next);
 
 /*Essa função recebe um ponteiro para uma lista ligada e retorna o número de elementos dessa lista.*/
 static int size(Link link);
 
-/*Recebe um ponteiro genérico e um ponteiro em uma lista ligada, que compõe uma fila.
+/*Recebe uma struct Elements representando algum elemento do cenário e um ponteiro em uma lista ligada, que compõe uma fila.
  *Ela aloca uma nova célula e insere na fila.
  */
-static Link new(void* data, Link next) {
+static Link new(Elements data, Link next) {
     Link link = (Link) malloc(sizeof(*link));
     link->data = data;
     link->next = next;
@@ -47,10 +36,10 @@ int queueIsEmpty(Queue q) {
     return q->first == NULL;
 }
 
-/*Recebe um ponteiro genérico e uma fila q. Essa
- * função enfila o ponteiro na fila q.
+/*Recebe uma struct Elements representando algum elemento do cenário e uma fila q. Essa
+ * função enfila o elemento na fila q.
  */
-void enqueue(void* data, Queue q) {
+void enqueue(Elements data, Queue q) {
     if (queueIsEmpty(q)) {
         q->last = new(data, NULL);
         q->first = q->last;
@@ -63,20 +52,21 @@ void enqueue(void* data, Queue q) {
 /*Essa função recebe uma fila q e retira o elemento que está há mais tempo na fila 
  * e o retorna. Se a fila estiver vazia, sai do programa com erro.
  */
-void* dequeue(Queue q) {
+Elements dequeue(Queue q) {
     if (queueIsEmpty(q)) {
-        printf("Fila vazia! ");
-        exit(EXIT_FAILURE);
+       printf("Fila vazia! ");
+       exit(EXIT_FAILURE);
     }
-    void* data = q->first->data;
+    Elements data = q->first->data;
     Link tmp = q->first->next;
     free(q->first);
     q->first = tmp;
     return data;
 }
 
+
 /*Essa função recebe uma fila q, retira todos os elementos e desaloca toda a memória que era usada 
- * por essa fila. 
+ * por essa fila.
  */
 void queueEmpty(Queue q) {
     while (q->first != NULL)
@@ -84,7 +74,9 @@ void queueEmpty(Queue q) {
     free(q);
 }   
 
-/*Essa função recebe uma fila q e retorna o número de elementos dessa fila.*/
+/*Essa função recebe uma fila q e retorna o número de elementos dessa fila.
+ * Ela encapsula a função size.
+ */
 int queueSize(Queue q) {
    if (q->first == NULL) return 0;
    return size(q->first); 
@@ -95,8 +87,6 @@ static int size(Link link) {
    if (link->next == NULL) return 1;
    return (size(link->next) + 1);
 }
-
-
 
 
 
