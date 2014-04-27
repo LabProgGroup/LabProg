@@ -1,38 +1,66 @@
 #include "utils.h"
+#include "shot.h"
 
-typedef struct enemy Enemy;
-struct enemy {
+typedef struct ship Ship;
+struct ship {
     int life;           /*de 0 a 100*/
     Position position;  /*X, Y e Z  */
-    Velocity velocity		/*Em m/s sem valor definido por enquanto :/ */
+    Velocity velocity;	/*Em m/s sem valor definido por enquanto :/ */
 };
 
+#define INITIAL_VELOCITY 60 /*Velocidade inicial da nave*/
+#define MOVING_FACTOR 2     /*O quanto a nave vira quando ela muda de orientação*/
+#define VELOCITY_FACTOR 10
+#define MAX_XY_ORIENTATION 15
+#define MAX_VELOCITY 100
 /*
-Recebe uma posicao e precisao e retorna um ponteiro para
-um novo inimigo com esses atributos
+Recebe uma posição(mira), a posição da nave e um inteiro com a "potencia"
+do tiro
 */
-int Shoot(Position shipP, Position shotP);
+Shot* shootFromShip(Position aimP, Position shipP, int power);
 
 /*
-Recebe uma posicao e precisao e retorna um ponteiro para
-um novo inimigo com esses atributos
+Retorna um ponteiro para uma nova nave
 */
-Enemy* createEnemy(Position myPosition, int precision);
+Ship* createShip();
 
 /*
-Recebe um ponteiro para um inimigo e desaloca-o da 
-memoria
+Recebe um ponteiro para a nave e um inteiro que se 1 move a nave para
+a direita e se for -1 move a nave para a esquerda
 */
-int killEnemy(Enemy* en);
+void moveShipHorizontally(Ship* sh, int direction);
 
 /*
-Recebe um inteiro com o valor do damage recebido e um
-ponteiro para um inimigo. Tira essa quantidade 
+Recebe um ponteiro para a nave e um inteiro que se 1 move a nave para
+a direita e se for -1 move a nave para a esquerda
 */
-void gotShot(Enemy* en, int damage);
+void moveShipVetically(Ship* sh, int direction);
 
 /*
-Recebe um ponteiro para um inimigo e retorna TRUE se estiver
-vivo ou FALSE se tiver morto.
+Recebe um ponteiro para a nave e um inteiro que se 1 aumenta a
+velocidade da nave e se for -1 diminui a velocidade da nave
 */
-int isAlive(Enemy* en);
+void changeShipSpeed(Ship* sh, int direction);
+
+/*
+Recebe um ponteiro para a nave e atualiza a sua posição de acordo
+com o tick do relogio
+*/
+void updateShipPosition(Ship* sh);
+
+/*
+Recebe um ponteiro para a nave e desaloca-a da memoria
+*/
+int killShip(Ship* sh);
+
+/*
+Recebe um inteiro com o valor do damage recebido e um ponteiro para a
+nave. Tira essa quantidade de damage da vida da nave 
+*/
+void gotShotShip(Ship* sh, int damage);
+
+/*
+Recebe um ponteiro para a nave e retorna TRUE se estiver viva ou
+FALSE se tiver destruida.
+*/
+int isShipAlive(Ship* sh);

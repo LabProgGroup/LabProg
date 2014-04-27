@@ -1,23 +1,31 @@
+#ifndef _QUEUE_H_
+#define _QUEUE_H_
+
 #include <stdio.h>
 #include "utils.h"
 #include "enemy.h"
 
-typedef struct {
-    Node *first;
-    Node *last;
-} Queue;
-
-typedef struct {
+typedef struct node Node;
+struct node{
     Enemy *enemy;
     Node *next;
-} Node;
+};
+
+typedef struct {
+    Enemy *first;
+    Enemy *last;
+    
+    Node *head;
+    Node *lastNode;
+} Queue;
 
 /* Cria uma queue vazia e a retorna */
 Queue* createQueue();
 
 /* insere um novo Node no final da fila */
-void enqueue(Enemy *enemy);
+void enqueue(Enemy *enemy, Queue *queue);
 
 /* tira um Node do inicio da fila */ 
-Enemy* dequeue();
+Enemy* dequeue(Queue *queue);
 
+#endif
