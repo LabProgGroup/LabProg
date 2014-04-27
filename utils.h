@@ -1,5 +1,3 @@
-
-
 #ifndef _UTILS_HEADER_H_
 #define _UTILS_HEADER_H_ 
 /*Incluir <math.h> 
