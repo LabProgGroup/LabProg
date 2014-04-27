@@ -44,10 +44,3 @@ Recebe um ponteiro para um inimigo e retorna TRUE se estiver vivo ou
 FALSE se tiver morto.
 */
 int isEnemyAlive(Enemy* en);
-
-/*
-Recebe um ponteiro para um inimigo e retorna TRUE se estiver na tela,
-FALSE se já tiver saído.
-*/
-int isEnemyAtScreen(Position shipP, Position enemyP);
-

@@ -35,6 +35,46 @@ Ship* createShip() {
 }
 
 /*
+Recebe um ponteiro para a nave e um inteiro que, se 1 move a nave para
+a direita e se for -1 move a nave para a esquerda
+*/
+void moveShipHorizontally(Ship* sh, int direction) {
+    if (sh->velocity.x + (direction * MOVING_FACTOR) >= MAX_XY_ORIENTATION)
+        return;
+    sh->velocity.x += (direction * MOVING_FACTOR);
+}
+
+/*
+Recebe um ponteiro para a nave e um inteiro que, se 1 move a nave para
+a direita e se for -1 move a nave para a esquerda
+*/
+void moveShipVetically(Ship* sh, int direction) {
+    if (sh->velocity.y + (direction * MOVING_FACTOR) >= MAX_XY_ORIENTATION)
+        return;
+    sh->velocity.y += (direction * MOVING_FACTOR);
+}
+
+/*
+Recebe um ponteiro para a nave e um inteiro que, se 1 aumenta a
+velocidade da nave, se for -1 diminui a velocidade da nave
+*/
+void changeShipSpeed(Ship* sh, int direction) {
+    if (sh->velocity.z + (direction * VELOCITY_FACTOR) >= MAX_VELOCITY)
+        return;
+    sh->velocity.z += (direction * VELOCITY_FACTOR);
+}
+
+/*
+Recebe um ponteiro para a nave e atualiza a sua posição de acordo
+com o tick do relogio
+*/
+void updateShipPosition(Ship* sh) {
+    sh->position.x = spaceTimeEquation(sh->position.x, sh->velocity.x);
+    sh->position.y = spaceTimeEquation(sh->position.y, sh->velocity.y);
+    sh->position.z = spaceTimeEquation(sh->position.z, sh->velocity.z);
+}
+
+/*
 Recebe um ponteiro para a nave e desaloca-a da memoria
 */
 int killShip(Ship* sh) {

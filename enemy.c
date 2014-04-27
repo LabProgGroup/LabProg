@@ -66,7 +66,3 @@ vivo ou FALSE se tiver morto.
 int isEnemyAlive(Enemy* en) {
     return en->life > 0;
 }
-
-int isEnemyAtScreen(Position shipP, Position enemyP) {
-    return shipP.z <= enemyP.z;
-}

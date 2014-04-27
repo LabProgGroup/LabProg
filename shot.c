@@ -24,17 +24,10 @@ void freeShot(Shot* sh) {
 }
 /*Recebe um ponteiro para um tiro e atualiza sua posição na tela.*/
 void updateShot(Shot* sh) {
-    
     sh->shotPosition.x = spaceTimeEquation(sh->shotPosition.x, sh->shotVelocity.x);
     sh->shotPosition.y = spaceTimeEquation(sh->shotPosition.y, sh->shotVelocity.y);
     sh->shotPosition.z = spaceTimeEquation(sh->shotPosition.z, sh->shotVelocity.z);
     computeShotNorm(sh);
-}
-/*Recebe uma posição So, velocidade v e retorna a nova 
- * posição após o tempo de atualização da tela.
- */
-float spaceTimeEquation(float initialPosition, float v) {
-    return (initialPosition + v*clockTick);
 }
 
 /*Recebe o ponteiro para um tiro e calcula a norma de suas velocidades (x,y,z).

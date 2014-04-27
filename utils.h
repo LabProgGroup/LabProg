@@ -1,5 +1,3 @@
-
-
 #ifndef _UTILS_HEADER_H_
 #define _UTILS_HEADER_H_ 
 /*Incluir <math.h> 
@@ -7,7 +5,6 @@
  * .*/
 #include <stdio.h>
 #include <stdlib.h>
-#include <malloc.h>
 #include <math.h>
 /*
 Essa struct define uma coordenada horizontal x, vertical y
@@ -37,9 +34,19 @@ float distance(Position a, Position b);
 */
 extern float clockTick;
 
+/*
+  Define a altura da janela do jogo
+*/
+extern int ySize;
+
+/*
+  Define a largura da janela do jogo
+*/
+extern int xSize;
+
 
 /*Recebe a posição da nave e de algum outro objeto (tiro, inimigo) e verifica se ele ainda
  * está na tela, retornando TRUE em case afirmativo e FALSE, caso contrário. */
-int isAtScreen(Position shipP, Position objectP);
+int isItAtScreen(Position shipP, Position objectP);
 
 #endif

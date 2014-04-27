@@ -1,6 +1,5 @@
 #include "utils.h"
 
-
 /*
   Recebe duas structs do tipo Position contendo posições (x,y,z) e retorna a distância 
   eucliana.
@@ -10,11 +9,33 @@ float distance(Position a, Position b) {
 }
 
 /*
- Define o tick do relógio em segundos.
- clockTick = 1/fps.
+  Recebe uma posição So, velocidade v e retorna a nova 
+  posição após o tempo de atualização da tela.
+ */
+float spaceTimeEquation(float initialPosition, float v) {
+    return (initialPosition + v*clockTick);
+}
+
+/*
+  Define o tick do relógio em segundos.
+  clockTick = 1/fps.
 */
 float clockTick = (float) 1/20;
 
-/*Recebe a posição da nave e de algum outro objeto (tiro, inimigo) e verifica se ele ainda
- * está na tela, retornando TRUE em case afirmativo e FALSE, caso contrário. */
-int isAtScreen(Position shipP, Position objectP);
+/*
+  Define a altura da janela do jogo
+*/
+int ySize;
+
+/*
+  Define a largura da janela do jogo
+*/
+int xSize;
+
+/*
+  Recebe a posição da nave e de algum outro objeto (tiro, inimigo) e verifica se ele ainda
+  está na tela, retornando TRUE em case afirmativo e FALSE, caso contrário. 
+*/
+int isItAtScreen(Position shipP, Position objectP) {
+	return shipP.z <= objectP.z;
+}

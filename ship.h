@@ -8,7 +8,11 @@ struct ship {
     Velocity velocity;	/*Em m/s sem valor definido por enquanto :/ */
 };
 
-#define INITIAL_VELOCITY 60
+#define INITIAL_VELOCITY 60 /*Velocidade inicial da nave*/
+#define MOVING_FACTOR 2     /*O quanto a nave vira quando ela muda de orientação*/
+#define VELOCITY_FACTOR 10
+#define MAX_XY_ORIENTATION 15
+#define MAX_VELOCITY 100
 /*
 Recebe uma posição(mira), a posição da nave e um inteiro com a "potencia"
 do tiro
@@ -19,6 +23,30 @@ Shot* shootFromShip(Position aimP, Position shipP, int power);
 Retorna um ponteiro para uma nova nave
 */
 Ship* createShip();
+
+/*
+Recebe um ponteiro para a nave e um inteiro que se 1 move a nave para
+a direita e se for -1 move a nave para a esquerda
+*/
+void moveShipHorizontally(Ship* sh, int direction);
+
+/*
+Recebe um ponteiro para a nave e um inteiro que se 1 move a nave para
+a direita e se for -1 move a nave para a esquerda
+*/
+void moveShipVetically(Ship* sh, int direction);
+
+/*
+Recebe um ponteiro para a nave e um inteiro que se 1 aumenta a
+velocidade da nave e se for -1 diminui a velocidade da nave
+*/
+void changeShipSpeed(Ship* sh, int direction);
+
+/*
+Recebe um ponteiro para a nave e atualiza a sua posição de acordo
+com o tick do relogio
+*/
+void updateShipPosition(Ship* sh);
 
 /*
 Recebe um ponteiro para a nave e desaloca-a da memoria
