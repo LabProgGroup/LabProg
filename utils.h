@@ -22,6 +22,10 @@ typedef struct coordinates Dimension;
 
 #define TRUE 1
 #define FALSE 0
+#define MAX_LOOP 100
+
+enum key {UP, DOWN, RIGHT, LEFT, SPACE, CLICK}; /* Enum Representando as teclas pressionadas */
+typedef enum key Key;
 
 /*
   Recebe duas structs do tipo Position contendo posições (x,y,z) e retorna a distância 

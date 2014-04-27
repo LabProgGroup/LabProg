@@ -3,6 +3,7 @@
 #include "queue.h"
 #include "enemy.h"
 #include "utils.h"
+#include "ship.h"
 
 void printCenario(Cenario *cenario) {
     printf("\nCenario:\n\tDimensions: %f %f %f", cenario->dimension.x, cenario->dimension.y, cenario->dimension.z);
@@ -17,7 +18,7 @@ void printQueue(Queue *queue) {
     printf("\n\tfirst: %p last: %p", (void *)queue->first, (void *)queue->last);
     
     while (node != queue->head) {
-        printf("\n\tNode: %p %p %p", (void *)node, (void *)node->enemy, (void *)node->next);
+        printf("\n\tNode: %p %p %p z: %f x: %f", (void *)node, (void *)node->enemy, (void *)node->next, node->enemy->position.z, node->enemy->position.x);
         node = node->next;
     }
     printf("\n");
@@ -27,56 +28,110 @@ void printPosition(Position position) {
     printf("\nPosition:\n\tx: %f\n\ty: %f\n\tz: %f\n", position.x, position.y, position.z);
 }
 
+void printVelocity(Position position) {
+    printf("\nVelocity:\n\tx: %f\n\ty: %f\n\tz: %f\n", position.x, position.y, position.z);
+}
+
 void printEnemy(Enemy *enemy) {
     printf("\nEnemy:\n\t%p\n\tlife: %d\n\tprecision: %d", enemy, enemy->life, enemy->precision);
     printPosition(enemy->position);
 }
 
+void printShip(Ship *ship) {
+    printf("\nShip:\n\tLife: %d", ship->life);
+    printPosition(ship->position);
+    printVelocity(ship->velocity);
+    
+}
+
+void printShot(Shot *shot) {
+    printf("\nShot:\n\tdamage: %d", shot->damage);
+    printPosition(shot->shotPosition);
+    printVelocity(shot->shotVelocity);
+}
+
 int main(int argc, const char * argv[])
 {
-    Cenario *cenario = createCenario();
-    cenario->dimension.x = 20;
-    cenario->dimension.y = 40;
-    cenario->dimension.z = 2000;
+    Cenario *cenario = createCenario(20, 20, 2000);
     printCenario(cenario);
     printQueue(cenario->enemies);
     
-    Position position;
-    position.x = 5;
-    position.y = 6;
-    position.z = 7;
-    printPosition(position);
+    Position position0;
+    position0.x = 10;
+    position0.y = 10;
+    position0.z = 0;
+    printPosition(position0);
     
-    
-    Enemy *enemy = createEnemy(position, 8);
-    printEnemy(enemy);
-    
-    enqueue(enemy, cenario->enemies);
+    refreshCenario(cenario, position0);
     printQueue(cenario->enemies);
     
-    Enemy *enemy2 = createEnemy(position, 8);
-    enqueue(enemy2, cenario->enemies);
-    printQueue(cenario->enemies);
+    Ship *ship = createShip();
+    printShip(ship);
     
-    Enemy *enemyTest = dequeue(cenario->enemies);
-    printEnemy(enemyTest);
-    printQueue(cenario->enemies);
+    Key keyPressed = -1; /* Representa a tecla apertada */
+    Position mousePosition;
+    Shot *shipShot = NULL;
+    int i;
+    for (i = 0; ; i = (i + 1) % MAX_LOOP) {
+        if (i % 20 == 0) {
+            switch (keyPressed) {
+                case UP:
+                    moveShipVetically(ship, 1);
+                    break;
+                case DOWN:
+                    moveShipVetically(ship, -1);
+                    break;
+                case RIGHT:
+                    moveShipHorizontally(ship, 1);
+                    break;
+                case LEFT:
+                    moveShipHorizontally(ship, -1);
+                    break;
+                case SPACE:
+                    changeShipSpeed(ship, 1);
+                    break;
+                case CLICK:
+                    scanf("%f %f %f", &mousePosition.x, &mousePosition.y, &mousePosition.z);
+                    shipShot = shootFromShip(mousePosition, ship->position, 20);
+                    break;
+                default:
+                    ship->velocity.x = 0;
+                    ship->velocity.y = 0;
+                    ship->velocity.z = INITIAL_VELOCITY;
+                    break;
+            }
+            updateShipPosition(ship);
+            insideKeeper(ship);
+            
+            if (shipShot != NULL) {
+                updateShot(shipShot);
+                if (verifyShotColision(shipShot, cenario) == TRUE) {
+                    freeShot(shipShot);
+                    shipShot = NULL;
+                }
+            }
+            if (verifyShipColision(ship, cenario) == TRUE) {
+                killEnemy(dequeue(cenario->enemies));
+                gotDamagedShip(ship, 50);
+            }
+            refreshCenario(cenario, ship->position);
+            if (ship->life <= 0) {
+                printf("\nGAME OVER\n");
+                return 0;
+            }
+            
+            if (shipShot != NULL)
+                printShot(shipShot);
+            
+            printShip(ship);
+            scanf("%d", &keyPressed);
+        }
+        
+        
+    }
     
-    enemyTest = dequeue(cenario->enemies);
-    printEnemy(enemyTest);
-    printQueue(cenario->enemies);
     
-    enemyTest = dequeue(cenario->enemies);
-    printf("\nNão consegue dequeue na head: %p\n", (void *)enemyTest);
-    printQueue(cenario->enemies);
     
-    enqueue(enemy, cenario->enemies);
-    enqueue(enemy2, cenario->enemies);
-    printQueue(cenario->enemies);
-    
-    updateCenario(cenario, position);
-    printQueue(cenario->enemies);
-    printEnemy(cenario->enemies->last);
     
     return 0;
 }

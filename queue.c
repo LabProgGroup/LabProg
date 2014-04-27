@@ -39,8 +39,18 @@ Enemy* dequeue(Queue *queue) {
         queue->lastNode = queue->head;
         queue->last = NULL;
     }
-    if (firstNode != queue->head)
-        free(firstNode);
     
     return enm;
+}
+
+void removeNode(Node *node, Queue *queue) {
+    Node *actualNode = queue->head;
+    while (actualNode->next != queue->head) {
+        if (actualNode->next == node) {
+            actualNode->next = node->next;
+            free(node->enemy);
+            free(node);
+            return;
+        }
+    }
 }

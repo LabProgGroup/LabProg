@@ -28,4 +28,6 @@ void enqueue(Enemy *enemy, Queue *queue);
 /* tira um Node do inicio da fila */ 
 Enemy* dequeue(Queue *queue);
 
+void removeNode(Node *node, Queue *queue);
+
 #endif

@@ -12,10 +12,10 @@ Shot* createShot(Position shotP, Velocity shotV, int damage) {
     Shot *sh = (Shot*) malloc(sizeof (Shot));
     sh->shotPosition = shotP;
     sh->shotVelocity = shotV;
-    sh->damage = damage; 
+    sh->damage = damage;
     return sh;
-} 
-/*Recebe um ponteiro para um tiro e desaloca a memória 
+}
+/*Recebe um ponteiro para um tiro e desaloca a memória
  * alocada para ele.
  */
 void freeShot(Shot* sh) {
@@ -26,12 +26,13 @@ void freeShot(Shot* sh) {
 void updateShot(Shot* sh) {
     sh->shotPosition = spaceTimeEquation(sh->shotPosition, sh->shotVelocity);
     computeShotNorm(sh);
+    
 }
 
 /*Recebe o ponteiro para um tiro e calcula a norma de suas velocidades (x,y,z).
  */
 float computeShotNorm(Shot* sh) {
-    shotNorm = sqrt(sh->shotVelocity.x*sh->shotVelocity.x + sh->shotVelocity.y*sh->shotVelocity.y + sh->shotVelocity.z*sh->shotVelocity.z); 
+    shotNorm = sqrt(sh->shotVelocity.x*sh->shotVelocity.x + sh->shotVelocity.y*sh->shotVelocity.y + sh->shotVelocity.z*sh->shotVelocity.z);
     return shotNorm;
 }
 
