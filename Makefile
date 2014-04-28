@@ -1,12 +1,12 @@
 CFLAGS= -g -Wall -O2 -ansi -pedantic -Wno-unused-result
-CC = gcc
+CC = gcc -g
 RM = rm
 #-------------------------------------------------
 
 riverraid:  main.o  utils.o cenario.o queue.o enemy.o ship.o  shot.o
-	$(CC) main.o  utils.o cenario.o queue.o enemy.o ship.o -o riverraid
+	$(CC) main.o  utils.o cenario.o queue.o enemy.o ship.o shot.o -o riverraid
 
-main.o: main.c cenario.h queue.h enemy.h utils.h ship.h shot.h
+main.o: main.c utils.h cenario.h queue.h enemy.h ship.h  shot.h
 	$(CC) -c main.c
 
 utils.o: utils.h utils.c

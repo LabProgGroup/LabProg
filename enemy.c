@@ -1,6 +1,6 @@
 #include <stdlib.h>  
-#include <stdio.h>   
-#include <math.h>
+#include <stdio.h>
+#include <math.h>   
 #include "enemy.h"
 #include "utils.h"
 #include "shot.h"

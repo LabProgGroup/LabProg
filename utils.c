@@ -1,5 +1,6 @@
-#include "utils.h"
 #include <math.h>
+#include "utils.h"
+
 /*
   Recebe duas structs do tipo Position contendo posições (x,y,z) e retorna a distância 
   eucliana.
