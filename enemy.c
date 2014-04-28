@@ -1,8 +1,9 @@
 #include <stdlib.h>  
 #include <stdio.h>   
 #include <math.h>
-
 #include "enemy.h"
+#include "utils.h"
+#include "shot.h"
 
 /*
 Recebe a posição da nave e decide se vai atirar ou não considerando

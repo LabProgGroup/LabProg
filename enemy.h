@@ -1,7 +1,6 @@
 #ifndef _ENEMY_H_
 #define _ENEMY_H_
 
-#include "utils.h"
 #include "shot.h"
 
 #define SHOOTABLE_DISTANCE 20 /*distancia minima para atirar na nave*/

@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "shot.h"
-#include "utils.h"
 /*Módulo da velocidade do tiro*/
 float shotNorm;
 

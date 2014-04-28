@@ -1,7 +1,6 @@
 #ifndef _SHIP_H_
 #define _SHIP_H_
 
-#include "utils.h"
 #include "shot.h"
 
 typedef struct ship Ship;
