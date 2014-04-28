@@ -1,6 +1,6 @@
 #ifndef _SHOT_H_
 #define _SHOT_H_
-/*TODO: pensar gravidade.*/
+
 #include "utils.h"
 
 typedef struct {
