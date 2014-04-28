@@ -4,7 +4,7 @@ RM = rm
 #-------------------------------------------------
 
 riverraid:  main.o  utils.o cenario.o queue.o enemy.o ship.o  shot.o
-	$(CC) main.o  utils.o cenario.o queue.o enemy.o ship.o shot.o -o riverraid
+	$(CC) -lm main.o  utils.o cenario.o queue.o enemy.o ship.o shot.o -o riverraid -lm
 
 main.o: main.c utils.h cenario.h queue.h enemy.h ship.h  shot.h
 	$(CC) -c main.c
