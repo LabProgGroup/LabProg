@@ -41,7 +41,6 @@ void printShip(Ship *ship) {
     printf("\nShip:\n\tLife: %d", ship->life);
     printPosition(ship->position);
     printVelocity(ship->velocity);
-    
 }
 
 void printShot(Shot *shot) {
@@ -50,8 +49,7 @@ void printShot(Shot *shot) {
     printVelocity(shot->shotVelocity);
 }
 
-int main(int argc, const char * argv[])
-{
+int main(int argc, const char * argv[]) {
     Cenario *cenario = createCenario(defaultCenarioDim);
     printCenario(cenario);
     printQueue(cenario->enemies);
@@ -73,7 +71,6 @@ int main(int argc, const char * argv[])
     Shot *shipShot = NULL;
     int i;
 
-    printf("def lalala: %f %f %f", defaultCenarioDim.x, defaultCenarioDim.y, defaultCenarioDim.z);
     for (i = 0; ; i = (i + 1) % MAX_LOOP) {
         if (i % 20 == 0) {
             if (keyPressed == CLICK) {

@@ -6,59 +6,25 @@
 
 typedef struct ship Ship;
 struct ship {
-    int life;           /*de 0 a 100*/
-    Position position;  /*X, Y e Z  */
-    Velocity velocity;	/*Em m/s sem valor definido por enquanto :/ */
+    int life;           
+    Position position;  
+    Velocity velocity;	
 };
 
-#define INITIAL_VELOCITY 10 /*Velocidade inicial da nave*/
-#define MOVING_FACTOR 2     /*O quanto a nave vira quando ela muda de orientação*/
+#define INITIAL_VELOCITY 10 
+#define MOVING_FACTOR 2    
 #define VELOCITY_FACTOR 10
 #define MAX_XY_ORIENTATION 15
 #define MAX_VELOCITY 100
-/*
- Retorna um ponteiro para uma nova nave
- */
+
 Ship* createShip(Position position);
-
-/*
-Recebe uma posição(mira), a posição da nave e um inteiro com a "potencia"
-do tiro
-*/
-Shot* shootFromShip(Position aimP, Position shipP, int power);
-
+void killShip(Ship* sh);
 void updateVelocity(Ship *sh, Key key);
-
-/*
-Recebe um ponteiro para a nave e um inteiro que se 1 aumenta a
-velocidade da nave e se for -1 diminui a velocidade da nave
-*/
-void changeShipSpeed(Ship* sh, int direction);
-
-/*
-Recebe um ponteiro para a nave e atualiza a sua posição de acordo
-com o tick do relogio
-*/
 void updateShipPosition(Ship* sh);
 
-/*
-Recebe um ponteiro para a nave e desaloca-a da memoria
-*/
-void killShip(Ship* sh);
-
-/*
-Recebe um inteiro com o valor do damage recebido e um ponteiro para a
-nave. Tira essa quantidade de damage da vida da nave 
-*/
-void gotDamagedShip(Ship* sh, int damage);
-
-/*
-Recebe um ponteiro para a nave e retorna TRUE se estiver viva ou
-FALSE se tiver destruida.
-*/
-BOOL isShipAlive(Ship* sh);
-
-/* Não deixa a nave sair do espaço do cenario */
 void insideKeeper(Ship *sh, Dimension dimension);
+Shot* shootFromShip(Position aimP, Position shipP, int power);
+void gotDamagedShip(Ship* sh, int damage);
+BOOL isShipAlive(Ship* sh);
 
 #endif

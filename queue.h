@@ -19,15 +19,10 @@ typedef struct {
     Node *lastNode;
 } Queue;
 
-/* Cria uma queue vazia e a retorna */
 Queue* createQueue();
-
-/* insere um novo Node no final da fila */
-void enqueue(Enemy *enemy, Queue *queue);
-
-/* tira um Node do inicio da fila */ 
-Enemy* dequeue(Queue *queue);
-
 void removeNode(Node *node, Queue *queue);
+
+void enqueue(Enemy *enemy, Queue *queue);
+Enemy* dequeue(Queue *queue);
 
 #endif

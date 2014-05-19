@@ -14,6 +14,18 @@ Queue* createQueue() {
     return queue;
 }
 
+void removeNode(Node *node, Queue *queue) {
+    Node *actualNode = queue->head;
+    while (actualNode->next != queue->head) {
+        if (actualNode->next == node) {
+            actualNode->next = node->next;
+            free(node->enemy);
+            free(node);
+            return;
+        }
+    }
+}
+
 void enqueue(Enemy *enemy, Queue *queue) {
     Node *newNode = malloc(sizeof(Node));
     
@@ -41,16 +53,4 @@ Enemy* dequeue(Queue *queue) {
     }
     
     return enm;
-}
-
-void removeNode(Node *node, Queue *queue) {
-    Node *actualNode = queue->head;
-    while (actualNode->next != queue->head) {
-        if (actualNode->next == node) {
-            actualNode->next = node->next;
-            free(node->enemy);
-            free(node);
-            return;
-        }
-    }
 }
