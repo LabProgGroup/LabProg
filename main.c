@@ -4,7 +4,6 @@
 #include "enemy.h"
 #include "utils.h"
 #include "ship.h"
-#include "shot.h"
 
 void printCenario(Cenario *cenario) {
     printf("\nCenario:\n\tDimensions: %f %f %f", cenario->dimension.x, cenario->dimension.y, cenario->dimension.z);

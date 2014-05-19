@@ -3,8 +3,7 @@
 #include <math.h>
 
 #include "ship.h"
-#include "utils.h"
-#include "shot.h"
+
 /*
  Retorna um ponteiro para uma nova nave
  */

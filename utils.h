@@ -5,6 +5,7 @@
  * .*/
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 /*
 Essa struct define uma coordenada horizontal x, vertical y
 e na direção da tela z.
