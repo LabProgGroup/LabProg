@@ -52,7 +52,7 @@ void printShot(Shot *shot) {
 
 int main(int argc, const char * argv[])
 {
-    Cenario *cenario = createCenario(20, 20, 2000);
+    Cenario *cenario = createCenario(xSize, ySize, 2000);
     printCenario(cenario);
     printQueue(cenario->enemies);
     
@@ -72,6 +72,8 @@ int main(int argc, const char * argv[])
     Position mousePosition;
     Shot *shipShot = NULL;
     int i;
+
+    printf("def lalala: %f %f %f", defaultCenarioDim.x, defaultCenarioDim.y, defaultCenarioDim.z);
     for (i = 0; ; i = (i + 1) % MAX_LOOP) {
         if (i % 20 == 0) {
             switch (keyPressed) {

@@ -12,9 +12,6 @@ Cenario* createCenario(float x, float y, float z) {
     cen->dimension.y = y;
     cen->dimension.z = z;
     
-    xSize = x;
-    ySize = y;
-    
     srand((unsigned int)time(NULL));
     initEnemies(cen);
     
@@ -34,7 +31,6 @@ void refreshCenario(Cenario *cenario, Position shipPosition) {
         free (dequeue(cenario->enemies));
         firstEnemy = cenario->enemies->first;
     }
-    
 }
 
 static void createNewEnemyInInterval(float min, float max, Cenario *cenario){

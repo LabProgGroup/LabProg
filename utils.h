@@ -49,6 +49,9 @@ extern int ySize;
 */
 extern int xSize;
 
+extern Dimension defaultCenarioDim;
+
+
 
 /*Recebe a posição da nave e de algum outro objeto (tiro, inimigo) e verifica se ele ainda
  * está na tela, retornando TRUE em case afirmativo e FALSE, caso contrário. */

@@ -10,6 +10,8 @@ typedef struct {
     int life;           /*de 0 a 100*/
     Position position;  /*X, Y e Z  */
     int precision;      /*de 0 a 10 */
+
+    Dimension dimension;
 } Enemy;
 
 /*

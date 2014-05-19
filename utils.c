@@ -30,12 +30,15 @@ float clockTick = (float) 1/20;
 /*
   Define a altura da janela do jogo
 */
-int ySize;
+int ySize = 20;
 
 /*
   Define a largura da janela do jogo
 */
-int xSize;
+int xSize = 20;
+
+Dimension defaultCenarioDim = {20, 20, 2000};   
+
 
 /*
   Recebe a posição da nave e de algum outro objeto (tiro, inimigo) e verifica se ele ainda

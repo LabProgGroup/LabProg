@@ -1,4 +1,4 @@
-#import "queue.h"
+#include "queue.h"
 
 Queue* createQueue() {
     Queue *queue = malloc(sizeof(Queue));
