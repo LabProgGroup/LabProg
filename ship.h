@@ -19,7 +19,7 @@ struct ship {
 /*
  Retorna um ponteiro para uma nova nave
  */
-Ship* createShip();
+Ship* createShip(Position position);
 
 /*
 Recebe uma posição(mira), a posição da nave e um inteiro com a "potencia"
@@ -27,17 +27,7 @@ do tiro
 */
 Shot* shootFromShip(Position aimP, Position shipP, int power);
 
-/*
-Recebe um ponteiro para a nave e um inteiro que se 1 move a nave para
-a direita e se for -1 move a nave para a esquerda
-*/
-void moveShipHorizontally(Ship* sh, int direction);
-
-/*
-Recebe um ponteiro para a nave e um inteiro que se 1 move a nave para
-a direita e se for -1 move a nave para a esquerda
-*/
-void moveShipVetically(Ship* sh, int direction);
+void updateVelocity(Ship *sh, Key key);
 
 /*
 Recebe um ponteiro para a nave e um inteiro que se 1 aumenta a
@@ -54,7 +44,7 @@ void updateShipPosition(Ship* sh);
 /*
 Recebe um ponteiro para a nave e desaloca-a da memoria
 */
-int killShip(Ship* sh);
+void killShip(Ship* sh);
 
 /*
 Recebe um inteiro com o valor do damage recebido e um ponteiro para a
@@ -66,9 +56,9 @@ void gotDamagedShip(Ship* sh, int damage);
 Recebe um ponteiro para a nave e retorna TRUE se estiver viva ou
 FALSE se tiver destruida.
 */
-int isShipAlive(Ship* sh);
+BOOL isShipAlive(Ship* sh);
 
 /* Não deixa a nave sair do espaço do cenario */
-void insideKeeper(Ship *sh);
+void insideKeeper(Ship *sh, Dimension dimension);
 
 #endif

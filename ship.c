@@ -7,12 +7,14 @@
 /*
  Retorna um ponteiro para uma nova nave
  */
-Ship* createShip() {
+Ship* createShip(Position position) {
     Ship* newship = malloc(sizeof (Ship));
     newship->life = 100;
-    newship->position.x = xSize / 2;
-    newship->position.y = ySize / 2;
-    newship->position.z = 0;
+
+    newship->position.x = position.x;
+    newship->position.y = position.y;
+    newship->position.z = position.z;
+
     newship->velocity.x = 0;
     newship->velocity.y = 0;
     newship->velocity.z = INITIAL_VELOCITY;
@@ -36,26 +38,39 @@ Shot* shootFromShip(Position aimP, Position shipP, int power) {
     return newShot;
 }
 
-/*
-Recebe um ponteiro para a nave e um inteiro que, se 1 move a nave para
-a direita e se for -1 move a nave para a esquerda
-*/
-void moveShipHorizontally(Ship* sh, int direction) {
-    if (sh->velocity.x + (direction * MOVING_FACTOR) >= MAX_XY_ORIENTATION ||
-        sh->velocity.x + (direction * MOVING_FACTOR) <= -MAX_XY_ORIENTATION)
-        return;
-    sh->velocity.x += (direction * MOVING_FACTOR);
-}
-
-/*
-Recebe um ponteiro para a nave e um inteiro que, se 1 move a nave para
-a direita e se for -1 move a nave para a esquerda
-*/
-void moveShipVetically(Ship* sh, int direction) {
-    if (sh->velocity.y + (direction * MOVING_FACTOR) >= MAX_XY_ORIENTATION ||
-        sh->velocity.y + (direction * MOVING_FACTOR) <= -MAX_XY_ORIENTATION)
-        return;
-    sh->velocity.y += (direction * MOVING_FACTOR);
+void updateVelocity(Ship *sh, Key key) {
+    switch (key) {
+        case UP:
+            if (sh->velocity.y + MOVING_FACTOR > MAX_XY_ORIENTATION)
+                return;
+            sh->velocity.y += MOVING_FACTOR;
+            break;
+        case DOWN:
+            if (sh->velocity.y - MOVING_FACTOR < -MAX_XY_ORIENTATION)
+                return;
+            sh->velocity.y -= MOVING_FACTOR;
+            break;
+        case RIGHT:
+            if (sh->velocity.x + MOVING_FACTOR > MAX_XY_ORIENTATION)
+                return;
+            sh->velocity.x += MOVING_FACTOR;
+            break;
+        case LEFT:
+            if (sh->velocity.x - MOVING_FACTOR < -MAX_XY_ORIENTATION)
+                return;
+            sh->velocity.x -= MOVING_FACTOR;
+            break;
+        case SPACE:
+            if (sh->velocity.z + VELOCITY_FACTOR > MAX_VELOCITY)
+                return;
+            sh->velocity.z += VELOCITY_FACTOR;
+            break;
+        default:
+            sh->velocity.x = 0;
+            sh->velocity.y = 0;
+            sh->velocity.z = INITIAL_VELOCITY;
+            break;
+    }
 }
 
 /*
@@ -79,9 +94,8 @@ void updateShipPosition(Ship* sh) {
 /*
 Recebe um ponteiro para a nave e desaloca-a da memoria
 */
-int killShip(Ship* sh) {
+void killShip(Ship* sh) {
     free(sh);
-    return 1;
 }
 
 /*
@@ -96,25 +110,25 @@ void gotDamagedShip(Ship* sh, int damage) {
 Recebe um ponteiro para a nave e retorna TRUE se estiver viva ou
 FALSE se tiver destruida.
 */
-int isShipAlive(Ship* sh) {
+BOOL isShipAlive(Ship* sh) {
     return sh->life > 0;
 }
 
-void insideKeeper(Ship *sh) {
+void insideKeeper(Ship *sh, Dimension dimension) {
     if (sh->position.x < 0) {
         sh->position.x = 0;
         sh->velocity.x = 0;
     }
-    else if (sh->position.x > xSize) {
-        sh->position.x = xSize;
+    else if (sh->position.x > dimension.x) {
+        sh->position.x = dimension.x;
         sh->velocity.x = 0;
     }
     if (sh->position.y < 0) {
         sh->position.y = 0;
         sh->velocity.y = 0;
     }
-    else if (sh->position.y > ySize) {
-        sh->position.y = ySize;
+    else if (sh->position.y > dimension.y) {
+        sh->position.y = dimension.y;
         sh->velocity.y = 0;
     }
 }

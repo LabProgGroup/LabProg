@@ -4,16 +4,17 @@
 #include <stdlib.h>
 #include <time.h>
 
-Cenario* createCenario(float x, float y, float z) {
+Cenario* createCenario(Dimension dimension) {
     Cenario *cen = malloc (sizeof(Cenario));
     
     cen->enemies = createQueue();
-    cen->dimension.x = x;
-    cen->dimension.y = y;
-    cen->dimension.z = z;
-    
-    srand((unsigned int)time(NULL));
+
+    cen->dimension.x = dimension.x;
+    cen->dimension.y = dimension.y;
+    cen->dimension.z = dimension.z;
     initEnemies(cen);
+
+    srand((unsigned int)time(NULL));
     
     return cen;
 }
@@ -41,7 +42,7 @@ static void createNewEnemyInInterval(float min, float max, Cenario *cenario){
     randomPos.y = 0;
     randomPos.z = rand() % (int)(max - min) + min;
     
-    enqueue (createEnemy(randomPos, precision), cenario->enemies);
+    enqueue (createEnemy(randomPos, defaultEnemyDim, precision), cenario->enemies);
 }
 
 static void initEnemies(Cenario *cenario) {
@@ -57,17 +58,17 @@ static void initEnemies(Cenario *cenario) {
     
 }
 
-int verifyShipColision(Ship *ship, Cenario *cenario) {
-    if (ship->position.x == cenario->enemies->first->position.x)
-        if (ship->position.z >= cenario->enemies->first->position.z)
+BOOL verifyShipColision(Ship *ship, Cenario *cenario) {
+    Enemy *first = cenario->enemies->first;
+    if (ship->position.x >= first->position.x &&
+        ship->position.x <= first->position.x + first->dimension.x)
+        if (ship->position.z >= first->position.z)
             return TRUE;
     return FALSE;
 }
 
-int verifyShotColision(Shot *shot, Cenario *cenario) {
-    if (shot->shotPosition.x <= 0 || shot->shotPosition.x >= xSize ||
-        shot->shotPosition.y <= 0 || shot->shotPosition.y >= ySize ||
-        shot->shotPosition.z >= cenario->dimension.z)
+BOOL verifyShotColision(Shot *shot, Cenario *cenario) {
+    if (isInsideCenario(shot->shotPosition, cenario))
         return TRUE;
     
     else {
@@ -87,5 +88,12 @@ int verifyShotColision(Shot *shot, Cenario *cenario) {
     return FALSE;
 }
 
+BOOL isInsideCenario(Position position, Cenario *cenario) {
+    if (position.x <= 0 || position.x >= cenario->dimension.x ||
+        position.y <= 0 || position.y >= cenario->dimension.y ||
+        position.z <= 0 || position.z >= cenario->dimension.z)
+        return TRUE;
+    return FALSE;
+}
 
 

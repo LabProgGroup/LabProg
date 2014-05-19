@@ -18,7 +18,7 @@ typedef struct {
 Recebe a posição da nave e decide se vai atirar ou não considerando
 a distancia entre a nave e o inimigo
 */
-int shouldShoot(Position shipP, Position enemyP);
+BOOL shouldShoot(Position shipP, Position enemyP);
 
 /*
 Recebe a posição da nave e a posição do inimigo que atirou, além da
@@ -30,12 +30,12 @@ Shot* shootFromEnemy(Position enemyP, Position shipP, int power);
 Recebe uma posicao e precisao e retorna um ponteiro para um novo
 inimigo com esses atributos
 */
-Enemy* createEnemy(Position myPosition, int precision);
+Enemy* createEnemy(Position myPosition, Dimension myDimension, int precision);
 
 /*
 Recebe um ponteiro para um inimigo e desaloca-o da memoria
 */
-int killEnemy(Enemy* en);
+void killEnemy(Enemy* en);
 
 /*
 Recebe um inteiro com o valor do damage recebido e um ponteiro para 
@@ -47,6 +47,6 @@ void gotShotEnemy(Enemy* en, int damage);
 Recebe um ponteiro para um inimigo e retorna TRUE se estiver vivo ou
 FALSE se tiver morto.
 */
-int isEnemyAlive(Enemy* en);
+BOOL isEnemyAlive(Enemy* en);
 
 #endif

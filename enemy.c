@@ -8,7 +8,7 @@
 Recebe a posição da nave e decide se vai atirar ou não considerando
 a distancia entre a nave e o inimigo
 */
-int shouldShoot(Position shipP, Position enemyP) {
+BOOL shouldShoot(Position shipP, Position enemyP) {
     if (distance(shipP, enemyP) < SHOOTABLE_DISTANCE)
         return TRUE;
     return FALSE;
@@ -34,11 +34,13 @@ Shot* shootFromEnemy(Position enemyP, Position shipP, int power) {
 Recebe uma posicao e precisao e retorna um ponteiro para
 um novo inimigo com esses atributos
 */
-Enemy* createEnemy(Position myPosition, int precision) {
+Enemy* createEnemy(Position myPosition, Dimension myDimension, int precision) {
     Enemy *newEnemy = malloc(sizeof (Enemy));
     newEnemy->life = 100;
     newEnemy->position = myPosition;
+    newEnemy->dimension = myDimension;
     newEnemy->precision = precision;
+
     return newEnemy;
 }
 
@@ -46,9 +48,8 @@ Enemy* createEnemy(Position myPosition, int precision) {
 Recebe um ponteiro para um inimigo e desaloca-o da 
 memoria
 */
-int killEnemy(Enemy* dead) {
+void killEnemy(Enemy* dead) {
     free(dead);
-    return 1;
 }
 
 /*
@@ -63,6 +64,6 @@ void gotShotEnemy(Enemy* en, int damage) {
 Recebe um ponteiro para um inimigo e retorna TRUE se estiver
 vivo ou FALSE se tiver morto.
 */
-int isEnemyAlive(Enemy* en) {
+BOOL isEnemyAlive(Enemy* en) {
     return en->life > 0;
 }

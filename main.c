@@ -52,20 +52,20 @@ void printShot(Shot *shot) {
 
 int main(int argc, const char * argv[])
 {
-    Cenario *cenario = createCenario(xSize, ySize, 2000);
+    Cenario *cenario = createCenario(defaultCenarioDim);
     printCenario(cenario);
     printQueue(cenario->enemies);
     
-    Position position0;
-    position0.x = 10;
-    position0.y = 10;
-    position0.z = 0;
-    printPosition(position0);
-    
-    refreshCenario(cenario, position0);
+    Position shipInitialPosition = {
+        cenario->dimension.x / 2,
+        cenario->dimension.y / 2,
+        0
+    };
+
+    printPosition(shipInitialPosition);
     printQueue(cenario->enemies);
     
-    Ship *ship = createShip();
+    Ship *ship = createShip(shipInitialPosition);
     printShip(ship);
     
     Key keyPressed = -1; /* Representa a tecla apertada */
@@ -76,34 +76,15 @@ int main(int argc, const char * argv[])
     printf("def lalala: %f %f %f", defaultCenarioDim.x, defaultCenarioDim.y, defaultCenarioDim.z);
     for (i = 0; ; i = (i + 1) % MAX_LOOP) {
         if (i % 20 == 0) {
-            switch (keyPressed) {
-                case UP:
-                    moveShipVetically(ship, 1);
-                    break;
-                case DOWN:
-                    moveShipVetically(ship, -1);
-                    break;
-                case RIGHT:
-                    moveShipHorizontally(ship, 1);
-                    break;
-                case LEFT:
-                    moveShipHorizontally(ship, -1);
-                    break;
-                case SPACE:
-                    changeShipSpeed(ship, 1);
-                    break;
-                case CLICK:
-                    scanf("%f %f %f", &mousePosition.x, &mousePosition.y, &mousePosition.z);
-                    shipShot = shootFromShip(mousePosition, ship->position, 20);
-                    break;
-                default:
-                    ship->velocity.x = 0;
-                    ship->velocity.y = 0;
-                    ship->velocity.z = INITIAL_VELOCITY;
-                    break;
+            if (keyPressed == CLICK) {
+                scanf("%f %f %f", &mousePosition.x, &mousePosition.y, &mousePosition.z);
+                shipShot = shootFromShip(mousePosition, ship->position, 20);
             }
+            else
+                updateVelocity(ship, keyPressed);
+
             updateShipPosition(ship);
-            insideKeeper(ship);
+            insideKeeper(ship, cenario->dimension);
             
             if (shipShot != NULL) {
                 updateShot(shipShot);
@@ -127,14 +108,8 @@ int main(int argc, const char * argv[])
             
             printShip(ship);
             scanf("%d", &keyPressed);
-        }
-        
-        
-    }
-    
-    
-    
-    
+        }     
+    }  
     return 0;
 }
 
