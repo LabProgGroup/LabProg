@@ -8,7 +8,9 @@ typedef struct ship Ship;
 struct ship {
     int life;           
     Position position;  
-    Velocity velocity;	
+    Velocity velocity;
+
+    Dimension dimension;
 };
 
 #define INITIAL_VELOCITY 10 

@@ -1,9 +1,9 @@
 #include "queue.h"
 
-Queue* createQueue() {
-    Queue *queue = malloc(sizeof(Queue));
+EnemyQueue* createEnemyQueue() {
+    EnemyQueue *queue = malloc(sizeof(EnemyQueue));
     
-    queue->head = malloc(sizeof(Node));
+    queue->head = malloc(sizeof(EnemyNode));
     queue->head->next = queue->head;
     queue->head->enemy = NULL;
     
@@ -14,11 +14,18 @@ Queue* createQueue() {
     return queue;
 }
 
-void removeNode(Node *node, Queue *queue) {
-    Node *actualNode = queue->head;
+void removeEnemyNode(EnemyNode *node, EnemyQueue *queue) {
+    EnemyNode *actualNode = queue->head;
     while (actualNode->next != queue->head) {
         if (actualNode->next == node) {
             actualNode->next = node->next;
+
+            if (actualNode->next == queue->head) {
+                queue->lastNode = actualNode;
+                queue->last = actualNode->enemy;
+            }
+            queue->first = queue->head->next->enemy;
+
             free(node->enemy);
             free(node);
             return;
@@ -26,8 +33,8 @@ void removeNode(Node *node, Queue *queue) {
     }
 }
 
-void enqueue(Enemy *enemy, Queue *queue) {
-    Node *newNode = malloc(sizeof(Node));
+void enqueueEnemy(Enemy *enemy, EnemyQueue *queue) {
+    EnemyNode *newNode = malloc(sizeof(EnemyNode));
     
     newNode->enemy = enemy;
     newNode->next  = queue->head;
@@ -39,8 +46,8 @@ void enqueue(Enemy *enemy, Queue *queue) {
     queue->first = queue->head->next->enemy;
 }
 
-Enemy* dequeue(Queue *queue) {
-    Node *firstNode = queue->head->next;
+Enemy* dequeueEnemy(EnemyQueue *queue) {
+    EnemyNode *firstNode = queue->head->next;
     Enemy *enm = firstNode->enemy;
     
     queue->head->next = firstNode->next;
@@ -53,4 +60,8 @@ Enemy* dequeue(Queue *queue) {
     }
     
     return enm;
+}
+
+BOOL isEnemyQueueEmpty(EnemyQueue *queue) {
+    return queue->first == NULL;
 }

@@ -3,8 +3,8 @@ CC = gcc -g
 RM = rm
 #-------------------------------------------------
 
-riverraid:  main.o  utils.o cenario.o queue.o enemy.o ship.o  shot.o
-	$(CC) -lm main.o  utils.o cenario.o queue.o enemy.o ship.o shot.o -o riverraid -lm
+riverraid:  main.o  utils.o cenario.o queue.o enemy.o ship.o  shot.o shotQueue.o
+	$(CC) -lm main.o  utils.o cenario.o queue.o enemy.o ship.o shot.o shotQueue.o -o riverraid -lm
 
 main.o: main.c utils.h cenario.h queue.h enemy.h ship.h  shot.h
 	$(CC) -c main.c
@@ -17,6 +17,9 @@ cenario.o: cenario.h cenario.c queue.h utils.h ship.h enemy.h
 
 queue.o: queue.h queue.c utils.h enemy.h
 	$(CC) -c queue.c
+
+shotQueue.o: shotQueue.h shotQueue.c utils.h shot.h
+	$(CC) -c shotQueue.c
 
 enemy.o: enemy.h enemy.c utils.h shot.h
 	$(CC) -lm -c enemy.c

@@ -7,7 +7,7 @@
 Cenario* createCenario(Dimension dimension) {
     Cenario *cen = malloc (sizeof(Cenario));
     
-    cen->enemies = createQueue();
+    cen->enemies = createEnemyQueue();
 
     cen->dimension.x = dimension.x;
     cen->dimension.y = dimension.y;
@@ -29,7 +29,7 @@ void refreshCenario(Cenario *cenario, Position shipPosition) {
         lastEnemy = cenario->enemies->last;
     }
     while (shipPosition.z > firstEnemy->position.z) {
-        free (dequeue(cenario->enemies));
+        free (dequeueEnemy(cenario->enemies));
         firstEnemy = cenario->enemies->first;
     }
 }
@@ -42,7 +42,7 @@ static void createNewEnemyInInterval(float min, float max, Cenario *cenario){
     randomPos.y = 0;
     randomPos.z = rand() % (int)(max - min) + min;
     
-    enqueue (createEnemy(randomPos, defaultEnemyDim, precision), cenario->enemies);
+    enqueueEnemy(createEnemy(randomPos, defaultEnemyDim, precision), cenario->enemies);
 }
 
 static void initEnemies(Cenario *cenario) {
@@ -72,13 +72,13 @@ BOOL verifyShotColision(Shot *shot, Cenario *cenario) {
         return TRUE;
     
     else {
-        Node *node = cenario->enemies->head->next;
+        EnemyNode *node = cenario->enemies->head->next;
         while (node != cenario->enemies->head) {
             if (shot->shotPosition.x == node->enemy->position.x)
                 if (shot->shotPosition.z >= node->enemy->position.z) {
                     gotShotEnemy(node->enemy, 20);
                     if (node->enemy->life <= 0)
-                        removeNode(node, cenario->enemies);
+                        removeEnemyNode(node, cenario->enemies);
                     return TRUE;
                 }
             node = node->next;

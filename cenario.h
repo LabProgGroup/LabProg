@@ -6,7 +6,7 @@
 #include "ship.h"
 
 typedef struct {
-    Queue *enemies;
+    EnemyQueue *enemies;
     Dimension dimension;
 } Cenario;
 

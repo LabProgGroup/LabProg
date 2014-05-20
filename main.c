@@ -4,14 +4,15 @@
 #include "enemy.h"
 #include "utils.h"
 #include "ship.h"
+#include "shotQueue.h"
 
 void printCenario(Cenario *cenario) {
     printf("\nCenario:\n\tDimensions: %f %f %f", cenario->dimension.x, cenario->dimension.y, cenario->dimension.z);
     printf("\n\tEnemies: %p\n", (void *)cenario->enemies);
 }
 
-void printQueue(Queue *queue) {
-    Node *node = queue->head->next;
+void printEnemyQueue(EnemyQueue *queue) {
+    EnemyNode *node = queue->head->next;
     
     printf("\nQueue:\n\tHead: %p %p %p", (void *)queue->head, (void *)queue->head->enemy, queue->head->next);
     printf("\n\tlastNode: %p", (void *)queue->lastNode);
@@ -49,10 +50,16 @@ void printShot(Shot *shot) {
     printVelocity(shot->shotVelocity);
 }
 
+Key readKey() {
+    Key keyPressed;
+    scanf("%d", &keyPressed);
+    return keyPressed;
+}
+
 int main(int argc, const char * argv[]) {
     Cenario *cenario = createCenario(defaultCenarioDim);
     printCenario(cenario);
-    printQueue(cenario->enemies);
+    printEnemyQueue(cenario->enemies);
     
     Position shipInitialPosition = {
         cenario->dimension.x / 2,
@@ -61,21 +68,22 @@ int main(int argc, const char * argv[]) {
     };
 
     printPosition(shipInitialPosition);
-    printQueue(cenario->enemies);
+    printEnemyQueue(cenario->enemies);
     
     Ship *ship = createShip(shipInitialPosition);
     printShip(ship);
     
     Key keyPressed = -1; /* Representa a tecla apertada */
     Position mousePosition;
-    Shot *shipShot = NULL;
-    int i;
+    ShotQueue *shipShotsQueue = createShotQueue();
 
+    int i;
     for (i = 0; ; i = (i + 1) % MAX_LOOP) {
         if (i % 20 == 0) {
+            keyPressed = readKey();
             if (keyPressed == CLICK) {
                 scanf("%f %f %f", &mousePosition.x, &mousePosition.y, &mousePosition.z);
-                shipShot = shootFromShip(mousePosition, ship->position, 20);
+                enqueueShot(shootFromShip(mousePosition, ship->position, 20), shipShotsQueue);
             }
             else
                 updateVelocity(ship, keyPressed);
@@ -83,15 +91,23 @@ int main(int argc, const char * argv[]) {
             updateShipPosition(ship);
             insideKeeper(ship, cenario->dimension);
             
-            if (shipShot != NULL) {
-                updateShot(shipShot);
-                if (verifyShotColision(shipShot, cenario) == TRUE) {
-                    freeShot(shipShot);
-                    shipShot = NULL;
+            /* Achei isso feio */
+            if (!isShotQueueEmpty(shipShotsQueue)) {
+                ShotNode *stNode = shipShotsQueue->head->next;
+                while (stNode != shipShotsQueue->head) {
+                    updateShot(stNode->shot);
+                    if (verifyShotColision(stNode->shot, cenario) == TRUE) {
+                        ShotNode *aux = stNode->next;
+                        removeShotNode(stNode, shipShotsQueue);
+                        stNode = aux;
+                    }
+                    else
+                        stNode = stNode->next;
                 }
             }
+
             if (verifyShipColision(ship, cenario) == TRUE) {
-                killEnemy(dequeue(cenario->enemies));
+                killEnemy(dequeueEnemy(cenario->enemies));
                 gotDamagedShip(ship, 50);
             }
             refreshCenario(cenario, ship->position);
@@ -100,11 +116,15 @@ int main(int argc, const char * argv[]) {
                 return 0;
             }
             
-            if (shipShot != NULL)
-                printShot(shipShot);
-            
+            if (!isShotQueueEmpty(shipShotsQueue)) {
+                Shot *st;
+                printf("\nShipShots:\n");
+                int a = 0;
+                foreach(st, shipShotsQueue)
+                   printf("\t%p\n", st);
+            }
+                        
             printShip(ship);
-            scanf("%d", &keyPressed);
         }     
     }  
     return 0;

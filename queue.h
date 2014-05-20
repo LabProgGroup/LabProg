@@ -5,24 +5,25 @@
 #include "utils.h"
 #include "enemy.h"
 
-typedef struct node Node;
-struct node{
+typedef struct enemynode EnemyNode;
+struct enemynode{
     Enemy *enemy;
-    Node *next;
+    EnemyNode *next;
 };
 
 typedef struct {
     Enemy *first;
     Enemy *last;
     
-    Node *head;
-    Node *lastNode;
-} Queue;
+    EnemyNode *head;
+    EnemyNode *lastNode;
+} EnemyQueue;
 
-Queue* createQueue();
-void removeNode(Node *node, Queue *queue);
+EnemyQueue* createEnemyQueue();
+void removeEnemyNode(EnemyNode *node, EnemyQueue *queue);
 
-void enqueue(Enemy *enemy, Queue *queue);
-Enemy* dequeue(Queue *queue);
+void enqueueEnemy(Enemy *enemy, EnemyQueue *queue);
+Enemy* dequeueEnemy(EnemyQueue *queue);
+BOOL isEnemyQueueEmpty(EnemyQueue *queue);
 
 #endif
