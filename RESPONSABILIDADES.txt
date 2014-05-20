@@ -1,0 +1,11 @@
+Estrela:
+	Fazer Velocidade dos tiros
+	Verificar colisão
+
+Nikas:
+	Calcular gravidade
+
+Sesso:
+	Organizar codigo
+		nomes de variáveis
+	Fazer relatório
