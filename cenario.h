@@ -1,7 +1,7 @@
 #ifndef _CENARIO_H_
 #define _CENARIO_H_
 
-#include "queue.h"
+#include "enemyQueue.h"
 #include "utils.h"
 #include "ship.h"
 

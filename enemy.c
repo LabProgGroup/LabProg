@@ -24,7 +24,7 @@ Shot* shootFromEnemy(Position enemyP, Position shipP, int power) {
     Velocity shotV;
     shotV.x = shipP.x - enemyP.x;
     shotV.y = shipP.y - enemyP.y;
-    shotV.z = -1 * sqrt(SHOOT_NORM * SHOOT_NORM - shotV.x * shotV.x - shotV.y * shotV.y); 
+    shotV.z = -1 * sqrt(SHOT_VELOCITY * SHOT_VELOCITY - shotV.x * shotV.x - shotV.y * shotV.y); 
     newShot = createShot(shotP, shotV, power);
     return newShot;
 }

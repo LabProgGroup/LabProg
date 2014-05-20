@@ -9,7 +9,7 @@
 #define BUFFER_SIZE 1000
 #define MAX_DISTANCE_BETWEEN_ENEMIES 20
 #define SHOOTABLE_DISTANCE 20 
-#define SHOOT_NORM 60
+#define SHOT_VELOCITY 60
 #define MAX_SHIP_SHOTS 50
 
 struct coordinates {

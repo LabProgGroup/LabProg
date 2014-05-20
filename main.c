@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "cenario.h"
-#include "queue.h"
+#include "enemyQueue.h"
 #include "enemy.h"
 #include "utils.h"
 #include "ship.h"

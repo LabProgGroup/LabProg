@@ -1,5 +1,6 @@
 #include "cenario.h"
 #include "enemy.h"
+#include "enemyQueue.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

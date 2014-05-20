@@ -87,7 +87,7 @@ Shot* shootFromShip(Position aimP, Position shipP, int power) {
     Velocity shotV;
     shotV.x = aimP.x - shipP.x;
     shotV.y = aimP.y - shipP.y;
-    shotV.z = sqrt(SHOOT_NORM * SHOOT_NORM - shotV.x * shotV.x - shotV.y * shotV.y); 
+    shotV.z = sqrt(SHOT_VELOCITY * SHOT_VELOCITY - shotV.x * shotV.x - shotV.y * shotV.y); 
     newShot = createShot(shotP, shotV, power);
     return newShot;
 }
