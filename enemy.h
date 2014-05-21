@@ -12,6 +12,8 @@ typedef struct {
     Dimension dimension;
 } Enemy;
 
+#define ENEMY_SHOT_VELOCITY 60
+
 Enemy* createEnemy(Position myPosition, Dimension myDimension, int precision);
 void killEnemy(Enemy* en);
 

@@ -18,6 +18,7 @@ struct ship {
 #define VELOCITY_FACTOR 10
 #define MAX_XY_ORIENTATION 15
 #define MAX_VELOCITY 100
+#define SHIP_SHOT_VELOCITY 60
 
 Ship* createShip(Position position);
 void killShip(Ship* sh);

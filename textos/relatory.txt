@@ -46,5 +46,4 @@ Os eixos:
      -Arquivo utils.h contém agora a declaração das variáveis globais:
       clockTick, largura e altura da janela. 
      -Decisão de dar ao tiro velocidade (x, y, z) constante, sem aceleração.
-     -
      
