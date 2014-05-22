@@ -10,7 +10,7 @@
 #define MAX_DISTANCE_BETWEEN_ENEMIES 20
 #define SHOOTABLE_DISTANCE 20 
 #define MAX_SHIP_SHOTS 50
-
+#define GRAVITY 9.80665
 struct coordinates {
     float x; 
     float y;
@@ -32,4 +32,5 @@ extern Dimension defaultEnemyDim;
 Position spaceTimeEquation(Position initialPosition, Velocity v);
 float distance(Position a, Position b);
 
+Velocity speedTimeEquation(Velocity initialVelocity);
 #endif

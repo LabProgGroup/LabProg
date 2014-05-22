@@ -17,8 +17,8 @@ void freeShot(Shot* sh) {
 
 void updateShot(Shot* sh) {
     sh->shotPosition = spaceTimeEquation(sh->shotPosition, sh->shotVelocity);
+    sh->shotVelocity = speedTimeEquation(sh->shotVelocity);
     computeShotNorm(sh);
-    
 }
 
 float computeShotNorm(Shot* sh) {

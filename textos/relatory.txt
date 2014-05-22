@@ -52,3 +52,7 @@ Os eixos:
 - Estrela:
 -> criei uma função besta pra verificar colisões
 -> O SHOT_NORM que estava definido foi extinto e agora existem SHIP_SHOT_NORM e ENEMY_SHOT_NORM     
+
+22/05
+-Nikolai:
+-Adicionei gravidade aos shots. 
