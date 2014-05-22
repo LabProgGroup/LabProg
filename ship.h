@@ -20,6 +20,8 @@ struct ship {
 #define MAX_VELOCITY 100
 #define SHIP_SHOT_VELOCITY 60
 
+extern float traveledDistance;
+
 Ship* createShip(Position position);
 void killShip(Ship* sh);
 void updateVelocity(Ship *sh, Key key);

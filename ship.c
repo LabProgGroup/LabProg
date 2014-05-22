@@ -4,6 +4,8 @@
 
 #include "ship.h"
 
+float traveledDistance = 0;
+
 Ship* createShip(Position position) {
     Ship* newship = malloc(sizeof (Ship));
     newship->life = 100;
@@ -60,6 +62,10 @@ void updateVelocity(Ship *sh, Key key) {
 
 void updateShipPosition(Ship* sh) {
     sh->position = spaceTimeEquation(sh->position, sh->velocity);
+}
+
+void updateScore(Ship* sh) {
+    traveledDistance = sh->position.z;
 }
 
 void insideKeeper(Ship *sh, Dimension dimension) {

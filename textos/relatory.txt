@@ -46,4 +46,9 @@ Os eixos:
      -Arquivo utils.h contém agora a declaração das variáveis globais:
       clockTick, largura e altura da janela. 
      -Decisão de dar ao tiro velocidade (x, y, z) constante, sem aceleração.
-     
+
+
+21/05 
+- Estrela:
+-> criei uma função besta pra verificar colisões
+-> O SHOT_NORM que estava definido foi extinto e agora existem SHIP_SHOT_NORM e ENEMY_SHOT_NORM     

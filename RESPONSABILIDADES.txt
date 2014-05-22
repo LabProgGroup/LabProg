@@ -1,6 +1,7 @@
 Estrela:
 	Fazer Velocidade dos tiros
 	Verificar colisão
+	Pontuação
 
 Nikas:
 	Calcular gravidade
