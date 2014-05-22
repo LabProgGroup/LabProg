@@ -38,10 +38,15 @@ void printEnemy(Enemy *enemy) {
     printPosition(enemy->position);
 }
 
+void printScore(Ship *ship) {
+    printf("\nScore: %.2f\n", traveledDistance);
+}
+
 void printShip(Ship *ship) {
     printf("\nShip:\n\tLife: %d", ship->life);
     printPosition(ship->position);
     printVelocity(ship->velocity);
+    printScore(ship);
 }
 
 void printShot(Shot *shot) {
@@ -89,6 +94,7 @@ int main(int argc, const char * argv[]) {
                 updateVelocity(ship, keyPressed);
 
             updateShipPosition(ship);
+            updateScore(ship);
             insideKeeper(ship, cenario->dimension);
             
             /* Achei isso feio */
