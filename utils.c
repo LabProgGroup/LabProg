@@ -1,7 +1,6 @@
 #include "utils.h"
 
 float clockTick = (float) 1/20;
-/* ? */float shotNorm;
 
 Dimension defaultCenarioDim = {20, 20, 2000};
 Dimension defaultEnemyDim = {4, 8, 4};

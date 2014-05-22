@@ -25,7 +25,6 @@ typedef enum {FALSE, TRUE} BOOL;
 typedef enum key {UP, DOWN, RIGHT, LEFT, SPACE, CLICK} Key; 
 
 extern float clockTick;
-extern float shotNorm;
 extern Dimension defaultCenarioDim;
 extern Dimension defaultEnemyDim;
 

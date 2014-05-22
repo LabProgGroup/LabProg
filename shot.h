@@ -4,15 +4,13 @@
 #include "utils.h"
 
 typedef struct {
-    Position shotPosition;
-    Velocity shotVelocity;
+    Position position;
+    Velocity velocity;
     int damage;
 } Shot;
 
 Shot* createShot(Position shotP, Velocity shotV, int damage);
 void freeShot(Shot* sh);
 void updateShot(Shot* sh);
-
-float computeShotNorm(Shot* sh);
 
 #endif

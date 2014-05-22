@@ -69,14 +69,14 @@ BOOL verifyShipColision(Ship *ship, Cenario *cenario) {
 }
 
 BOOL verifyShotColision(Shot *shot, Cenario *cenario) {
-    if (isInsideCenario(shot->shotPosition, cenario))
+    if (isInsideCenario(shot->position, cenario))
         return TRUE;
     
     else {
         EnemyNode *node = cenario->enemies->head->next;
         while (node != cenario->enemies->head) {
-            if (shot->shotPosition.x == node->enemy->position.x)
-                if (shot->shotPosition.z >= node->enemy->position.z) {
+            if (shot->position.x == node->enemy->position.x)
+                if (shot->position.z >= node->enemy->position.z) {
                     gotShotEnemy(node->enemy, 20);
                     if (node->enemy->life <= 0)
                         removeEnemyNode(node, cenario->enemies);

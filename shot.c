@@ -4,8 +4,8 @@
 
 Shot* createShot(Position shotP, Velocity shotV, int damage) {
     Shot *sh = (Shot*) malloc(sizeof (Shot));
-    sh->shotPosition = shotP;
-    sh->shotVelocity = shotV;
+    sh->position = shotP;
+    sh->velocity = shotV;
     sh->damage = damage;
     return sh;
 }
@@ -16,15 +16,10 @@ void freeShot(Shot* sh) {
 }
 
 void updateShot(Shot* sh) {
-    sh->shotPosition = spaceTimeEquation(sh->shotPosition, sh->shotVelocity);
-    sh->shotVelocity = speedTimeEquation(sh->shotVelocity);
-    computeShotNorm(sh);
+    sh->position = spaceTimeEquation(sh->position, sh->velocity);
+    sh->velocity = speedTimeEquation(sh->velocity);
 }
 
-float computeShotNorm(Shot* sh) {
-    shotNorm = sqrt(sh->shotVelocity.x*sh->shotVelocity.x + sh->shotVelocity.y*sh->shotVelocity.y + sh->shotVelocity.z*sh->shotVelocity.z);
-    return shotNorm;
-}
 
 
 

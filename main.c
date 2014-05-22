@@ -51,8 +51,8 @@ void printShip(Ship *ship) {
 
 void printShot(Shot *shot) {
     printf("\nShot:\n\tdamage: %d", shot->damage);
-    printPosition(shot->shotPosition);
-    printVelocity(shot->shotVelocity);
+    printPosition(shot->position);
+    printVelocity(shot->velocity);
 }
 
 Key readKey() {
