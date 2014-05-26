@@ -5,7 +5,7 @@
 #include "utils.h"
 #include "shot.h"
 
-#define foreach(item, list) \
+#define foreachshot(item, list) \
     ShotNode *nd; \
     for (nd = list->head->next, item = nd->shot; nd != list->head; nd = nd->next, item = nd->shot)
 

@@ -4,6 +4,9 @@
 #include "utils.h"
 #include "shot.h"
 
+#define ENEMY_SHOT_VELOCITY 60
+#define SHOOTABLE_DISTANCE 20 
+
 typedef struct {
     int life;         
     Position position;
@@ -11,8 +14,6 @@ typedef struct {
 
     Dimension dimension;
 } Enemy;
-
-#define ENEMY_SHOT_VELOCITY 60
 
 Enemy* createEnemy(Position myPosition, Dimension myDimension, int precision);
 void killEnemy(Enemy* en);

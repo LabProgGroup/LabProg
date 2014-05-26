@@ -10,7 +10,7 @@ main.o: main.c utils.h cenario.h enemyQueue.h enemy.h ship.h  shot.h
 	$(CC) -c main.c
 
 utils.o: utils.h utils.c
-	$(CC) -lm -c utils.c
+	$(CC) -c utils.c
 
 cenario.o: cenario.h cenario.c enemyQueue.h utils.h ship.h enemy.h 
 	$(CC) -c cenario.c
@@ -22,10 +22,10 @@ shotQueue.o: shotQueue.h shotQueue.c utils.h shot.h
 	$(CC) -c shotQueue.c
 
 enemy.o: enemy.h enemy.c utils.h shot.h
-	$(CC) -lm -c enemy.c
+	$(CC) -c enemy.c
 
 ship.o: ship.h ship.c utils.h shot.h 
-	$(CC) -lm -c ship.c
+	$(CC) -c ship.c
 
 shot.o: shot.h shot.c utils.h
 	$(CC) -c shot.c

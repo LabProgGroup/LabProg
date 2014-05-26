@@ -71,9 +71,7 @@ int main(int argc, const char * argv[]) {
         cenario->dimension.y / 2,
         0
     };
-
     printPosition(shipInitialPosition);
-    printEnemyQueue(cenario->enemies);
     
     Ship *ship = createShip(shipInitialPosition);
     printShip(ship);
@@ -110,25 +108,25 @@ int main(int argc, const char * argv[]) {
                     else
                         stNode = stNode->next;
                 }
+
+                printf("\nShipShots:\n");
+                Shot *st;
+                foreachshot(st, shipShotsQueue)
+                   printf("\t%p\n", st);
             }
 
-            if (verifyShipColision(ship, cenario) == TRUE) {
+            if (verifyShipColision(ship, cenario)) {
                 killEnemy(dequeueEnemy(cenario->enemies));
-                gotDamagedShip(ship, 50);
+                gotDamagedShip(ship, DAMAGE_BY_HITTING_ENEMY);
             }
+
             refreshCenario(cenario, ship->position);
+
             if (ship->life <= 0) {
                 printf("\nGAME OVER\n");
                 return 0;
             }
-            
-            if (!isShotQueueEmpty(shipShotsQueue)) {
-                Shot *st;
-                printf("\nShipShots:\n");
-                int a = 0;
-                foreach(st, shipShotsQueue)
-                   printf("\t%p\n", st);
-            }
+
                         
             printShip(ship);
         }     
