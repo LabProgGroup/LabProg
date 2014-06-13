@@ -4,6 +4,9 @@ RM = rm
 LDFLAGS= -lglut -lGLU -lGL -lm
 #-------------------------------------------------
 
+all: riverraid
+	./riverraid
+
 riverraid:  main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o  shot.o shotQueue.o
 	$(CC) -lm main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o shot.o shotQueue.o -o riverraid $(LDFLAGS) -lm
 
