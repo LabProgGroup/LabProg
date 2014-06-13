@@ -36,3 +36,8 @@ BOOL colisionTest(Position pa, Velocity va, float ra, Position pb, Velocity vb, 
 	else
 		return FALSE;
 }
+
+Position createPosition(double x, double  y, double z) {
+   Position p = {x, y, z};
+   return p;
+}

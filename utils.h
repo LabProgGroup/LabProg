@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <GL/glut.h>
 
 #define MAX_LOOP 100
 #define BUFFER_SIZE 1000
@@ -32,5 +33,5 @@ extern Dimension defaultEnemyDim;
 Position spaceTimeEquation(Position initialPosition, Velocity v);
 float distance(Position a, Position b);
 Velocity speedTimeEquation(Velocity initialVelocity);
-
+Position createPosition(double x, double  y, double z);
 #endif

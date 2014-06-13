@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> 
 #include <math.h>
-
+#include "utils.h"
 #include "ship.h"
 
 float traveledDistance = 0;
@@ -105,3 +105,13 @@ void gotDamagedShip(Ship* sh, int damage) {
 BOOL isShipAlive(Ship* sh) {
     return sh->life > 0;
 }
+
+void renderShip(Ship* sh) {
+    glPushMatrix();
+    glTranslatef(sh->position.x, sh->position.y, 0);
+    //glRotated(2, 0, 1, 0);
+    glColor3f(0.2, 0.56, 0.);
+    glutSolidCube(0.2); 
+    
+    glPopMatrix();
+}  
