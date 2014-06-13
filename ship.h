@@ -32,5 +32,5 @@ Shot* shootFromShip(Position aimP, Position shipP, int power);
 void gotDamagedShip(Ship* sh, int damage);
 BOOL isShipAlive(Ship* sh);
 void updateScore(Ship* sh);
-
+void renderShip(Ship* sh);
 #endif

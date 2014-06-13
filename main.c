@@ -6,6 +6,25 @@
 #include "ship.h"
 #include "shotQueue.h"
 
+Ship *sh;
+
+void display (void) {  
+   glClearColor(1.0f, 0.0f, 0.0f, 1.0f); // Clear the background of our window to red  
+   glClear(GL_COLOR_BUFFER_BIT); //Clear the colour buffer (more buffers later on)  
+   glLoadIdentity(); // Load the Identity Matrix to reset our drawing locations  
+   renderShip(sh);
+   glutSwapBuffers(); // Flush the OpenGL buffers to the window  
+} 
+
+void reshape (int width, int height) {  
+glViewport(0, 0, (GLsizei)width, (GLsizei)height); // Set our viewport to the size of our window  
+glMatrixMode(GL_PROJECTION); // Switch to the projection matrix so that we can manipulate how our scene is viewed  
+glLoadIdentity(); // Reset the projection matrix to the identity matrix so that we don't get any artifacts (cleaning up)  
+gluPerspective(60, (GLfloat)width / (GLfloat)height, 1.0, 100.0); // Set the Field of view angle (in degrees), the aspect ratio of our window, and the new and far planes  
+glMatrixMode(GL_MODELVIEW); // Switch back to the model view matrix, so that we can start drawing shapes correctly  
+  
+}  
+
 void printCenario(Cenario *cenario) {
     printf("\nCenario:\n\tDimensions: %f %f %f", cenario->dimension.x, cenario->dimension.y, cenario->dimension.z);
     printf("\n\tEnemies: %p\n", (void *)cenario->enemies);
@@ -61,76 +80,28 @@ Key readKey() {
     return keyPressed;
 }
 
-int main(int argc, const char * argv[]) {
-    Cenario *cenario = createCenario(defaultCenarioDim);
-    printCenario(cenario);
-    printEnemyQueue(cenario->enemies);
+int main(int argc, char * argv[]) {
+    /* parte OpenGL */
+    glutInit(&argc, argv);
     
-    Position shipInitialPosition = {
-        cenario->dimension.x / 2,
-        cenario->dimension.y / 2,
-        0
-    };
-    printPosition(shipInitialPosition);
+    glutInitDisplayMode(GLUT_DOUBLE |GLUT_RGBA | GLUT_DEPTH);
+    glutReshapeFunc(reshape);
+    glutInitWindowSize(1200, 768);
+    glViewport(0,0,1200, 760);
     
-    Ship *ship = createShip(shipInitialPosition);
-    printShip(ship);
+    glutCreateWindow("EP-River Raid");
+  
     
-    Key keyPressed = -1; /* Representa a tecla apertada */
-    Position mousePosition;
-    ShotQueue *shipShotsQueue = createShotQueue();
-
-    int i;
-    for (i = 0; ; i = (i + 1) % MAX_LOOP) {
-        if (i % 20 == 0) {
-            keyPressed = readKey();
-            if (keyPressed == CLICK) {
-                scanf("%f %f %f", &mousePosition.x, &mousePosition.y, &mousePosition.z);
-                enqueueShot(shootFromShip(mousePosition, ship->position, 20), shipShotsQueue);
-            }
-            else
-                updateVelocity(ship, keyPressed);
-
-            updateShipPosition(ship);
-            updateScore(ship);
-            insideKeeper(ship, cenario->dimension);
-            
-            /* Achei isso feio */
-            if (!isShotQueueEmpty(shipShotsQueue)) {
-                ShotNode *stNode = shipShotsQueue->head->next;
-                while (stNode != shipShotsQueue->head) {
-                    updateShot(stNode->shot);
-                    if (verifyShotColision(stNode->shot, cenario) == TRUE) {
-                        ShotNode *aux = stNode->next;
-                        removeShotNode(stNode, shipShotsQueue);
-                        stNode = aux;
-                    }
-                    else
-                        stNode = stNode->next;
-                }
-
-                printf("\nShipShots:\n");
-                Shot *st;
-                foreachshot(st, shipShotsQueue)
-                   printf("\t%p\n", st);
-            }
-
-            if (verifyShipColision(ship, cenario)) {
-                killEnemy(dequeueEnemy(cenario->enemies));
-                gotDamagedShip(ship, DAMAGE_BY_HITTING_ENEMY);
-            }
-
-            refreshCenario(cenario, ship->position);
-
-            if (ship->life <= 0) {
-                printf("\nGAME OVER\n");
-                return 0;
-            }
-
-                        
-            printShip(ship);
-        }     
-    }  
+    sh = createShip(createPosition(0., .4, 10.));
+    /*if (sh->position == NULL) {
+      printf("blal");
+      return 0;
+    }*/
+    glClearColor(1,1,1,1);
+    glutDisplayFunc(display); 
+    glutMainLoop();
+    
+    
     return 0;
 }
 

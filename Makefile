@@ -1,10 +1,11 @@
 CFLAGS= -g -Wall -O2 -ansi -pedantic -Wno-unused-result
 CC = gcc -g
 RM = rm
+LDFLAGS= -lglut -lGLU -lGL -lm
 #-------------------------------------------------
 
 riverraid:  main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o  shot.o shotQueue.o
-	$(CC) -lm main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o shot.o shotQueue.o -o riverraid -lm
+	$(CC) -lm main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o shot.o shotQueue.o -o riverraid $(LDFLAGS) -lm
 
 main.o: main.c utils.h cenario.h enemyQueue.h enemy.h ship.h  shot.h
 	$(CC) -c main.c
@@ -24,7 +25,7 @@ shotQueue.o: shotQueue.h shotQueue.c utils.h shot.h
 enemy.o: enemy.h enemy.c utils.h shot.h
 	$(CC) -c enemy.c
 
-ship.o: ship.h ship.c utils.h shot.h 
+ship.o: ship.h ship.c utils.c utils.h shot.h 
 	$(CC) -c ship.c
 
 shot.o: shot.h shot.c utils.h
