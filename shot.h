@@ -12,5 +12,5 @@ typedef struct {
 Shot* createShot(Position shotP, Velocity shotV, int damage);
 void freeShot(Shot* sh);
 void updateShot(Shot* sh);
-
+void renderShot(Shot* sh);
 #endif

@@ -7,12 +7,27 @@
 #include "shotQueue.h"
 
 Ship *sh;
-
+Shot *shot;
+ShotQueue *shipShotsQueue;
+ShotQueue *enemyShotsQueue;
+Velocity shotV = {0.7, 0.7, 50.};
 void display (void) {  
-   glClearColor(1.0f, 0.0f, 0.0f, 1.0f); // Clear the background of our window to red  
-   glClear(GL_COLOR_BUFFER_BIT); //Clear the colour buffer (more buffers later on)  
-   glLoadIdentity(); // Load the Identity Matrix to reset our drawing locations  
-   renderShip(sh);
+    glClearColor(1.0f, 0.0f, 0.0f, 1.0f); // Clear the background of our window to red  
+    glClear(GL_COLOR_BUFFER_BIT); //Clear the colour buffer (more buffers later on)  
+    glLoadIdentity(); // Load the Identity Matrix to reset our drawing locations  
+   
+   /*Rendera o ship */
+    renderShip(sh);
+   /*Rendera os tiros*/
+    if (!isShotQueueEmpty(shipShotsQueue)) {
+        ShotNode *stNode = shipShotsQueue->head->next;
+        while (stNode != shipShotsQueue->head) {
+            updateShot(stNode->shot);
+            renderShot(stNode->shot);
+            stNode = stNode->next;
+        }
+    } 
+   
    glutSwapBuffers(); // Flush the OpenGL buffers to the window  
 } 
 
@@ -74,14 +89,22 @@ void printShot(Shot *shot) {
     printVelocity(shot->velocity);
 }
 
-Key readKey() {
-    Key keyPressed;
-    scanf("%d", &keyPressed);
-    return keyPressed;
+void readKey() {
+    unsigned char keyPressed;
+    scanf("%c", &keyPressed);
+    switch(keyPressed) {
+    case(' '):
+        shot = createShot(createPosition(sh->position.x, sh->position.y, sh->position.z), shotV, 10);
+        enqueueShot(shot, shipShotsQueue);
+    break;
+    
+    }
 }
 
 int main(int argc, char * argv[]) {
     /* parte OpenGL */
+    shipShotsQueue = createShotQueue();
+    enemyShotsQueue = createShotQueue();
     glutInit(&argc, argv);
     
     glutInitDisplayMode(GLUT_DOUBLE |GLUT_RGBA | GLUT_DEPTH);
@@ -90,13 +113,9 @@ int main(int argc, char * argv[]) {
     glViewport(0,0,1200, 760);
     
     glutCreateWindow("EP-River Raid");
-  
     
     sh = createShip(createPosition(0., .4, 10.));
-    /*if (sh->position == NULL) {
-      printf("blal");
-      return 0;
-    }*/
+     
     glClearColor(1,1,1,1);
     glutDisplayFunc(display); 
     glutMainLoop();
