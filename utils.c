@@ -8,7 +8,7 @@ Dimension defaultEnemyDim = {4, 8, 4};
 Position spaceTimeEquation(Position initialPosition, Velocity v) {
     Position newPosition = {
         initialPosition.x + v.x * clockTick,
-        initialPosition.y + v.y * clockTick + (GRAVITY * clockTick * clockTick) / 2,
+        initialPosition.y + v.y * clockTick - (GRAVITY * clockTick * clockTick) / 2,
         initialPosition.z + v.z * clockTick,
     };
     
@@ -18,7 +18,7 @@ Position spaceTimeEquation(Position initialPosition, Velocity v) {
 Velocity speedTimeEquation(Velocity initialVelocity) { 
     Velocity newVelocity = {
         initialVelocity.x,
-        initialVelocity.y + GRAVITY * clockTick, 
+        initialVelocity.y - GRAVITY * clockTick, 
         initialVelocity.z, 
     };
     
