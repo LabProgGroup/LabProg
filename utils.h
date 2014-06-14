@@ -10,7 +10,7 @@
 #define BUFFER_SIZE 1000
 #define MAX_DISTANCE_BETWEEN_ENEMIES 20
 #define MAX_SHIP_SHOTS 50
-#define GRAVITY 9.80665
+#define GRAVITY 0.980665
 #define DAMAGE_BY_HITTING_ENEMY 50
 
 struct coordinates {
