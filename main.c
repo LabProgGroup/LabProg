@@ -9,8 +9,10 @@
 #define SHOT_DAMAGE 10
 
 Ship *sh;
-ShotQueue* shotQ;
-
+Shot *shot;
+ShotQueue* shipShotQ;
+ShotQueue* enemyShotQ;
+//Velocity shotV = {0.7, 0.7, 50.};
 float eyex = 0, eyey = 1.5, eyez = 3;
 GLfloat lightZeroColor[]  = {0.5, 0.5, 0.5, .5f};
 GLfloat light_position[]  = {20, 30, -5, 1};
@@ -42,7 +44,8 @@ void display (void) {
 
     renderParedes();
 
-    renderShotQ(shotQ);
+    renderShotQ(shipShotQ);
+    renderShotQ(enemyShotQ);
 
 
     glutSwapBuffers(); 
@@ -75,13 +78,14 @@ void mouse(int b, int s, int x, int y)
         shotP.y = sh->position.y;
         shotP.z = 0;
 
+        int yShot = (WIN_HEIGHT - y) / 1.6; /*Talvez essa cte '1.6' mude para outros tamanhos*/
         Velocity shotV;
-        shotP.x = x;
-        shotP.y = y;
-        shotP.z = -50;
-        Shot* shot = createShot(shotP, shotV, SHOT_DAMAGE);
-        enqueueShot(shot, shotQ);
-        printf("terminei!\n");
+        shotV.x = (x != HALF_WIN_WIDTH) ? (x - HALF_WIN_WIDTH) / 10 : 0;
+        shotV.y = (yShot != HALF_WIN_HEIGHT) ? (yShot - HALF_WIN_HEIGHT) / 10 : 0;
+        shotV.z = 50.;
+        shot = createShot(shotP, shotV, SHOT_DAMAGE);
+        enqueueShot(shot, shipShotQ);
+        printf("terminei! x = %d y = %d shtx = %f shty = %f \n", x, yShot, shotV.x, shotV.y);
         return;
     }
     if (b == GLUT_MIDDLE_BUTTON) {
@@ -96,7 +100,7 @@ void mouse(int b, int s, int x, int y)
 
 void move(int x, int y)
 {
-    printf("\nPosicao do mouse: %d %d", x, y);
+    /*printf("\nPosicao do mouse: %d %d", x, y);*/
     glutPostRedisplay();      /* força o redesenho */
 }
 
@@ -137,14 +141,16 @@ void sptecl(int k, int x, int y)
 }
 
 int main(int argc, char * argv[]) {
+    shipShotQ = createShotQueue();
+    enemyShotQ = createShotQueue();
+    
     /* parte OpenGL */
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE |GLUT_RGBA | GLUT_DEPTH);
-    glutInitWindowSize(1200, 768);
+    glutInitWindowSize(WIN_WIDTH, WIN_HEIGHT);
 
     glutCreateWindow("EP-River Raid");
     sh = createShip(createPosition(0, 0, 0));
-    shotQ = createShotQueue();
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_COLOR_MATERIAL);

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "shot.h"
 #include "utils.h"
-
+#include "shotQueue.h"
 Shot* createShot(Position shotP, Velocity shotV, int damage) {
     Shot *sh = (Shot*) malloc(sizeof (Shot));
     sh->position = shotP;
@@ -27,7 +27,6 @@ void renderShot(Shot* sh) {
     glutWireSphere(0.2, 30, 40);
     glPopMatrix();
 }
-
 
 
 

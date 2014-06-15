@@ -6,6 +6,10 @@
 #include <math.h>
 #include <GL/glut.h>
 
+#define WIN_HEIGHT 768
+#define WIN_WIDTH 1200
+#define HALF_WIN_HEIGHT (WIN_HEIGHT / 2) /*Para não ficar fazendo essa conta toda hora. Será necessário?*/
+#define HALF_WIN_WIDTH (WIN_WIDTH / 2)
 #define MAX_LOOP 100
 #define BUFFER_SIZE 1000
 #define MAX_DISTANCE_BETWEEN_ENEMIES 20

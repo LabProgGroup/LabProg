@@ -68,16 +68,13 @@ BOOL isShotQueueEmpty(ShotQueue *shotQueue) {
     return shotQueue->first == NULL;
 }
 
-void renderShotQ(ShotQueue *queue) {
-    int i =0;
-    ShotNode* sn = queue->head->next;
-    Shot* sh = sn->shot;
-    while (sh != NULL) {
-        printf("tentei desenhar! %d\n", i);
-        i++;
-        renderShot(sn->shot);
-        sn = sn->next;
-        sh = sn->shot;
-    }
-
+void renderShotQ(ShotQueue *shotQ) {
+    if (!isShotQueueEmpty(shotQ)) {
+        ShotNode *stNode = shotQ->head->next;
+        while (stNode != shotQ->head) {
+            updateShot(stNode->shot);
+            renderShot(stNode->shot);
+            stNode = stNode->next;
+        }
+    } 
 }
