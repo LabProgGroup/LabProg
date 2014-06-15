@@ -30,5 +30,6 @@ void removeShotNode(ShotNode *node, ShotQueue *queue);
 void enqueueShot(Shot *shot, ShotQueue *queue);
 Shot* dequeueShot(ShotQueue *queue);
 BOOL isShotQueueEmpty(ShotQueue *queue);
+void renderShotQ(ShotQueue *queue);
 
 #endif

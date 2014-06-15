@@ -1,4 +1,5 @@
 #include "shotQueue.h"
+#include "shot.h"
 
 ShotQueue* createShotQueue() {
     ShotQueue *shotQueue = malloc(sizeof(ShotQueue));
@@ -65,4 +66,18 @@ Shot* dequeueShot(ShotQueue *shotQueue) {
 
 BOOL isShotQueueEmpty(ShotQueue *shotQueue) {
     return shotQueue->first == NULL;
+}
+
+void renderShotQ(ShotQueue *queue) {
+    int i =0;
+    ShotNode* sn = queue->head->next;
+    Shot* sh = sn->shot;
+    while (sh != NULL) {
+        printf("tentei desenhar! %d\n", i);
+        i++;
+        renderShot(sn->shot);
+        sn = sn->next;
+        sh = sn->shot;
+    }
+
 }

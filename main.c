@@ -6,6 +6,8 @@
 #include "ship.h"
 #include "shotQueue.h"
 
+#define SHOT_DAMAGE 10
+
 Ship *sh;
 ShotQueue* shotQ;
 
@@ -40,6 +42,8 @@ void display (void) {
 
     renderParedes();
 
+    renderShotQ(shotQ);
+
 
     glutSwapBuffers(); 
 }
@@ -66,7 +70,18 @@ void mouse(int b, int s, int x, int y)
     printf("xis: %d\n", x);
     printf("Y: %d\n", y);
     if (b == GLUT_RIGHT_BUTTON) {
-        printf("Botao direito pressionado!\n");
+        Position shotP;
+        shotP.x = sh->position.x;
+        shotP.y = sh->position.y;
+        shotP.z = 0;
+
+        Velocity shotV;
+        shotP.x = x;
+        shotP.y = y;
+        shotP.z = -50;
+        Shot* shot = createShot(shotP, shotV, SHOT_DAMAGE);
+        enqueueShot(shot, shotQ);
+        printf("terminei!\n");
         return;
     }
     if (b == GLUT_MIDDLE_BUTTON) {
