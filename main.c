@@ -47,6 +47,7 @@ void display (void) {
     renderShotQ(shipShotQ);
     renderShotQ(enemyShotQ);
 
+    //renderEnemyQ();
 
     glutSwapBuffers(); 
 }
@@ -64,6 +65,7 @@ void reshape (int width, int height) {
 
 void timer(int node) {
     updateShipPosition(sh);
+    rmFarShots(sh->position.z, shipShotQ);
     glutTimerFunc(clockTick * 1000, timer ,1);
     glutPostRedisplay();
 }
@@ -72,7 +74,15 @@ void mouse(int b, int s, int x, int y)
 {
     printf("xis: %d\n", x);
     printf("Y: %d\n", y);
-    if (b == GLUT_RIGHT_BUTTON) {
+    if (b == GLUT_RIGHT_BUTTON && (s == GLUT_DOWN)) {
+        printf("Botado direito pressionado!\n");
+        return;
+    }
+    if (b == GLUT_MIDDLE_BUTTON) {
+        printf("Botado do meio pressionado!\n");
+        return;
+    } 
+    if (b == GLUT_LEFT_BUTTON && (s == GLUT_DOWN)) {
         Position shotP;
         shotP.x = sh->position.x;
         shotP.y = sh->position.y;
@@ -85,15 +95,6 @@ void mouse(int b, int s, int x, int y)
         shotV.z = 50.;
         shot = createShot(shotP, shotV, SHOT_DAMAGE);
         enqueueShot(shot, shipShotQ);
-        printf("terminei! x = %d y = %d shtx = %f shty = %f \n", x, yShot, shotV.x, shotV.y);
-        return;
-    }
-    if (b == GLUT_MIDDLE_BUTTON) {
-        printf("Botado do meio pressionado!\n");
-        return;
-    }
-    if (b == GLUT_LEFT_BUTTON) {
-        printf("Botado esquerdo pressionado!\n");
         return;
     }
 }
@@ -101,7 +102,7 @@ void mouse(int b, int s, int x, int y)
 void move(int x, int y)
 {
     /*printf("\nPosicao do mouse: %d %d", x, y);*/
-    glutPostRedisplay();      /* força o redesenho */
+    glutPostRedisplay();
 }
 
 Key readKey() {
@@ -112,14 +113,10 @@ Key readKey() {
 
 void tecl(unsigned char k, int x, int y)
 {
-    switch (k) {
-        case 'w':
-            eyey += 0.1;
-            break;
-        case 's':
-            eyey -= 0.1;
-            break;
-    }
+    if (k == 'w')
+        eyey += 0.1;
+    if (k == 's')
+        eyey -= 0.1;
 }
 
 void sptecl(int k, int x, int y)

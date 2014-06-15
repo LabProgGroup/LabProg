@@ -31,5 +31,6 @@ void enqueueShot(Shot *shot, ShotQueue *queue);
 Shot* dequeueShot(ShotQueue *queue);
 BOOL isShotQueueEmpty(ShotQueue *queue);
 void renderShotQ(ShotQueue *queue);
+void rmFarShots(float shipZ, ShotQueue *shotQ);
 
 #endif

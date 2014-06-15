@@ -42,3 +42,8 @@ void gotShotEnemy(Enemy* en, int damage) {
 BOOL isEnemyAlive(Enemy* en) {
     return en->life > 0;
 }
+
+Position sortEnemyPosition(float shipZ) {
+    Position pos;
+    return pos;
+}
