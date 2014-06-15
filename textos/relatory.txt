@@ -56,3 +56,13 @@ Os eixos:
 22/05
 -Nikolai:
 -Adicionei gravidade aos shots. 
+
+15/06
+-Nikolai e Estrela: 
+-Tiros aparecem na tela.
+-Transformei as dimensões da tela (ex 1200x768) em constantes definidas na utils.h
+-Corrigi provisoriamente a precisão da mira dos tiros transformando a posição (x,y)
+do mouse para a escala usada pelo glut para desenhar o tiro. 
+-Nesse processo precisei usar o valor correspondente à metade das dimensões da tela.
+Para não ficar calculando isso toda hora que um tiro é disparado, defini constantes 
+na util.h.
