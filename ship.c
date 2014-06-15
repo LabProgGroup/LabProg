@@ -108,7 +108,7 @@ BOOL isShipAlive(Ship* sh) {
 
 void renderShip(Ship* sh) {
     glPushMatrix();
-    glTranslatef(sh->position.x, sh->position.y, 0);
+    glTranslatef(sh->position.x, sh->position.y,  0);
     glColor4f(0.2, 0.56, 0., 0.9);
     glutSolidCube(1); 
     glPopMatrix();

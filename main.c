@@ -7,12 +7,14 @@
 #include "shotQueue.h"
 
 Ship *sh;
+ShotQueue* shotQ;
+
 float eyex = 0, eyey = 1.5, eyez = 3;
 GLfloat lightZeroColor[]  = {0.5, 0.5, 0.5, .5f};
 GLfloat light_position[]  = {20, 30, -5, 1};
 
 void display (void) {  
-    glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.99f, 0.5f, 0.99f, 0.5f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
     glEnable(GL_NORMALIZE);
 
@@ -23,6 +25,7 @@ void display (void) {
         0, 0, 0,
         0, 1, 0);
 
+    renderBackground();
                     
     /* as luzes mudam de lugar pois a matriz modelview muda. */
     /* LUZ 0 */
@@ -32,58 +35,13 @@ void display (void) {
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightZeroColor);
 
+
     renderShip(sh);
 
     renderParedes();
 
+
     glutSwapBuffers(); 
-} 
-
-void renderParedes() {
-    glColor4f(0.22, 0.22, 0.3, 0.3);
-    /* Parede direita */
-    GLfloat paredeColor[]  = {0.22, 0.22, 0.22};
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, paredeColor);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,  paredeColor);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,  paredeColor);
-    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 1);
-    
-    glBegin(GL_QUADS);
-    {
-        glNormal3f(-1, 1, 0);
-        glVertex3f(10, 0, 0);
-        glVertex3f(5, -5, 0);
-        glVertex3f(5, -5, -1000);
-        glVertex3f(10, 0, -1000);
-    }
-    glEnd();
-
-    /* Parede esquerda */
-    glBegin(GL_QUADS);
-    {
-        glNormal3f(1, 1, 0);
-        glVertex3f(-10, 0, 0);
-        glVertex3f(-5, -5, 0);
-        glVertex3f(-5, -5, -1000);
-        glVertex3f(-10, 0, -1000);
-    }
-    glEnd();
-
-    /* Rio */
-    GLfloat rioColor[]  = {0.43, 0.73, 0.9};
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, rioColor);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,  rioColor);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,  rioColor);
-    glColor4f(0.43, 0.73, 0.9, 0.9);
-    glBegin(GL_QUADS);
-    {
-        glNormal3f(0, 1, 0);
-        glVertex3f(-5, -5, 0);
-        glVertex3f(5, -5, 0);
-        glVertex3f(5, -5, -1000);
-        glVertex3f(-5, -5, -1000);
-    }
-    glEnd();
 }
 
 void reshape (int width, int height) { 
@@ -96,15 +54,41 @@ void reshape (int width, int height) {
 } 
 
 
+
+void timer(int node) {
+    updateShipPosition(sh);
+    glutTimerFunc(clockTick * 1000, timer ,1);
+    glutPostRedisplay();
+}
+
+void mouse(int b, int s, int x, int y)
+{
+    printf("xis: %d\n", x);
+    printf("Y: %d\n", y);
+    if (b == GLUT_RIGHT_BUTTON) {
+        printf("Botao direito pressionado!\n");
+        return;
+    }
+    if (b == GLUT_MIDDLE_BUTTON) {
+        printf("Botado do meio pressionado!\n");
+        return;
+    }
+    if (b == GLUT_LEFT_BUTTON) {
+        printf("Botado esquerdo pressionado!\n");
+        return;
+    }
+}
+
+void move(int x, int y)
+{
+    printf("\nPosicao do mouse: %d %d", x, y);
+    glutPostRedisplay();      /* força o redesenho */
+}
+
 Key readKey() {
     Key keyPressed;
     scanf("%d", &keyPressed);
     return keyPressed;
-}
-
-void timer(int node) {
-  glutTimerFunc(50, timer ,1);
-  glutPostRedisplay();
 }
 
 void tecl(unsigned char k, int x, int y)
@@ -144,20 +128,24 @@ int main(int argc, char * argv[]) {
     glutInitWindowSize(1200, 768);
 
     glutCreateWindow("EP-River Raid");
-    
     sh = createShip(createPosition(0, 0, 0));
-
+    shotQ = createShotQueue();
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
 
+    if (loadTexture("girl-jpg.ppm") == 0)
+    fputs("Não carregou a textura\n", stderr);
+
     glutReshapeFunc(reshape); 
     glutDisplayFunc(display); 
     glutKeyboardFunc(tecl);
+    glutMouseFunc(mouse);
+    glutPassiveMotionFunc(move);
     glutSpecialFunc(sptecl);
-    glutTimerFunc(50, timer, 1);
+    glutTimerFunc(clockTick * 1000, timer, 1);
 
     glutMainLoop();
 

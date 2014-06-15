@@ -97,4 +97,73 @@ BOOL isInsideCenario(Position position, Cenario *cenario) {
     return FALSE;
 }
 
+void renderParedes() {
+    glColor4f(0.22, 0.22, 0.3, 0.3);
+    /* Parede direita */
+    GLfloat paredeColor[]  = {0.22, 0.22, 0.22};
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, paredeColor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,  paredeColor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,  paredeColor);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 1);
+    
+
+    glBegin(GL_QUADS);
+    {
+        glNormal3f(-1, 1, 0);
+        glVertex3f(10, 0, 0);
+        glVertex3f(5, -5, 0);
+        glVertex3f(5, -5, -1000);
+        glVertex3f(10, 0, -1000);
+    }
+    glEnd();
+
+    /* Parede esquerda */
+    glBegin(GL_QUADS);
+    {
+        glNormal3f(1, 1, 0);
+        glVertex3f(-10, 0, 0);
+        glVertex3f(-5, -5, 0);
+        glVertex3f(-5, -5, -1000);
+        glVertex3f(-10, 0, -1000);
+    }
+    glEnd();
+
+    /* Rio */
+    GLfloat rioColor[]  = {0.43, 0.73, 0.9};
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, rioColor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,  rioColor);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,  rioColor);
+    glColor4f(0.43, 0.73, 0.9, 0.9);
+    glBegin(GL_QUADS);
+    {
+        glNormal3f(0, 1, 0);
+        glVertex3f(-5, -5, 0);
+        glVertex3f(5, -5, 0);
+        glVertex3f(5, -5, -1000);
+        glVertex3f(-5, -5, -1000);
+    }
+    glEnd();
+}
+
+void renderBackground() {
+    glEnable(GL_TEXTURE_2D);
+    GLfloat color[]  = {0.22, 0.22, 0.22};
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, color);
+    glBegin(GL_QUADS);
+    {
+        glTexCoord2f(0, 60);
+        glVertex3f(-3000, -3000, -900);
+
+        glTexCoord2f(60, 60);
+        glVertex3f(3000, -3000, -900);
+
+        glTexCoord2f(60, 0);
+        glVertex3f(3000, 3000, -900);
+
+        glTexCoord2f(0, 0);
+        glVertex3f(-3000, 3000, -900);
+    }
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
 
