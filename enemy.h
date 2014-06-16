@@ -12,10 +12,11 @@ typedef struct {
     Position position;
     int precision;   
 
-    Dimension dimension;
+    float radius;
+    // Dimension dimension;
 } Enemy;
 
-Enemy* createEnemy(Position myPosition, Dimension myDimension, int precision);
+Enemy* createEnemy(Position myPosition, float myRadius, int precision);
 void killEnemy(Enemy* en);
 
 Shot* shootFromEnemy(Position enemyP, Position shipP, int power);

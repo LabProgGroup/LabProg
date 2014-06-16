@@ -43,7 +43,7 @@ static void createNewEnemyInInterval(float min, float max, Cenario *cenario){
     randomPos.y = rand() % (2 * (int)cenario->dimension.y) - cenario->dimension.y;
     randomPos.z = rand() % (int)(max - min) + min;
     
-    enqueueEnemy(createEnemy(randomPos, defaultEnemyDim, precision), cenario->enemies);
+    enqueueEnemy(createEnemy(randomPos, 10, precision), cenario->enemies);
 }
 
 static void initEnemies(Cenario *cenario) {
@@ -60,11 +60,13 @@ static void initEnemies(Cenario *cenario) {
 }
 
 BOOL verifyShipColision(Ship *ship, Cenario *cenario) {
-    Enemy *first = cenario->enemies->first;
-    if (ship->position.x >= first->position.x &&
-        ship->position.x <= first->position.x + first->dimension.x)
-        if (ship->position.z >= first->position.z)
+    EnemyNode *node = cenario->enemies->head->next;
+
+    while (node != cenario->enemies->head) {
+        if (distance(ship->position, node->enemy->position) < ship->radius + node->enemy->radius)
             return TRUE;
+        node = node->next;
+    }
     return FALSE;
 }
 

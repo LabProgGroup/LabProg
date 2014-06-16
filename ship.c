@@ -5,6 +5,7 @@
 #include "ship.h"
 
 float traveledDistance = 0;
+float savedVelocity = 0;
 
 Ship* createShip(Position position) {
     Ship* newship = malloc(sizeof (Ship));
@@ -18,6 +19,7 @@ Ship* createShip(Position position) {
     newship->velocity.y = 0;
     newship->velocity.z = INITIAL_VELOCITY;
     
+    newship->radius = 5.5;
     return newship;
 }
 
@@ -56,9 +58,13 @@ void updateVelocity(Ship *sh, unsigned char key) {
                 return;
             sh->velocity.z += VELOCITY_FACTOR;
             break;
-        default:
-            sh->velocity.x = 0;
-            sh->velocity.y = 0;
+        case 'p':
+            if (sh->velocity.z - VELOCITY_FACTOR < INITIAL_VELOCITY)
+                return;
+            sh->velocity.z -= VELOCITY_FACTOR;
+            break;
+        case 'm':
+            savedVelocity = sh->velocity.z;
             sh->velocity.z = INITIAL_VELOCITY;
             break;
     }
@@ -66,11 +72,24 @@ void updateVelocity(Ship *sh, unsigned char key) {
 
 void clearVelocity(Ship *sh, unsigned char key) {
     switch (key) {
-        case '8': case '5':
-            sh->velocity.y = 0;
+        case '8':
+            if (sh->velocity.y > 0)
+                sh->velocity.y = 0;
             break;
-        case '6': case '4':
-            sh->velocity.x = 0;
+        case '5':
+            if (sh->velocity.y < 0)
+                sh->velocity.y = 0;
+            break;
+        case '6':
+            if (sh->velocity.x > 0)
+                sh->velocity.x = 0;
+            break;
+        case '4':
+            if (sh->velocity.x < 0)
+                sh->velocity.x = 0;
+            break;
+        case 'm':
+            sh->velocity.z = savedVelocity;
             break;
     }
 }

@@ -17,7 +17,8 @@ struct ship {
     Position position;  
     Velocity velocity;
 
-    Dimension dimension;
+    float radius;
+    // Dimension dimension;
 };
 
 extern float traveledDistance;
