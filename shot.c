@@ -22,9 +22,9 @@ void updateShot(Shot* sh) {
 
 void renderShot(Shot* sh) {
     glPushMatrix();
-    glTranslatef(sh->position.x, sh->position.y, -sh->position.z);
-    glColor3f(0.2, 0.56, 0.74);
-    glutWireSphere(0.2, 30, 40);
+    glTranslatef(sh->position.x, sh->position.y, -sh->position.z + shipPosition);
+    glColor3f(0.5, 0.06, 0.04);
+    glutWireSphere(0.3, 30, 40);
     glPopMatrix();
 }
 

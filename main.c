@@ -81,17 +81,11 @@ void mouse(int b, int s, int x, int y)
         return;
     } 
     if (b == GLUT_LEFT_BUTTON && (s == GLUT_DOWN)) {
-        Position shotP;
-        shotP.x = sh->position.x; 
-        shotP.y = sh->position.y;
-        shotP.z = 0;
+        Position aimP = {(((x * cenario->dimension.x) / glutGet(GLUT_WINDOW_WIDTH)) - cenario->dimension.x/2) * (2),
+            (-1) * (((y * cenario->dimension.y + eyey) / glutGet(GLUT_WINDOW_HEIGHT)) - cenario->dimension.y/2 + eyey),
+            0};
 
-        int yShot = (WIN_HEIGHT - y) / 1.6; /*Talvez essa cte '1.6' mude para outros tamanhos*/
-        Velocity shotV;
-        shotV.x = (x != HALF_WIN_WIDTH) ? (x - HALF_WIN_WIDTH) / 10 : 0;
-        shotV.y = (yShot != HALF_WIN_HEIGHT) ? (yShot - HALF_WIN_HEIGHT) / 10 : 0;
-        shotV.z = 50.;
-        shot = createShot(shotP, shotV, SHOT_DAMAGE);
+        Shot* shot = shootFromShip(aimP, sh->position, SHOT_DAMAGE);
         enqueueShot(shot, shipShotQ);
         return;
     }

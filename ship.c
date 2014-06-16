@@ -102,13 +102,13 @@ void insideKeeper(Ship *sh, Dimension dimension) {
     }
 }
 
-Shot* shootFromShip(Position aimP, Position shipP, int power) {
+Shot* shootFromShip(Position aimP, Position shipP,int power) {
     Shot* newShot;
     Position shotP = shipP;
     Velocity shotV;
-    shotV.x = aimP.x - shipP.x;
-    shotV.y = aimP.y - shipP.y;
-    shotV.z = sqrt(SHIP_SHOT_VELOCITY * SHIP_SHOT_VELOCITY - shotV.x * shotV.x - shotV.y * shotV.y); 
+    shotV.x = aimP.x;
+    shotV.y = aimP.y; 
+    shotV.z = 100;
     newShot = createShot(shotP, shotV, power);
     return newShot;
 }
