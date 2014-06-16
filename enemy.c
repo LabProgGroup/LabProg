@@ -4,11 +4,12 @@
 
 #include "enemy.h"
 
-Enemy* createEnemy(Position myPosition, Dimension myDimension, int precision) {
+Enemy* createEnemy(Position myPosition, float myRadius, int precision) {
     Enemy *newEnemy = malloc(sizeof (Enemy));
     newEnemy->life = 100;
     newEnemy->position = myPosition;
-    newEnemy->dimension = myDimension;
+    // newEnemy->dimension = myDimension;
+    newEnemy->radius = myRadius;
     newEnemy->precision = precision;
 
     return newEnemy;
@@ -54,14 +55,8 @@ void renderEnemy(Enemy* enemy) {
 
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
-    glTranslatef(p.x, p.y,  -p.z + shipPosition);
-    glutSolidSphere(10, 20, 20);
+    glTranslatef(p.x, p.y, -p.z + shipPosition);
+    glutSolidSphere(enemy->radius, 20, 20);
     glPopMatrix();
-    /*
-    Dimension d = enemy->dimension;
-    glBegin(GL_QUADS) {
-        glVertex3f(p.x - p.y 
-    } 
-    */   
 }
 

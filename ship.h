@@ -17,7 +17,8 @@ struct ship {
     Position position;  
     Velocity velocity;
 
-    Dimension dimension;
+    float radius;
+    // Dimension dimension;
 };
 
 extern float traveledDistance;
@@ -29,7 +30,7 @@ void clearVelocity(Ship *sh, unsigned char key);
 void updateShipPosition(Ship* sh);
 
 void insideKeeper(Ship *sh, Dimension dimension);
-Shot* shootFromShip(Position aimP, Position shipP, int power);
+Shot* shootFromShip(Ship *sh, Position aimP, int power);
 void gotDamagedShip(Ship* sh, int damage);
 BOOL isShipAlive(Ship* sh);
 void updateScore(Ship* sh);

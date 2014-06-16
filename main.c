@@ -63,6 +63,9 @@ void timer(int node) {
     insideKeeper(sh, cenario->dimension);
     shipPosition = sh->position.z;
     refreshCenario(cenario, sh->position);
+    if (verifyShipColision(sh, cenario))
+        sh->velocity.z = 0;
+
     rmFarShots(sh->position.z, shipShotQ);
     glutTimerFunc(1, timer ,1);
     glutPostRedisplay();
@@ -85,7 +88,7 @@ void mouse(int b, int s, int x, int y)
             (-1) * (((y * cenario->dimension.y + eyey) / glutGet(GLUT_WINDOW_HEIGHT)) - cenario->dimension.y/2 + eyey),
             0};
 
-        Shot* shot = shootFromShip(aimP, sh->position, SHOT_DAMAGE);
+        Shot* shot = shootFromShip(sh, aimP, SHOT_DAMAGE);
         enqueueShot(shot, shipShotQ);
         return;
     }
@@ -156,6 +159,8 @@ int main(int argc, char * argv[]) {
 
     if (loadTexture("girl-jpg.ppm") == 0)
     fputs("Não carregou a textura\n", stderr);
+
+    glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
     glutReshapeFunc(reshape); 
     glutDisplayFunc(display); 
     glutKeyboardFunc(tecl);
