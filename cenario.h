@@ -20,5 +20,6 @@ BOOL verifyShotColision(Shot *shot, Cenario *cenario);
 BOOL isInsideCenario(Position position, Cenario *cenario);
 void renderParedes();
 void renderBackground();
+void renderCenario();
 
 #endif

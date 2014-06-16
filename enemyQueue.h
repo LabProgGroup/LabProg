@@ -26,5 +26,6 @@ void enqueueEnemy(Enemy *enemy, EnemyQueue *queue);
 Enemy* dequeueEnemy(EnemyQueue *queue);
 BOOL isEnemyQueueEmpty(EnemyQueue *queue);
 Position sortEnemyPosition(float shipZ);
+void renderEnemyQ(EnemyQueue *queue);
 
 #endif

@@ -47,3 +47,21 @@ Position sortEnemyPosition(float shipZ) {
     Position pos;
     return pos;
 }
+
+
+void renderEnemy(Enemy* enemy) {
+    Position p = enemy->position;
+
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glTranslatef(p.x, p.y,  -p.z + shipPosition);
+    glutSolidSphere(10, 20, 20);
+    glPopMatrix();
+    /*
+    Dimension d = enemy->dimension;
+    glBegin(GL_QUADS) {
+        glVertex3f(p.x - p.y 
+    } 
+    */   
+}
+

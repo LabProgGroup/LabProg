@@ -25,29 +25,33 @@ void killShip(Ship* sh) {
     free(sh);
 }
 
-void updateVelocity(Ship *sh, Key key) {
+void updateVelocity(Ship *sh, unsigned char key) {
     switch (key) {
-        case UP:
+        case '8':
+            if (sh->velocity.y < 0) sh->velocity.y = 0;
             if (sh->velocity.y + MOVING_FACTOR > MAX_XY_ORIENTATION)
                 return;
             sh->velocity.y += MOVING_FACTOR;
             break;
-        case DOWN:
+        case '5':
+            if (sh->velocity.y > 0) sh->velocity.y = 0;
             if (sh->velocity.y - MOVING_FACTOR < -MAX_XY_ORIENTATION)
                 return;
             sh->velocity.y -= MOVING_FACTOR;
             break;
-        case RIGHT:
+        case '6':
+            if (sh->velocity.x < 0) sh->velocity.x = 0;
             if (sh->velocity.x + MOVING_FACTOR > MAX_XY_ORIENTATION)
                 return;
             sh->velocity.x += MOVING_FACTOR;
             break;
-        case LEFT:
+        case '4':
+            if (sh->velocity.x > 0) sh->velocity.x = 0;
             if (sh->velocity.x - MOVING_FACTOR < -MAX_XY_ORIENTATION)
                 return;
             sh->velocity.x -= MOVING_FACTOR;
             break;
-        case SPACE:
+        case ' ':
             if (sh->velocity.z + VELOCITY_FACTOR > MAX_VELOCITY)
                 return;
             sh->velocity.z += VELOCITY_FACTOR;
@@ -56,6 +60,17 @@ void updateVelocity(Ship *sh, Key key) {
             sh->velocity.x = 0;
             sh->velocity.y = 0;
             sh->velocity.z = INITIAL_VELOCITY;
+            break;
+    }
+}
+
+void clearVelocity(Ship *sh, unsigned char key) {
+    switch (key) {
+        case '8': case '5':
+            sh->velocity.y = 0;
+            break;
+        case '6': case '4':
+            sh->velocity.x = 0;
             break;
     }
 }
@@ -69,20 +84,20 @@ void updateScore(Ship* sh) {
 }
 
 void insideKeeper(Ship *sh, Dimension dimension) {
-    if (sh->position.x < 0) {
-        sh->position.x = 0;
+    if (sh->position.x < -dimension.x / 2) {
+        sh->position.x = -dimension.x / 2;
         sh->velocity.x = 0;
     }
-    else if (sh->position.x > dimension.x) {
-        sh->position.x = dimension.x;
+    else if (sh->position.x > dimension.x / 2) {
+        sh->position.x = dimension.x / 2;
         sh->velocity.x = 0;
     }
-    if (sh->position.y < 0) {
-        sh->position.y = 0;
+    if (sh->position.y < -dimension.y / 2) {
+        sh->position.y = -dimension.y / 2;
         sh->velocity.y = 0;
     }
-    else if (sh->position.y > dimension.y) {
-        sh->position.y = dimension.y;
+    else if (sh->position.y > dimension.y / 2) {
+        sh->position.y = dimension.y / 2;
         sh->velocity.y = 0;
     }
 }
@@ -108,20 +123,20 @@ BOOL isShipAlive(Ship* sh) {
 
 void renderShip(Ship* sh) {
     glPushMatrix();
-    glTranslatef(sh->position.x, sh->position.y,  0);
+    glTranslatef(sh->position.x, sh->position.y, -sh->position.z + shipPosition);
     glColor4f(0.2, 0.56, 0., 0.9);
-    glutSolidCube(1); 
+    glutSolidCube(5); 
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(sh->position.x + 1, sh->position.y, 0);
+    glTranslatef(sh->position.x + 4, sh->position.y, -sh->position.z + shipPosition);
     glColor4f(0.2, 0.56, 1., 0.9);
-    glutSolidCube(0.5); 
+    glutSolidCube(3); 
     glPopMatrix();
 
     glPushMatrix();
-    glTranslatef(sh->position.x - 1, sh->position.y, 0);
+    glTranslatef(sh->position.x - 4, sh->position.y, -sh->position.z + shipPosition);
     glColor4f(1, 0.56, 0., 0.9);
-    glutSolidCube(0.5);    
+    glutSolidCube(3);    
     glPopMatrix();
 }  

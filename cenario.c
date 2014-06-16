@@ -39,8 +39,8 @@ static void createNewEnemyInInterval(float min, float max, Cenario *cenario){
     int precision = rand();
     
     Position randomPos;
-    randomPos.x = rand() % (int)cenario->dimension.x;
-    randomPos.y = 0;
+    randomPos.x = rand() % (2 * (int)cenario->dimension.x) - cenario->dimension.x;
+    randomPos.y = rand() % (2 * (int)cenario->dimension.y) - cenario->dimension.y;
     randomPos.z = rand() % (int)(max - min) + min;
     
     enqueueEnemy(createEnemy(randomPos, defaultEnemyDim, precision), cenario->enemies);
@@ -107,13 +107,14 @@ void renderParedes() {
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 1);
     
 
+    int p1 = 90;
     glBegin(GL_QUADS);
     {
         glNormal3f(-1, 1, 0);
-        glVertex3f(10, 0, 0);
-        glVertex3f(5, -5, 0);
-        glVertex3f(5, -5, -1000);
-        glVertex3f(10, 0, -1000);
+        glVertex3f(p1, 0, 0);
+        glVertex3f(p1 / 2, -p1 / 2, 0);
+        glVertex3f(p1 / 2, -p1 / 2, -5000);
+        glVertex3f(p1, 0, -5000);
     }
     glEnd();
 
@@ -121,10 +122,10 @@ void renderParedes() {
     glBegin(GL_QUADS);
     {
         glNormal3f(1, 1, 0);
-        glVertex3f(-10, 0, 0);
-        glVertex3f(-5, -5, 0);
-        glVertex3f(-5, -5, -1000);
-        glVertex3f(-10, 0, -1000);
+        glVertex3f(-p1, 0, 0);
+        glVertex3f(-p1 / 2, -p1 / 2, 0);
+        glVertex3f(-p1 / 2, -p1 / 2, -5000);
+        glVertex3f(-p1, 0, -5000);
     }
     glEnd();
 
@@ -137,33 +138,37 @@ void renderParedes() {
     glBegin(GL_QUADS);
     {
         glNormal3f(0, 1, 0);
-        glVertex3f(-5, -5, 0);
-        glVertex3f(5, -5, 0);
-        glVertex3f(5, -5, -1000);
-        glVertex3f(-5, -5, -1000);
+        glVertex3f(-p1 / 2, -p1 / 2, 0);
+        glVertex3f(p1 / 2, -p1 / 2, 0);
+        glVertex3f(p1 / 2, -p1 / 2, -5000);
+        glVertex3f(-p1 / 2, -p1 / 2, -5000);
     }
     glEnd();
 }
 
 void renderBackground() {
     glEnable(GL_TEXTURE_2D);
-    GLfloat color[]  = {0.22, 0.22, 0.22};
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, color);
+    glColor4f(1, 1, 1, 1);
     glBegin(GL_QUADS);
     {
-        glTexCoord2f(0, 60);
-        glVertex3f(-3000, -3000, -900);
+        glTexCoord2f(0, 30);
+        glVertex3f(-9000, -9000, -4900);
 
-        glTexCoord2f(60, 60);
-        glVertex3f(3000, -3000, -900);
+        glTexCoord2f(30, 30);
+        glVertex3f(9000, -9000, -4900);
 
-        glTexCoord2f(60, 0);
-        glVertex3f(3000, 3000, -900);
+        glTexCoord2f(30, 0);
+        glVertex3f(9000, 9000, -4900);
 
         glTexCoord2f(0, 0);
-        glVertex3f(-3000, 3000, -900);
+        glVertex3f(-9000, 9000, -4900);
     }
     glEnd();
     glDisable(GL_TEXTURE_2D);
 }
 
+void renderCenario(Cenario* cen) {
+    renderBackground();
+    renderParedes();
+    renderEnemyQ(cen->enemies);
+}

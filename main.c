@@ -12,8 +12,10 @@ Ship *sh;
 Shot *shot;
 ShotQueue* shipShotQ;
 ShotQueue* enemyShotQ;
+Cenario* cenario;
 //Velocity shotV = {0.7, 0.7, 50.};
-float eyex = 0, eyey = 1.5, eyez = 3;
+float eyex = 0, eyey = 8.5, eyez = 20;
+float keyWalk = 1.0;
 GLfloat lightZeroColor[]  = {0.5, 0.5, 0.5, .5f};
 GLfloat light_position[]  = {20, 30, -5, 1};
 
@@ -29,8 +31,6 @@ void display (void) {
         0, 0, 0,
         0, 1, 0);
 
-    renderBackground();
-                    
     /* as luzes mudam de lugar pois a matriz modelview muda. */
     /* LUZ 0 */
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightZeroColor);
@@ -39,15 +39,10 @@ void display (void) {
     glLightfv(GL_LIGHT0, GL_POSITION, light_position);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightZeroColor);
 
-
     renderShip(sh);
-
-    renderParedes();
-
-    renderShotQ(shipShotQ);
     renderShotQ(enemyShotQ);
-
-    //renderEnemyQ();
+    renderCenario(cenario);
+    renderShotQ(shipShotQ);
 
     glutSwapBuffers(); 
 }
@@ -57,7 +52,7 @@ void reshape (int width, int height) {
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(70, (GLfloat)width / (GLfloat)height, 1.0, 1000.0);
+    gluPerspective(70, (GLfloat)width / (GLfloat)height, 1.0, 5000.0);
     glMatrixMode(GL_MODELVIEW);
 } 
 
@@ -65,8 +60,11 @@ void reshape (int width, int height) {
 
 void timer(int node) {
     updateShipPosition(sh);
+    insideKeeper(sh, cenario->dimension);
+    shipPosition = sh->position.z;
+    refreshCenario(cenario, sh->position);
     rmFarShots(sh->position.z, shipShotQ);
-    glutTimerFunc(clockTick * 1000, timer ,1);
+    glutTimerFunc(1, timer ,1);
     glutPostRedisplay();
 }
 
@@ -84,7 +82,7 @@ void mouse(int b, int s, int x, int y)
     } 
     if (b == GLUT_LEFT_BUTTON && (s == GLUT_DOWN)) {
         Position shotP;
-        shotP.x = sh->position.x;
+        shotP.x = sh->position.x; 
         shotP.y = sh->position.y;
         shotP.z = 0;
 
@@ -113,26 +111,31 @@ Key readKey() {
 
 void tecl(unsigned char k, int x, int y)
 {
+    updateVelocity(sh, k);
     if (k == 'w')
-        eyey += 0.1;
+        eyey += keyWalk;
     if (k == 's')
-        eyey -= 0.1;
+        eyey -= keyWalk;
+}
+
+void teclUp(unsigned char k, int x, int y) {
+    clearVelocity(sh, k);
 }
 
 void sptecl(int k, int x, int y)
 {
     switch (k) {
         case GLUT_KEY_UP:
-            eyez += 0.1;
+            eyez += keyWalk;
             break;
         case GLUT_KEY_DOWN:
-            eyez -= 0.1;
+            eyez -= keyWalk;
             break;
         case GLUT_KEY_LEFT:
-            eyex -= 0.1;
+            eyex -= keyWalk;
             break;
         case GLUT_KEY_RIGHT:
-            eyex += 0.1;
+            eyex += keyWalk;
             break;
     }
 }
@@ -140,7 +143,10 @@ void sptecl(int k, int x, int y)
 int main(int argc, char * argv[]) {
     shipShotQ = createShotQueue();
     enemyShotQ = createShotQueue();
-    
+
+    Dimension cenDim = {90, 50, 1000};
+    cenario = createCenario(cenDim);
+
     /* parte OpenGL */
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE |GLUT_RGBA | GLUT_DEPTH);
@@ -156,17 +162,16 @@ int main(int argc, char * argv[]) {
 
     if (loadTexture("girl-jpg.ppm") == 0)
     fputs("Não carregou a textura\n", stderr);
-
     glutReshapeFunc(reshape); 
     glutDisplayFunc(display); 
     glutKeyboardFunc(tecl);
+    glutKeyboardUpFunc(teclUp);
     glutMouseFunc(mouse);
     glutPassiveMotionFunc(move);
     glutSpecialFunc(sptecl);
-    glutTimerFunc(clockTick * 1000, timer, 1);
+    glutTimerFunc(1, timer, 1);
 
     glutMainLoop();
 
     return 0;
-  }
-
+}

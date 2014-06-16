@@ -65,3 +65,12 @@ Enemy* dequeueEnemy(EnemyQueue *queue) {
 BOOL isEnemyQueueEmpty(EnemyQueue *queue) {
     return queue->first == NULL;
 }
+
+void renderEnemyQ(EnemyQueue *queue) {
+    EnemyNode *node = queue->head->next;
+    
+    while (node != queue->head) {
+        renderEnemy(node->enemy);
+        node = node->next;
+    } 
+}

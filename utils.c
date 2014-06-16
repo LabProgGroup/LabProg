@@ -1,9 +1,9 @@
 #include "utils.h"
 
 float clockTick = (float) 1/50;
-
 Dimension defaultCenarioDim = {20, 20, 2000};
 Dimension defaultEnemyDim = {4, 8, 4};
+float shipPosition = 0;
 
 Position spaceTimeEquation(Position initialPosition, Velocity v) {
     Position newPosition = {
