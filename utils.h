@@ -30,7 +30,7 @@ extern float shipPosition;
 Position spaceTimeEquation(Position initialPosition, Velocity v);
 float distance(Position a, Position b);
 Velocity speedTimeEquation(Velocity initialVelocity);
-Position createPosition(double x, double  y, double z);
+Position createPosition(double x, double  y, double z); // need???
 int loadTexture(char *f);
-BOOL colisionTest(Position pa, Velocity va, float ra, Position pb, Velocity vb, float rb);
+// BOOL colisionTest(Position pa, Velocity va, float ra, Position pb, Velocity vb, float rb);
 #endif

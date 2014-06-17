@@ -23,8 +23,11 @@ Shot* shootFromEnemy(Enemy* enemy, Ship* ship, int power) {
     Shot* newShot;
     Position shotP = enemy->position;
     Velocity shotV;
+
+    float gama = distance(ship->position, enemy->position) * GRAVITY / (2 * ENEMY_SHOT_VELOCITY);
+
     shotV.x = ship->position.x - enemy->position.x;
-    shotV.y = ship->position.y - enemy->position.y;
+    shotV.y = ship->position.y - enemy->position.y + gama;
     shotV.z = ship->position.z - enemy->position.z;
 
     float alpha = sqrt((shotV.x * shotV.x + shotV.y * shotV.y + shotV.z * shotV.z) / (ENEMY_SHOT_VELOCITY * ENEMY_SHOT_VELOCITY));
