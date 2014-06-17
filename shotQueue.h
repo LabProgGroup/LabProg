@@ -5,8 +5,8 @@
 #include "utils.h"
 #include "shot.h"
 
-// #define foreachshot(item, list) \
-//     ShotNode *nd; \
+// #define foreachshot(item, list) 
+//     ShotNode *nd; 
 //     for (nd = list->head->next, item = nd->shot; nd != list->head; nd = nd->next, item = nd->shot)
 
 
@@ -30,6 +30,7 @@ void removeShotNode(ShotNode *node, ShotQueue *queue);
 void enqueueShot(Shot *shot, ShotQueue *queue);
 Shot* dequeueShot(ShotQueue *queue);
 BOOL isShotQueueEmpty(ShotQueue *queue);
+void updateShotQueue(ShotQueue *shotQueue);
 void renderShotQ(ShotQueue *queue);
 void rmFarShots(float shipZ, ShotQueue *shotQ);
 

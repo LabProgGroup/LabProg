@@ -35,7 +35,7 @@ void refreshCenario(Cenario *cenario, Position shipPosition) {
     }
 }
 
-static void createNewEnemyInInterval(float min, float max, Cenario *cenario){
+void createNewEnemyInInterval(float min, float max, Cenario *cenario){
     int precision = rand();
     
     Position randomPos;
@@ -46,7 +46,7 @@ static void createNewEnemyInInterval(float min, float max, Cenario *cenario){
     enqueueEnemy(createEnemy(randomPos, 10, precision), cenario->enemies);
 }
 
-static void initEnemies(Cenario *cenario) {
+void initEnemies(Cenario *cenario) {
     Enemy *lastEnemy;
     
     createNewEnemyInInterval(0, MAX_DISTANCE_BETWEEN_ENEMIES, cenario);

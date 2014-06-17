@@ -1,9 +1,9 @@
-CFLAGS=-Wall --ansi -g -Wno-deprecated
-LDFLAGS= -lglut -lGLU -lGL -v
+CFLAGS=-Wall -g -Wno-deprecated
+LDFLAGS= -lglut -lGLU -lGL -v -lm
 
-INCLUDE_PATHS= -I/usr/local/include -I/opt/X11/include
-LIBRARY_PATHS= -L/usr/local/lib -I/opt/X11/lib
-LINKER_FLAGS = -framework OpenGL -lGLUT
+#INCLUDE_PATHS= -I/usr/local/include -I/opt/X11/include
+#LIBRARY_PATHS= -L/usr/local/lib -I/opt/X11/lib
+#LINKER_FLAGS = -framework OpenGL -lGLUT
 
 RM = rm
 CC = gcc -g $(LIBRARY_PATHS) $(CFLAGS)
@@ -13,10 +13,10 @@ all: riverraid
 	./riverraid
 
 riverraid:  main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o  shot.o shotQueue.o
-	$(CC) -lm main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o shot.o shotQueue.o -o riverraid $(LINKER_FLAGS) 
+	$(CC) -lm main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o shot.o shotQueue.o -o riverraid $(LDFLAGS) 
 
 main.o: main.c utils.h cenario.h enemyQueue.h enemy.h ship.h  shot.h
-	$(CC) -c main.c
+	$(CC) -c main.c 
 
 utils.o: utils.h utils.c configuration.h
 	$(CC) -c utils.c

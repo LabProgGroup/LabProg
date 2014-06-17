@@ -66,7 +66,7 @@ void timer(int n) {
     refreshCenario(cenario, sh->position);
     if (verifyShipColision(sh, cenario))
         sh->velocity.z /= 2;
-    if (n == 1 & shouldShoot(sh->position, cenario->enemies->first->position))
+    if ((n == 1) && shouldShoot(sh->position, cenario->enemies->first->position))
         enqueueShot(shootFromEnemy(cenario->enemies->first, sh, 10), enemyShotQ);
 
     updateShotQueue(shipShotQ);
@@ -80,8 +80,8 @@ void timer(int n) {
 
 void mouse(int b, int s, int x, int y)
 {
-    printf("xis: %d\n", x);
-    printf("Y: %d\n", y);
+    printf("mouse: %d %d\n", x, y);
+    printf("Nave: %3.f %3.f\n", sh->position.x, sh->position.y);
     if (b == GLUT_RIGHT_BUTTON && (s == GLUT_DOWN)) {
         printf("Botado direito pressionado!\n");
         return;
@@ -91,8 +91,8 @@ void mouse(int b, int s, int x, int y)
         return;
     } 
     if (b == GLUT_LEFT_BUTTON && (s == GLUT_DOWN)) {
-        Position aimP = {(((x * cenario->dimension.x) / glutGet(GLUT_WINDOW_WIDTH)) - cenario->dimension.x/2) * (2),
-            (-1) * (((y * cenario->dimension.y + eyey) / glutGet(GLUT_WINDOW_HEIGHT)) - cenario->dimension.y/2 + eyey),
+        Position aimP = {((x*cenario->dimension.x) / glutGet(GLUT_WINDOW_WIDTH)) - cenario->dimension.x/2 - sh->position.x,
+            -1 * ( (((y*cenario->dimension.y) / glutGet(GLUT_WINDOW_HEIGHT)) - cenario->dimension.y/2) + sh->position.y),
             0};
 
         Shot* shot = shootFromShip(sh, aimP, SHOT_DAMAGE);
