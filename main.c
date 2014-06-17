@@ -13,7 +13,7 @@ Shot *shot;
 ShotQueue* shipShotQ;
 ShotQueue* enemyShotQ;
 Cenario* cenario;
-//Velocity shotV = {0.7, 0.7, 50.};
+/*Velocity shotV = {0.7, 0.7, 50.};*/
 float eyex = 0, eyey = 8.5, eyez = 20;
 float keyWalk = 1.0;
 GLfloat lightZeroColor[]  = {0.5, 0.5, 0.5, .5f};
@@ -66,7 +66,7 @@ void timer(int n) {
     refreshCenario(cenario, sh->position);
     if (verifyShipColision(sh, cenario))
         sh->velocity.z /= 2;
-    if (n == 1 & shouldShoot(sh->position, cenario->enemies->first->position))
+    if (n == 1 && shouldShoot(sh->position, cenario->enemies->first->position))
         enqueueShot(shootFromEnemy(cenario->enemies->first, sh, 10), enemyShotQ);
 
     updateShotQueue(shipShotQ);

@@ -4,11 +4,11 @@
 #include <stdio.h>
 #include "utils.h"
 #include "shot.h"
-
+/*
 // #define foreachshot(item, list) \
 //     ShotNode *nd; \
 //     for (nd = list->head->next, item = nd->shot; nd != list->head; nd = nd->next, item = nd->shot)
-
+*/
 
 typedef struct shotnode ShotNode;
 struct shotnode{
@@ -32,5 +32,5 @@ Shot* dequeueShot(ShotQueue *queue);
 BOOL isShotQueueEmpty(ShotQueue *queue);
 void renderShotQ(ShotQueue *queue);
 void rmFarShots(float shipZ, ShotQueue *shotQ);
-
+void updateShotQueue(ShotQueue *shotQueue);
 #endif
