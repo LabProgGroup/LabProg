@@ -5,6 +5,30 @@
 #include <stdlib.h>
 #include <time.h>
 
+void createNewEnemyInInterval(float min, float max, Cenario *cenario) {
+    int precision = rand();
+    
+    Position randomPos;
+    randomPos.x = rand() % (2 * (int)cenario->dimension.x) - cenario->dimension.x;
+    randomPos.y = rand() % (2 * (int)cenario->dimension.y) - cenario->dimension.y;
+    randomPos.z = rand() % (int)(max - min) + min;
+    
+    enqueueEnemy(createEnemy(randomPos, 10, precision), cenario->enemies);
+}
+
+void initEnemies(Cenario *cenario) {
+    Enemy *lastEnemy;
+    
+    createNewEnemyInInterval(0, MAX_DISTANCE_BETWEEN_ENEMIES, cenario);
+    lastEnemy = cenario->enemies->last;
+    
+    while (BUFFER_SIZE - lastEnemy->position.z > MAX_DISTANCE_BETWEEN_ENEMIES) {
+        createNewEnemyInInterval(lastEnemy->position.z, lastEnemy->position.z + MAX_DISTANCE_BETWEEN_ENEMIES, cenario);
+        lastEnemy = cenario->enemies->last;
+    }
+    
+}
+
 Cenario* createCenario(Dimension dimension) {
     Cenario *cen = malloc (sizeof(Cenario));
     

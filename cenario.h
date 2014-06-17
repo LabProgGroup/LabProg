@@ -12,7 +12,6 @@ typedef struct {
 
 Cenario* createCenario(Dimension dimension);
 void refreshCenario(Cenario *cenario, Position shipPosition);
-
 void createNewEnemyInInterval(float min, float max, Cenario *cenario);
 void initEnemies(Cenario *cenario);
 BOOL verifyShipColision(Ship *ship, Cenario *cenario);

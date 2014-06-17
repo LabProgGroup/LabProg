@@ -127,9 +127,18 @@ Shot* shootFromShip(Ship *sh, Position aimP, int power) {
     Shot* newShot;
     Position shotP = sh->position;
     Velocity shotV;
+    float firstNorm = sqrt(aimP.x * aimP.x + aimP.y * aimP.y);
+    float normC = SHIP_SHOT_NORM / firstNorm;
+    float t = aimP.x / SHIP_SHOT_NORM;
+
+    aimP.x = normC * aimP.x;
+    aimP.y = normC * aimP.y;
+
+
+
     shotV.x = aimP.x;
     shotV.y = aimP.y; 
-    shotV.z = sh->velocity.z + sqrt(SHIP_SHOT_VELOCITY * SHIP_SHOT_VELOCITY - (shotV.x * shotV.x + shotV.y * shotV.y));
+    shotV.z = 0;
     newShot = createShot(shotP, shotV, power);
     return newShot;
 }

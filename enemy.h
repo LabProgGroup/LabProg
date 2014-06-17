@@ -22,6 +22,6 @@ Shot* shootFromEnemy(Enemy* enemy, Ship* ship, int power);
 BOOL shouldShoot(Position shipP, Position enemyP);
 void gotShotEnemy(Enemy* en, int damage);
 BOOL isEnemyAlive(Enemy* en);
-void renderEnemies();
+void renderEnemy();
 
 #endif

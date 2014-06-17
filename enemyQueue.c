@@ -1,4 +1,5 @@
 #include "enemyQueue.h"
+#include "enemy.h"
 
 EnemyQueue* createEnemyQueue() {
     EnemyQueue *queue = malloc(sizeof(EnemyQueue));
