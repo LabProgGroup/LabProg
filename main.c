@@ -66,7 +66,7 @@ void timer(int n) {
     refreshCenario(cenario, sh->position);
     if (verifyShipColision(sh, cenario))
         sh->velocity.z /= 2;
-    if (n == 1 & shouldShoot(sh->position, cenario->enemies->first->position))
+    if (n == 1 && shouldShoot(sh->position, cenario->enemies->first->position))
         enqueueShot(shootFromEnemy(cenario->enemies->first, sh, 10), enemyShotQ);
 
     updateShotQueue(shipShotQ);
