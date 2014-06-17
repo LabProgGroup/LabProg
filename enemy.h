@@ -3,9 +3,9 @@
 
 #include "utils.h"
 #include "shot.h"
+#include "configuration.h"
+#include "ship.h"
 
-#define ENEMY_SHOT_VELOCITY 60
-#define SHOOTABLE_DISTANCE 20 
 
 typedef struct {
     int life;         
@@ -13,13 +13,12 @@ typedef struct {
     int precision;   
 
     float radius;
-    // Dimension dimension;
 } Enemy;
 
 Enemy* createEnemy(Position myPosition, float myRadius, int precision);
 void killEnemy(Enemy* en);
 
-Shot* shootFromEnemy(Position enemyP, Position shipP, int power);
+Shot* shootFromEnemy(Enemy* enemy, Ship* ship, int power);
 BOOL shouldShoot(Position shipP, Position enemyP);
 void gotShotEnemy(Enemy* en, int damage);
 BOOL isEnemyAlive(Enemy* en);

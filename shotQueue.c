@@ -68,11 +68,20 @@ BOOL isShotQueueEmpty(ShotQueue *shotQueue) {
     return shotQueue->first == NULL;
 }
 
+void updateShotQueue(ShotQueue *shotQueue) {
+    if (!isShotQueueEmpty(shotQueue)) {
+        ShotNode *stNode = shotQueue->head->next;
+        while (stNode != shotQueue->head) {
+            updateShot(stNode->shot);
+            stNode = stNode->next;
+        }
+    }
+}
+
 void renderShotQ(ShotQueue *shotQ) {
     if (!isShotQueueEmpty(shotQ)) {
         ShotNode *stNode = shotQ->head->next;
         while (stNode != shotQ->head) {
-            updateShot(stNode->shot);
             renderShot(stNode->shot);
             stNode = stNode->next;
         }

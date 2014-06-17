@@ -40,8 +40,8 @@ void display (void) {
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightZeroColor);
 
     renderShip(sh);
-    renderShotQ(enemyShotQ);
     renderCenario(cenario);
+    renderShotQ(enemyShotQ);
     renderShotQ(shipShotQ);
 
     glutSwapBuffers(); 
@@ -58,16 +58,23 @@ void reshape (int width, int height) {
 
 
 
-void timer(int node) {
+void timer(int n) {
     updateShipPosition(sh);
     insideKeeper(sh, cenario->dimension);
     shipPosition = sh->position.z;
+
     refreshCenario(cenario, sh->position);
     if (verifyShipColision(sh, cenario))
-        sh->velocity.z = 0;
+        sh->velocity.z /= 2;
+    if (n == 1 & shouldShoot(sh->position, cenario->enemies->first->position))
+        enqueueShot(shootFromEnemy(cenario->enemies->first, sh, 10), enemyShotQ);
 
+    updateShotQueue(shipShotQ);
+    updateShotQueue(enemyShotQ);
+
+    rmFarShots(sh->position.z, enemyShotQ);
     rmFarShots(sh->position.z, shipShotQ);
-    glutTimerFunc(1, timer ,1);
+    glutTimerFunc(1, timer , (n + 1) % 30);
     glutPostRedisplay();
 }
 
@@ -98,12 +105,6 @@ void move(int x, int y)
 {
     /*printf("\nPosicao do mouse: %d %d", x, y);*/
     glutPostRedisplay();
-}
-
-Key readKey() {
-    Key keyPressed;
-    scanf("%d", &keyPressed);
-    return keyPressed;
 }
 
 void tecl(unsigned char k, int x, int y)

@@ -1,19 +1,24 @@
-CFLAGS= -g -Wall -O2 -ansi -pedantic -Wno-unused-result
-CC = gcc -g
+CFLAGS=-Wall --ansi -g -Wno-deprecated
+LDFLAGS= -lglut -lGLU -lGL -v
+
+INCLUDE_PATHS= -I/usr/local/include -I/opt/X11/include
+LIBRARY_PATHS= -L/usr/local/lib -I/opt/X11/lib
+LINKER_FLAGS = -framework OpenGL -lGLUT
+
 RM = rm
-LDFLAGS= -lglut -lGLU -lGL -lm
+CC = gcc -g $(LIBRARY_PATHS) $(CFLAGS)
 #-------------------------------------------------
 
 all: riverraid
 	./riverraid
 
 riverraid:  main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o  shot.o shotQueue.o
-	$(CC) -lm main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o shot.o shotQueue.o -o riverraid $(LDFLAGS) -lm
+	$(CC) -lm main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o shot.o shotQueue.o -o riverraid $(LINKER_FLAGS) 
 
 main.o: main.c utils.h cenario.h enemyQueue.h enemy.h ship.h  shot.h
 	$(CC) -c main.c
 
-utils.o: utils.h utils.c
+utils.o: utils.h utils.c configuration.h
 	$(CC) -c utils.c
 
 cenario.o: cenario.h cenario.c enemyQueue.h utils.h ship.h enemy.h 
@@ -25,10 +30,10 @@ enemyQueue.o: enemyQueue.h enemyQueue.c utils.h enemy.h
 shotQueue.o: shotQueue.h shotQueue.c utils.h shot.h
 	$(CC) -c shotQueue.c
 
-enemy.o: enemy.h enemy.c utils.h shot.h
+enemy.o: enemy.h enemy.c utils.h shot.h configuration.h ship.h
 	$(CC) -c enemy.c
 
-ship.o: ship.h ship.c utils.c utils.h shot.h 
+ship.o: ship.h ship.c utils.c utils.h shot.h configuration.h
 	$(CC) -c ship.c
 
 shot.o: shot.h shot.c utils.h

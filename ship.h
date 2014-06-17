@@ -3,13 +3,7 @@
 
 #include "utils.h"
 #include "shot.h"
-
-#define INITIAL_VELOCITY 30 
-#define MOVING_FACTOR 10   
-#define VELOCITY_FACTOR 30
-#define MAX_XY_ORIENTATION 25
-#define MAX_VELOCITY 2000
-#define SHIP_SHOT_VELOCITY 60
+#include "configuration.h"
 
 typedef struct ship Ship;
 struct ship {
@@ -20,8 +14,6 @@ struct ship {
     float radius;
     // Dimension dimension;
 };
-
-extern float traveledDistance;
 
 Ship* createShip(Position position);
 void killShip(Ship* sh);

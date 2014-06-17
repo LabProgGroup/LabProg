@@ -4,18 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "configuration.h"
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
 #include <GL/glut.h>
-
-#define WIN_HEIGHT 768
-#define WIN_WIDTH 1200
-#define HALF_WIN_HEIGHT (WIN_HEIGHT / 2) /*Para não ficar fazendo essa conta toda hora. Será necessário?*/
-#define HALF_WIN_WIDTH (WIN_WIDTH / 2)
-#define MAX_LOOP 100
-#define BUFFER_SIZE 5000
-#define MAX_DISTANCE_BETWEEN_ENEMIES 500
-#define MAX_SHIP_SHOTS 50
-#define GRAVITY 0.980665
-#define DAMAGE_BY_HITTING_ENEMY 50
+#endif
 
 struct coordinates {
     float x; 
@@ -28,9 +22,7 @@ typedef struct coordinates Dimension;
 
 typedef enum {FALSE, TRUE} BOOL;
 
-typedef enum key {UP, DOWN, RIGHT, LEFT, SPACE, CLICK} Key; 
-
-extern float clockTick;
+extern float clockTick; // precisa ser variavel?!
 extern Dimension defaultCenarioDim;
 extern Dimension defaultEnemyDim;
 extern float shipPosition;

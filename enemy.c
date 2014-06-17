@@ -19,13 +19,20 @@ void killEnemy(Enemy* dead) {
     free(dead);
 }
 
-Shot* shootFromEnemy(Position enemyP, Position shipP, int power) {
+Shot* shootFromEnemy(Enemy* enemy, Ship* ship, int power) {
     Shot* newShot;
-    Position shotP = enemyP;
+    Position shotP = enemy->position;
     Velocity shotV;
-    shotV.x = shipP.x - enemyP.x;
-    shotV.y = shipP.y - enemyP.y;
-    shotV.z = -1 * sqrt(ENEMY_SHOT_VELOCITY * ENEMY_SHOT_VELOCITY - shotV.x * shotV.x - shotV.y * shotV.y); 
+    shotV.x = ship->position.x - enemy->position.x;
+    shotV.y = ship->position.y - enemy->position.y;
+    shotV.z = ship->position.z - enemy->position.z;
+
+    float alpha = sqrt((shotV.x * shotV.x + shotV.y * shotV.y + shotV.z * shotV.z) / (ENEMY_SHOT_VELOCITY * ENEMY_SHOT_VELOCITY));
+
+    shotV.x /= alpha;
+    shotV.y /= alpha;
+    shotV.z = shotV.z / alpha + ship->velocity.z;
+
     newShot = createShot(shotP, shotV, power);
     return newShot;
 }

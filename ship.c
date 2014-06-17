@@ -4,7 +4,6 @@
 #include "utils.h"
 #include "ship.h"
 
-float traveledDistance = 0;
 float savedVelocity = 0;
 
 Ship* createShip(Position position) {
@@ -67,6 +66,9 @@ void updateVelocity(Ship *sh, unsigned char key) {
             savedVelocity = sh->velocity.z;
             sh->velocity.z = INITIAL_VELOCITY;
             break;
+        case 'k':
+            sh->velocity.z = 0;
+            break;
     }
 }
 
@@ -99,7 +101,7 @@ void updateShipPosition(Ship* sh) {
 }
 
 void updateScore(Ship* sh) {
-    traveledDistance = sh->position.z;
+    // traveledDistance = sh->position.z;
 }
 
 void insideKeeper(Ship *sh, Dimension dimension) {
