@@ -4,8 +4,6 @@
 #include "utils.h"
 #include "ship.h"
 
-float savedVelocity = 0;
-
 Ship* createShip(Position position) {
     Ship* newship = malloc(sizeof (Ship));
     newship->life = 100;
@@ -28,25 +26,25 @@ void killShip(Ship* sh) {
 
 void updateVelocity(Ship *sh, unsigned char key) {
     switch (key) {
-        case '8':
+        case 'w':
             if (sh->velocity.y < 0) sh->velocity.y = 0;
             if (sh->velocity.y + MOVING_FACTOR > MAX_XY_ORIENTATION)
                 return;
             sh->velocity.y += MOVING_FACTOR;
             break;
-        case '5':
+        case 's':
             if (sh->velocity.y > 0) sh->velocity.y = 0;
             if (sh->velocity.y - MOVING_FACTOR < -MAX_XY_ORIENTATION)
                 return;
             sh->velocity.y -= MOVING_FACTOR;
             break;
-        case '6':
+        case 'd':
             if (sh->velocity.x < 0) sh->velocity.x = 0;
             if (sh->velocity.x + MOVING_FACTOR > MAX_XY_ORIENTATION)
                 return;
             sh->velocity.x += MOVING_FACTOR;
             break;
-        case '4':
+        case 'a':
             if (sh->velocity.x > 0) sh->velocity.x = 0;
             if (sh->velocity.x - MOVING_FACTOR < -MAX_XY_ORIENTATION)
                 return;
@@ -56,6 +54,7 @@ void updateVelocity(Ship *sh, unsigned char key) {
             if (sh->velocity.z + VELOCITY_FACTOR > MAX_VELOCITY)
                 return;
             sh->velocity.z += VELOCITY_FACTOR;
+            printf("\nvelocity: %f", sh->velocity.z);
             break;
         case 'p':
             if (sh->velocity.z - VELOCITY_FACTOR < INITIAL_VELOCITY)
@@ -63,8 +62,7 @@ void updateVelocity(Ship *sh, unsigned char key) {
             sh->velocity.z -= VELOCITY_FACTOR;
             break;
         case 'm':
-            savedVelocity = sh->velocity.z;
-            sh->velocity.z = INITIAL_VELOCITY;
+            clockTick = (float)1 / 500;
             break;
         case 'k':
             sh->velocity.z = 0;
@@ -74,24 +72,24 @@ void updateVelocity(Ship *sh, unsigned char key) {
 
 void clearVelocity(Ship *sh, unsigned char key) {
     switch (key) {
-        case '8':
+        case 'w':
             if (sh->velocity.y > 0)
                 sh->velocity.y = 0;
             break;
-        case '5':
+        case 's':
             if (sh->velocity.y < 0)
                 sh->velocity.y = 0;
             break;
-        case '6':
+        case 'd':
             if (sh->velocity.x > 0)
                 sh->velocity.x = 0;
             break;
-        case '4':
+        case 'a':
             if (sh->velocity.x < 0)
                 sh->velocity.x = 0;
             break;
         case 'm':
-            sh->velocity.z = savedVelocity;
+            clockTick = (float)1 / 50;
             break;
     }
 }
@@ -105,20 +103,20 @@ void updateScore(Ship* sh) {
 }
 
 void insideKeeper(Ship *sh, Dimension dimension) {
-    if (sh->position.x < -dimension.x / 2) {
-        sh->position.x = -dimension.x / 2;
+    if (sh->position.x < -dimension.x) {
+        sh->position.x = -dimension.x;
         sh->velocity.x = 0;
     }
-    else if (sh->position.x > dimension.x / 2) {
-        sh->position.x = dimension.x / 2;
+    else if (sh->position.x > dimension.x) {
+        sh->position.x = dimension.x;
         sh->velocity.x = 0;
     }
-    if (sh->position.y < -dimension.y / 2) {
-        sh->position.y = -dimension.y / 2;
+    if (sh->position.y < -dimension.y) {
+        sh->position.y = -dimension.y;
         sh->velocity.y = 0;
     }
-    else if (sh->position.y > dimension.y / 2) {
-        sh->position.y = dimension.y / 2;
+    else if (sh->position.y > dimension.y) {
+        sh->position.y = dimension.y;
         sh->velocity.y = 0;
     }
 }

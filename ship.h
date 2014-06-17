@@ -12,7 +12,6 @@ struct ship {
     Velocity velocity;
 
     float radius;
-    // Dimension dimension;
 };
 
 Ship* createShip(Position position);

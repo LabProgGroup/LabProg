@@ -9,8 +9,8 @@ void createNewEnemyInInterval(float min, float max, Cenario *cenario) {
     int precision = rand();
     
     Position randomPos;
-    randomPos.x = rand() % (2 * (int)cenario->dimension.x) - cenario->dimension.x;
-    randomPos.y = rand() % (2 * (int)cenario->dimension.y) - cenario->dimension.y;
+    randomPos.x = (rand() % (2 * (int)cenario->dimension.x)) - cenario->dimension.x;
+    randomPos.y = (rand() % (2 * (int)cenario->dimension.y)) - cenario->dimension.y;
     randomPos.z = rand() % (int)(max - min) + min;
     
     enqueueEnemy(createEnemy(randomPos, 10, precision), cenario->enemies);
@@ -26,7 +26,6 @@ void initEnemies(Cenario *cenario) {
         createNewEnemyInInterval(lastEnemy->position.z, lastEnemy->position.z + MAX_DISTANCE_BETWEEN_ENEMIES, cenario);
         lastEnemy = cenario->enemies->last;
     }
-    
 }
 
 Cenario* createCenario(Dimension dimension) {
@@ -94,33 +93,33 @@ BOOL verifyShipColision(Ship *ship, Cenario *cenario) {
     return FALSE;
 }
 
-BOOL verifyShotColision(Shot *shot, Cenario *cenario) {
-    if (isInsideCenario(shot->position, cenario))
-        return TRUE;
+// void verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue) {
+    // EnemyNode *eNode = cenario->enemies->head->next;
+    // ShotNode *shotNode = shotQueue->head->next;
+
+    // while (eNode != cenario->enemies->head) {
+    //     while (shotNode != shotQueue->head) {
+    //         if (distance(shotNode->shot->position, eNode->enemy->position) < eNode->enemy->radius)
+    //             gotShotEnemy(eNode->enemy);
+    //         if (!isEnemyAlive(eNode->enemy)) {
+    //             EnemyNode *kill = eNode->prox;
+    //             removeEnemyNode(eNode->enemy, cenario->enemies);
+    //         }
+    //         shotNode = shotNode->prox;
+    //     }
+    // }
     
-    else {
-        EnemyNode *node = cenario->enemies->head->next;
-        while (node != cenario->enemies->head) {
-            if (shot->position.x == node->enemy->position.x)
-                if (shot->position.z >= node->enemy->position.z) {
-                    gotShotEnemy(node->enemy, 20);
-                    if (node->enemy->life <= 0)
-                        removeEnemyNode(node, cenario->enemies);
-                    return TRUE;
-                }
-            node = node->next;
-        }
-    }
-    
-    return FALSE;
-}
+    // return FALSE;
+// }
+
+// void verifyShipShotColision()
 
 BOOL isInsideCenario(Position position, Cenario *cenario) {
-    if (position.x <= 0 || position.x >= cenario->dimension.x ||
-        position.y <= 0 || position.y >= cenario->dimension.y ||
-        position.z <= 0 || position.z >= cenario->dimension.z)
-        return TRUE;
-    return FALSE;
+    if (position.x <= -cenario->dimension.x || position.x >= cenario->dimension.x ||
+        position.y <= -cenario->dimension.y || position.y >= cenario->dimension.y ||
+        position.z <= -cenario->dimension.z || position.z >= cenario->dimension.z)
+        return FALSE;
+    return TRUE;
 }
 
 void renderParedes() {
@@ -177,17 +176,17 @@ void renderBackground() {
     glColor4f(1, 1, 1, 1);
     glBegin(GL_QUADS);
     {
-        glTexCoord2f(0, 30);
-        glVertex3f(-9000, -9000, -4900);
+        glTexCoord2f(0, 1);
+        glVertex3f(-9000, -9000, -5000);
 
-        glTexCoord2f(30, 30);
-        glVertex3f(9000, -9000, -4900);
+        glTexCoord2f(1, 1);
+        glVertex3f(9000, -9000, -5000);
 
-        glTexCoord2f(30, 0);
-        glVertex3f(9000, 9000, -4900);
+        glTexCoord2f(1, 0);
+        glVertex3f(9000, 9000, -5000);
 
         glTexCoord2f(0, 0);
-        glVertex3f(-9000, 9000, -4900);
+        glVertex3f(-9000, 9000, -5000);
     }
     glEnd();
     glDisable(GL_TEXTURE_2D);
@@ -195,6 +194,6 @@ void renderBackground() {
 
 void renderCenario(Cenario* cen) {
     renderBackground();
-    renderParedes();
+    // renderParedes();
     renderEnemyQ(cen->enemies);
 }

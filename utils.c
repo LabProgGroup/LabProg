@@ -30,12 +30,12 @@ float distance(Position a, Position b) {
 }
 
 /*Oops, não estou usando va e vb pra nada!*/
-BOOL colisionTest(Position pa, Velocity va, float ra, Position pb, Velocity vb, float rb) {
-	if (distance(pa, pb) < ra + rb)
-		return TRUE;
-	else
-		return FALSE;
-}
+// BOOL colisionTest(Position pa, Velocity va, float ra, Position pb, Velocity vb, float rb) {
+// 	if (distance(pa, pb) < ra + rb)
+// 		return TRUE;
+// 	else
+// 		return FALSE;
+// }
 
 Position createPosition(double x, double  y, double z) {
    Position p = {x, y, z};

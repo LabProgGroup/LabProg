@@ -27,7 +27,7 @@ void removeEnemyNode(EnemyNode *node, EnemyQueue *queue) {
             }
             queue->first = queue->head->next->enemy;
 
-            free(node->enemy);
+            killEnemy(node->enemy);
             free(node);
             return;
         }
