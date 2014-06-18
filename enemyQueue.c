@@ -16,7 +16,7 @@ EnemyQueue* createEnemyQueue() {
 
 void removeEnemyNode(EnemyNode *node, EnemyQueue *queue) {
     EnemyNode *actualNode = queue->head;
-   do {
+    do {
         if (actualNode->next == node) {
             actualNode->next = node->next;
 
@@ -28,9 +28,10 @@ void removeEnemyNode(EnemyNode *node, EnemyQueue *queue) {
 
             killEnemy(node->enemy);
             free(node);
+            return;
         }
         actualNode = actualNode->next;
-    }  while (actualNode->next != queue->head);
+    } while (actualNode->next != queue->head);
 }
 
 void enqueueEnemy(Enemy *enemy, EnemyQueue *queue) {
