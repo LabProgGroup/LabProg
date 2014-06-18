@@ -48,6 +48,7 @@ void display (void) {
 }
 
 void timer(int n) {
+    sh->velocity.z=0;
     updateShipPosition(sh);
     insideKeeper(sh, cenario->dimension);
     shipPosition = sh->position.z;
