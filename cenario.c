@@ -69,25 +69,31 @@ BOOL verifyShipColision(Ship *ship, Cenario *cenario) {
     return FALSE;
 }
 
-// void verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue) {
-    // EnemyNode *eNode = cenario->enemies->head->next;
-    // ShotNode *shotNode = shotQueue->head->next;
-
-    // while (eNode != cenario->enemies->head) {
-    //     while (shotNode != shotQueue->head) {
-    //         if (distance(shotNode->shot->position, eNode->enemy->position) < eNode->enemy->radius)
-    //             gotShotEnemy(eNode->enemy);
-    //         if (!isEnemyAlive(eNode->enemy)) {
-    //             EnemyNode *kill = eNode->prox;
-    //             removeEnemyNode(eNode->enemy, cenario->enemies);
-    //         }
-    //         shotNode = shotNode->prox;
-    //     }
-    // }
+/*TODO: Descobrir o porquê de um dos inimigos (primeiro do lado esquerdo) não estar morrendo!*/
+ BOOL verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue) {
+     EnemyNode *eNode = cenario->enemies->head->next;
+     ShotNode *shotNode = shotQueue->head->next;
     
-    // return FALSE;
-// }
-
+     BOOL killedEnemy = FALSE; 
+     while (eNode != cenario->enemies->head) {
+         while (shotNode != shotQueue->head) {
+             if (distance(shotNode->shot->position, eNode->enemy->position) < eNode->enemy->radius) {
+                 gotShotEnemy(eNode->enemy, shotNode->shot->damage); 
+             }
+             if (!isEnemyAlive(eNode->enemy)) {
+                 EnemyNode *kill = eNode;
+                 eNode = eNode->next;
+                 killedEnemy = TRUE;
+                 removeEnemyNode(kill, cenario->enemies);
+             }
+             shotNode = shotNode->next;
+         }
+         if (!killedEnemy) eNode = eNode->next;
+         else killedEnemy = FALSE;
+     }
+     
+     return FALSE;
+ }
 // void verifyShipShotColision()
 
 BOOL isInsideCenario(Position position, Cenario *cenario) {
@@ -172,4 +178,19 @@ void renderCenario(Cenario* cen) {
     renderBackground();
     // renderParedes();
     renderEnemyQ(cen->enemies);
+}
+
+
+void rmFarShots(ShotQueue *shotQ, Cenario *cenario) {
+    if (!isShotQueueEmpty(shotQ)) {
+        ShotNode *stNode = shotQ->head->next;
+        while (stNode != shotQ->head) {
+            if (stNode->shot->position.z - shipPosition > 500) {
+                removeShotNode(stNode, shotQ);
+            }
+            if (!isInsideCenario(stNode->shot->position, cenario)) 
+                removeShotNode(stNode, shotQ);
+            stNode = stNode->next;
+        }
+    }
 }

@@ -4,7 +4,7 @@
 #include "enemyQueue.h"
 #include "utils.h"
 #include "ship.h"
-
+#include "shotQueue.h"
 typedef struct {
     EnemyQueue *enemies;
     Dimension dimension;
@@ -20,5 +20,8 @@ BOOL isInsideCenario(Position position, Cenario *cenario);
 void renderParedes();
 void renderBackground();
 void renderCenario();
-
+BOOL verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue);
+void rmFarShots(ShotQueue *shotQ, Cenario *cenario);
 #endif
+
+
