@@ -69,7 +69,6 @@ BOOL verifyShipColision(Ship *ship, Cenario *cenario) {
     return FALSE;
 }
 
-/*TODO: Descobrir o porquê de um dos inimigos (primeiro do lado esquerdo) não estar morrendo!*/
  BOOL verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue) {
      EnemyNode *eNode = cenario->enemies->head->next;
      ShotNode *shotNode = shotQueue->head->next;
