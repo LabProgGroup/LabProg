@@ -121,20 +121,13 @@ void insideKeeper(Ship *sh, Dimension dimension) {
     }
 }
 
-Shot* shootFromShip(Ship *sh, Position aimP, int power) {
+Shot* shootFromShip(Ship *sh, Position aimV, int power) {
     Shot* newShot;
-    Position shotP = sh->position;
     Velocity shotV;
-    float t = 1.36590984939; //pi/2.2
-    float firstNorm = sqrt(aimP.x * aimP.x + aimP.y * aimP.y);
-    float normC = SHIP_SHOT_NORM / firstNorm;
-
-    aimP.x = normC * aimP.x;
-    aimP.y = normC * aimP.y;
-
-    shotV.x = aimP.x;
-    shotV.y = aimP.y; 
-    shotV.z = 0 * SHIP_SHOT_NORM;
+    Position shotP = sh->position;
+    shotV.x = aimV.x;
+    shotV.y = aimV.y; 
+    shotV.z = aimV.z;
     newShot = createShot(shotP, shotV, power);
     return newShot;
 }
@@ -165,4 +158,42 @@ void renderShip(Ship* sh) {
     glColor4f(1, 0.56, 0., 0.9);
     glutSolidCube(3);    
     glPopMatrix();
-}  
+}
+
+Velocity getAimV(int x, int y, Ship* sh, int cenx, int ceny) {
+    Velocity shotV;
+    float xc = ((x*cenx) / glutGet(GLUT_WINDOW_WIDTH)) - cenx/2 - sh->position.x;
+    float yc =  ceny/2 - (y*ceny) / glutGet(GLUT_WINDOW_HEIGHT) - sh->position.y;
+    //float t = 1.36590984939; //pi/2.2
+    float zc = sqrt(SHIP_SHOT_NORM * SHIP_SHOT_NORM - (xc * xc + yc * yc));
+    float z = zc + sh->velocity.z;
+    float correction = z / zc;
+    xc = xc * correction;
+    yc = yc * correction;
+    shotV.x =  xc * 1.7;
+    shotV.y =  yc * 1.7;
+    shotV.z = z;
+    return shotV;
+}
+
+void renderAim(Ship* sh, Position pos, Velocity v, int n) { 
+    int i = 0;
+    float dt = 900 / v.z;
+    //since the arc is not a closed curve, this is a strip now 
+    for (i = 0; i < n; i++)
+    {
+        glPushMatrix();
+        glColor4f(1, 0, 0, 0.5);
+        //space time
+        pos.x = pos.x + v.x * dt;
+        pos.y = pos.y + v.y * dt - (GRAVITY * dt * dt) / 2;
+        pos.z = pos.z + v.z * dt;
+        //speed time
+        v.x = v.x;
+        v.y = v.y - GRAVITY * clockTick;
+        v.z = v.z;
+        glTranslatef(pos.x, pos.y,  -pos.z + shipPosition);
+        glutSolidCube(4);
+        glPopMatrix();
+    }
+}

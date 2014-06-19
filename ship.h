@@ -21,9 +21,12 @@ void clearVelocity(Ship *sh, unsigned char key);
 void updateShipPosition(Ship* sh);
 
 void insideKeeper(Ship *sh, Dimension dimension);
-Shot* shootFromShip(Ship *sh, Position aimP, int power);
+Shot* shootFromShip(Ship *sh, Position aimV, int power);
 void gotDamagedShip(Ship* sh, int damage);
 BOOL isShipAlive(Ship* sh);
 void updateScore(Ship* sh);
 void renderShip(Ship* sh);
+Velocity getAimV(int x, int y, Ship* sh, int cenx, int ceny);
+void renderAim(Ship* sh, Position pos, Velocity v, int n);
+void DrawArc(Position begin, Velocity v, int n);
 #endif

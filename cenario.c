@@ -184,11 +184,11 @@ void rmFarShots(ShotQueue *shotQ, Cenario *cenario) {
     if (!isShotQueueEmpty(shotQ)) {
         ShotNode *stNode = shotQ->head->next;
         while (stNode != shotQ->head) {
-            if (stNode->shot->position.z - shipPosition > 500) {
+            if (stNode->shot->position.z - shipPosition > 1000) {
                 removeShotNode(stNode, shotQ);
             }
-            if (!isInsideCenario(stNode->shot->position, cenario)) 
-                removeShotNode(stNode, shotQ);
+            //if (!isInsideCenario(stNode->shot->position, cenario))  segFault!!
+            //    removeShotNode(stNode, shotQ);
             stNode = stNode->next;
         }
     }
