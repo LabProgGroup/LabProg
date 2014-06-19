@@ -162,38 +162,38 @@ void renderShip(Ship* sh) {
 
 Velocity getAimV(int x, int y, Ship* sh, int cenx, int ceny) {
     Velocity shotV;
-    float xc = ((x*cenx) / glutGet(GLUT_WINDOW_WIDTH)) - cenx/2 - sh->position.x;
-    float yc =  ceny/2 - (y*ceny) / glutGet(GLUT_WINDOW_HEIGHT) - sh->position.y;
+    float xc = ((x*cenx) / glutGet(GLUT_WINDOW_WIDTH)) - cenx/2 + sh->position.x;
+    float yc =  ceny/2 - (y*ceny) / glutGet(GLUT_WINDOW_HEIGHT) + sh->position.y;
     //float t = 1.36590984939; //pi/2.2
     float zc = sqrt(SHIP_SHOT_NORM * SHIP_SHOT_NORM - (xc * xc + yc * yc));
     float z = zc + sh->velocity.z;
     float correction = z / zc;
     xc = xc * correction;
     yc = yc * correction;
-    shotV.x =  xc * 1.7;
-    shotV.y =  yc * 1.7;
+    shotV.x =  xc * 1;
+    shotV.y =  yc * 2;
     shotV.z = z;
     return shotV;
 }
 
 void renderAim(Ship* sh, Position pos, Velocity v, int n) { 
     int i = 0;
-    float dt = 900 / v.z;
+    float dt = 100 / v.z;
     //since the arc is not a closed curve, this is a strip now 
-    for (i = 0; i < n; i++)
-    {
         glPushMatrix();
-        glColor4f(1, 0, 0, 0.5);
+    for (i = 1; i < n; i++)
+    {
+        glColor4f(0, 1, 1, 0.5);
         //space time
-        pos.x = pos.x + v.x * dt;
-        pos.y = pos.y + v.y * dt - (GRAVITY * dt * dt) / 2;
-        pos.z = pos.z + v.z * dt;
+        pos.x = pos.x + v.x * dt * i;
+        pos.y = pos.y + v.y * dt * i - (GRAVITY * dt * dt * i * i) / 2;
+        pos.z = pos.z + v.z * dt * i;
         //speed time
         v.x = v.x;
-        v.y = v.y - GRAVITY * clockTick;
+        v.y = v.y - GRAVITY * dt * i;
         v.z = v.z;
         glTranslatef(pos.x, pos.y,  -pos.z + shipPosition);
-        glutSolidCube(4);
-        glPopMatrix();
+        glutWireCube(10);
     }
+        glPopMatrix();
 }

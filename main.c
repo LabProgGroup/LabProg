@@ -46,7 +46,7 @@ void display (void) {
     renderShotQ(shipShotQ);
     glClear(GL_DEPTH_BUFFER_BIT);
     Velocity aimV = getAimV(mouseP.x, mouseP.y, sh, cenario->dimension.x, cenario->dimension.y);
-    renderAim(sh, sh->position, aimV, 500);
+    renderAim(sh, sh->position, aimV, 100);
     glutSwapBuffers(); 
 }
 
@@ -155,7 +155,7 @@ int main(int argc, char * argv[]) {
 
     if (loadTexture("night.pbm") == 0)
         fputs("Não carregou a textura\n", stderr);
-
+    glutSetCursor(GLUT_CURSOR_NONE); 
     glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
     glutReshapeFunc(reshape); 
     glutDisplayFunc(display); 
