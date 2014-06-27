@@ -145,7 +145,8 @@ void renderShip(Ship* sh) {
     glTranslatef(sh->position.x, sh->position.y, -sh->position.z + shipPosition);
     glRotatef(200, 0.0f, 1.0f, 0.0f);
     glColor4f(0.2, 0.56, 0., 0.9);
-    #include "GLship.inc"; 
+    glScalef(1.5, 1.5, 1.5);
+    #include "ship.inc"; 
     glPopMatrix();
 }
 

@@ -66,7 +66,9 @@ void renderEnemy(Enemy* enemy) {
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glTranslatef(p.x, p.y, -p.z + shipPosition);
-    glutSolidSphere(enemy->radius, 20, 20);
+    glColor4f(0.5, 0.35, 0.05, 0.9);
+    glScalef(20.0, 20.0, 20.0);
+    #include "enemy.inc";
     glPopMatrix();
 }
 
