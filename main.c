@@ -46,7 +46,7 @@ void display (void) {
     renderShotQ(shipShotQ);
     glClear(GL_DEPTH_BUFFER_BIT);
     Velocity aimV = getAimV(mouseP.x, mouseP.y, sh, cenario->dimension.x, cenario->dimension.y);
-    renderAim(sh, sh->position, aimV, 10);
+    renderAim(sh->position, aimV, 3);
 
     /*2D part (HUD)*/
     glMatrixMode(GL_PROJECTION);
@@ -111,7 +111,7 @@ void mouse(int b, int s, int x, int y)
         return;
     } 
     if (b == GLUT_LEFT_BUTTON && (s == GLUT_DOWN)) {
-        Velocity aimV = getAimV(x, y, sh, cenario->dimension.x, cenario->dimension.y);
+        Velocity aimV = getAimV(mouseP.x, mouseP.y, sh, cenario->dimension.x, cenario->dimension.y);
         Shot* shot = shootFromShip(sh, aimV, SHOT_DAMAGE);
         enqueueShot(shot, shipShotQ);
         return;

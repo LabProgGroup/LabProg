@@ -176,12 +176,11 @@ Velocity getAimV(int x, int y, Ship* sh, int cenx, int ceny) {
     return shotV;
 }
 
-void renderAim(Ship* sh, Position pos, Velocity v, int n) { 
+void renderAim(Position pos, Velocity v, int n) { 
     int i = 0;
-    float dt = 100 / v.z;
-    //since the arc is not a closed curve, this is a strip now 
-        glPushMatrix();
-    for (i = 1; i < n; i++)
+    float dt = 10 / v.z;
+    glPushMatrix();
+    for (i = 1; i < 200; i++)
     {
         glColor4f(0, 1, 1, 0.5);
         //space time
@@ -195,5 +194,5 @@ void renderAim(Ship* sh, Position pos, Velocity v, int n) {
         glTranslatef(pos.x, pos.y,  -pos.z + shipPosition);
         glutWireCube(10);
     }
-        glPopMatrix();
+    glPopMatrix();
 }

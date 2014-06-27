@@ -5,7 +5,7 @@ void renderHud(Velocity velocity, int life, Dimension cenarySize) {
 }
 
 void renderSpeed(Velocity velocity, Dimension cenarySize) {
-    //glPushMatrix();
+    glPushMatrix();
     glTranslatef(100, WIN_HEIGHT - 20,0);
     glLineWidth(2); 
     glColor3f(0.2, 0.0, 0.4);
@@ -14,7 +14,7 @@ void renderSpeed(Velocity velocity, Dimension cenarySize) {
         glVertex2f( -80 * cos(velocity.z / MAX_VELOCITY * M_PI),
                     -80 * sin(velocity.z / MAX_VELOCITY * M_PI));
     glEnd();
-    //glPopMatrix();
+    glPopMatrix();
 }
 
 void renderLife(int life, Dimension cenarySize) {

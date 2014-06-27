@@ -27,6 +27,6 @@ BOOL isShipAlive(Ship* sh);
 void updateScore(Ship* sh);
 void renderShip(Ship* sh);
 Velocity getAimV(int x, int y, Ship* sh, int cenx, int ceny);
-void renderAim(Ship* sh, Position pos, Velocity v, int n);
+void renderAim(Position pos, Velocity v, int n);
 void DrawArc(Position begin, Velocity v, int n);
 #endif
