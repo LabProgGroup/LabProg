@@ -167,22 +167,12 @@ Velocity getAimV(int x, int y, Ship* sh, int cenx, int ceny) {
 void renderAim(Ship* sh, Velocity v, int n) { 
     int i = 0;
     Position pos = sh->position;
-    float dt = 10 / v.z;
+    float dt = 50 / v.z;
+
     glPushMatrix();
     glLineWidth(2); 
     glColor4f(0, 1, 1, 0.5);
-
-    // float newz = v.z + sh->velocity.z;
-    // float correction = 
-
-    //v.z = newz;
-
-    glBegin(GL_LINES);
-        glVertex3f(pos.x, pos.y, 0);
-        glVertex3f(pos.x + v.x * 5000, pos.y + v.y * 5000, -v.z * 5000);
-    glEnd();
-
-    for (i = 1; i < 200; i++)
+    for (i = 3; i < n + 3; i++)
     {   
         //space time
         pos.x = pos.x + v.x * dt * i;
@@ -192,8 +182,10 @@ void renderAim(Ship* sh, Velocity v, int n) {
         v.x = v.x;
         v.y = v.y - GRAVITY * dt * i;
         v.z = v.z;
-        glTranslatef(pos.x, pos.y,  -pos.z + shipPosition);
-        glutWireCube(10);
+        glPushMatrix();
+            glTranslatef(pos.x, pos.y,   - pos.z + shipPosition);
+            glutWireCube(10);
+        glPopMatrix();
     }
     glPopMatrix();
 }
