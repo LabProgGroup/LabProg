@@ -69,30 +69,31 @@ BOOL verifyShipColision(Ship *ship, Cenario *cenario) {
     return FALSE;
 }
 
- BOOL verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue) {
-     EnemyNode *eNode = cenario->enemies->head->next;
-     ShotNode *shotNode = shotQueue->head->next;
+BOOL verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue) {
+    EnemyNode *eNode = cenario->enemies->head->next;
+    ShotNode *shotNode = shotQueue->head->next;
     
-     BOOL killedEnemy = FALSE; 
-     while (eNode != cenario->enemies->head) {
-         while (shotNode != shotQueue->head) {
-             if (distance(shotNode->shot->position, eNode->enemy->position) < eNode->enemy->radius) {
-                 gotShotEnemy(eNode->enemy, shotNode->shot->damage); 
-             }
-             if (!isEnemyAlive(eNode->enemy)) {
-                 EnemyNode *kill = eNode;
-                 eNode = eNode->next;
-                 killedEnemy = TRUE;
-                 removeEnemyNode(kill, cenario->enemies);
-             }
-             shotNode = shotNode->next;
-         }
-         if (!killedEnemy) eNode = eNode->next;
-         else killedEnemy = FALSE;
-     }
+    BOOL killedEnemy = FALSE; 
+    while (eNode != cenario->enemies->head) {
+        while (shotNode != shotQueue->head) {
+            if (distance(shotNode->shot->position, eNode->enemy->position) < eNode->enemy->radius) {
+                gotShotEnemy(eNode->enemy, shotNode->shot->damage); 
+            }
+            if (!isEnemyAlive(eNode->enemy)) {
+                EnemyNode *kill = eNode;
+                eNode = eNode->next;
+                killedEnemy = TRUE;
+                removeEnemyNode(kill, cenario->enemies);
+            }
+            shotNode = shotNode->next;
+        }
+        shotNode = shotQueue->head->next;
+        if (!killedEnemy) eNode = eNode->next;
+        else killedEnemy = FALSE;
+    }
      
-     return FALSE;
- }
+    return FALSE;
+}
 // void verifyShipShotColision()
 
 BOOL isInsideCenario(Position position, Cenario *cenario) {
