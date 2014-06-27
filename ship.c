@@ -180,9 +180,17 @@ void renderAim(Position pos, Velocity v, int n) {
     int i = 0;
     float dt = 10 / v.z;
     glPushMatrix();
+    glLineWidth(2); 
+    glColor4f(0, 1, 1, 0.5);
+    
+    glBegin(GL_LINES);
+        glVertex3f(pos.x, pos.y, 0);
+        glVertex3f(pos.x + v.x * 5000, pos.y + v.y * 5000, -v.z * 5000);
+    glEnd();
+
     for (i = 1; i < 200; i++)
-    {
-        glColor4f(0, 1, 1, 0.5);
+    {   
+
         //space time
         pos.x = pos.x + v.x * dt * i;
         pos.y = pos.y + v.y * dt * i - (GRAVITY * dt * dt * i * i) / 2;

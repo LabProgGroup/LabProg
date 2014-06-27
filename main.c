@@ -44,7 +44,7 @@ void display (void) {
     renderCenario(cenario);
     renderShotQ(enemyShotQ);
     renderShotQ(shipShotQ);
-    glClear(GL_DEPTH_BUFFER_BIT);
+    // glClear(GL_DEPTH_BUFFER_BIT);
     Velocity aimV = getAimV(mouseP.x, mouseP.y, sh, cenario->dimension.x, cenario->dimension.y);
     renderAim(sh->position, aimV, 3);
 
