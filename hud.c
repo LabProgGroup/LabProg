@@ -10,7 +10,7 @@ void renderSpeed(Velocity velocity, Dimension cenarySize) {
     glLineWidth(2); 
     glColor3f(0.2, 0.0, 0.4);
     glBegin(GL_LINES);
-        glVertex2f(0.0, 0.0);
+        glMaterialfv(GL_FRONT_AND_BACK, channel, color4f);
         glVertex2f( -80 * cos(velocity.z / MAX_VELOCITY * M_PI),
                     -80 * sin(velocity.z / MAX_VELOCITY * M_PI));
     glEnd();

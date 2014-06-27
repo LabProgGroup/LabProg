@@ -164,10 +164,9 @@ Velocity getAimV(int x, int y, Ship* sh, int cenx, int ceny) {
     Velocity shotV;
     float xc = ((x*cenx) / glutGet(GLUT_WINDOW_WIDTH)) - cenx/2 + sh->position.x;
     float yc =  ceny/2 - (y*ceny) / glutGet(GLUT_WINDOW_HEIGHT) + sh->position.y;
-    //float t = 1.36590984939; //pi/2.2
     float zc = sqrt(SHIP_SHOT_NORM * SHIP_SHOT_NORM - (xc * xc + yc * yc));
     float z = zc + sh->velocity.z;
-    float correction = z / zc;
+    float correction = z / (zc * 1.5);
     xc = xc * correction;
     yc = yc * correction;
     shotV.x =  xc * 1;
@@ -175,6 +174,9 @@ Velocity getAimV(int x, int y, Ship* sh, int cenx, int ceny) {
     shotV.z = z;
     return shotV;
 }
+
+    
+
 
 void renderAim(Ship* sh, Position pos, Velocity v, int n) { 
     int i = 0;
