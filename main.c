@@ -46,7 +46,7 @@ void display (void) {
     renderShotQ(shipShotQ);
     // glClear(GL_DEPTH_BUFFER_BIT);
     Velocity aimV = getAimV(mouseP.x, mouseP.y, sh, cenario->dimension.x, cenario->dimension.y);
-    renderAim(sh->position, aimV, 3);
+    renderAim(sh, aimV, 3);
 
     /*2D part (HUD)*/
     glMatrixMode(GL_PROJECTION);
