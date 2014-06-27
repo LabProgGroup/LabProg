@@ -5,6 +5,7 @@
 #include "utils.h"
 #include "ship.h"
 #include "shotQueue.h"
+#include "hud.h"
 
 #define SHOT_DAMAGE 10
 
@@ -22,7 +23,6 @@ void display (void) {
     glClearColor(0.99f, 0.5f, 0.99f, 0.5f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
     glEnable(GL_NORMALIZE);
-
     glMatrixMode(GL_MODELVIEW);  /* Coordenadas do modelo */
     glLoadIdentity();
     gluLookAt(
@@ -46,7 +46,26 @@ void display (void) {
     renderShotQ(shipShotQ);
     glClear(GL_DEPTH_BUFFER_BIT);
     Velocity aimV = getAimV(mouseP.x, mouseP.y, sh, cenario->dimension.x, cenario->dimension.y);
-    renderAim(sh, sh->position, aimV, 100);
+    renderAim(sh, sh->position, aimV, 10);
+
+    /*2D part (HUD)*/
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    glOrtho(0.0, WIN_WIDTH, WIN_HEIGHT, 0.0, -1.0, 1);
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+    glDisable(GL_CULL_FACE);
+    glClear(GL_DEPTH_BUFFER_BIT);
+    renderHud(sh->velocity, sh->life, cenario->dimension);
+    // Making sure we can render 3d again
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix(); 
+    /*End of 2D part*/
+
     glutSwapBuffers(); 
 }
 

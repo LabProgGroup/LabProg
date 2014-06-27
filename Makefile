@@ -7,10 +7,10 @@ LDFLAGS= -lglut -lGLU -lGL
 all: riverraid
 	./riverraid
 
-riverraid:  main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o  shot.o shotQueue.o
-	$(CC) -lm main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o shot.o shotQueue.o -o riverraid $(LDFLAGS) -lm
+riverraid:  main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o  shot.o shotQueue.o hud.o
+	$(CC) -lm main.o  utils.o cenario.o enemyQueue.o enemy.o ship.o shot.o shotQueue.o hud.o -o riverraid $(LDFLAGS) -lm
 
-main.o: main.c utils.h cenario.h enemyQueue.h enemy.h ship.h  shot.h
+main.o: main.c utils.h cenario.h enemyQueue.h enemy.h ship.h  shot.h hud.h
 	$(CC) -c main.c
 
 utils.o: utils.h utils.c configuration.h
@@ -33,6 +33,9 @@ ship.o: ship.h ship.c utils.c utils.h shot.h configuration.h
 
 shot.o: shot.h shot.c utils.h
 	$(CC) -c shot.c
+
+hud.o: hud.c hud.h utils.h
+	$(CC) -c hud.c
 
 clean:
 	rm *.o *~
