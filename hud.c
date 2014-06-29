@@ -1,10 +1,16 @@
 #include "hud.h"
 
 void renderHud(Velocity velocity, int life, int focus, long unsigned int score, Dimension cenarySize) {
+    glPushMatrix();
+    GLfloat lightZeroColor[]  = {0.5, 0.5, 0.5, .5f};
+    glLightfv(GL_LIGHT0, GL_AMBIENT, lightZeroColor);
     renderScore(score, cenarySize);
     renderSpeed(velocity, cenarySize);
     renderLife(life, cenarySize);
     renderFocus(focus, cenarySize);
+    GLfloat newlightZeroColor[]  = {0, 0, 0, 0};
+    glLightfv(GL_LIGHT0, GL_AMBIENT, newlightZeroColor);
+    glPopMatrix();
 }
 
 void renderSpeed(Velocity velocity, Dimension cenarySize) {

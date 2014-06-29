@@ -141,7 +141,7 @@ Shot* shootFromShip(Ship *sh, Position aimV, int power) {
 void gotDamagedShip(Ship* sh, int damage) {
     sh->life -= damage;
     if (sh->life < 0)
-        sh->life = 0;
+        gameState = GAME_OVER;
 }
 
 BOOL isShipAlive(Ship* sh) {
@@ -170,7 +170,7 @@ Velocity getAimV(int x, int y, Ship* sh, int cenx, int ceny) {
     float yc =  ceny/2 - (y*ceny) / glutGet(GLUT_WINDOW_HEIGHT) + sh->position.y;
     float zc = sqrt(SHIP_SHOT_NORM * SHIP_SHOT_NORM - (xc * xc + yc * yc));
     float z = zc + sh->velocity.z;
-    float correction = z / (zc * 1.5);
+    float correction = z / zc;
     xc = xc * correction;
     yc = yc * correction;
     shotV.x =  xc * 1;

@@ -11,6 +11,10 @@
 #include <GL/glut.h>
 #endif
 
+#define SPLASH_SCREEN 0
+#define IN_GAME 1
+#define GAME_OVER 2
+
 GLuint idBackground, idShipBase, idShipCream, idEnemy, idWall;
 
 struct coordinates {
@@ -26,6 +30,7 @@ typedef enum {FALSE, TRUE} BOOL;
 
 extern float clockTick;
 extern float shipPosition;
+extern int gameState;
 
 Position spaceTimeEquation(Position initialPosition, Velocity v);
 float distance(Position a, Position b);
