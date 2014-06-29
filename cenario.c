@@ -122,6 +122,7 @@ void rmFarShots(ShotQueue *shotQ, Cenario *cenario) {
 }
 
 void renderBackground() {
+    glBindTexture(GL_TEXTURE_2D, idBackground);
     glEnable(GL_TEXTURE_2D);
     glColor4f(1, 1, 1, 1);
     glBegin(GL_QUADS);

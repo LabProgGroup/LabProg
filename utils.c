@@ -32,9 +32,9 @@ Position createPosition(double x, double  y, double z) {
    return p;
 }
 
-int loadTexture(char *f) {
-    GLubyte *loc;
-
+int loadTexture(char *f, GLuint id) {
+    GLubyte *loc; 
+    
     char l[1024];                 /* exagerada */
     int  larg,alt,prof;
     FILE *arq = fopen(f, "rb");
@@ -67,6 +67,7 @@ int loadTexture(char *f) {
     fread(loc, sizeof(GLubyte), larg*alt*3, arq);
     fclose(arq);
 
+    glBindTexture(GL_TEXTURE_2D, id);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -76,3 +77,4 @@ int loadTexture(char *f) {
     printf("(%d x %d) %d\n",larg, alt,prof);
     return 1;
 }
+

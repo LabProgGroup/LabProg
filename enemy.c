@@ -57,8 +57,11 @@ void renderEnemy(Enemy* enemy) {
 
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, idEnemy);
     glTranslatef(p.x, p.y, -p.z + shipPosition);
     glColor4f(0.5, 0.35, 0.05, 0.9);
     #include "enemy.inc"
+    glDisable(GL_TEXTURE_2D);
     glPopMatrix();
 }

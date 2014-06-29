@@ -64,6 +64,9 @@ while (<>) {
    elsif ($c eq "vn") {
 	 push @VN, "       glNormal3f($f[0], $f[1], $f[2]);";
    }
+   elsif ($c eq "vt") {
+      push @VT, "       glTexCoord2f($f[0], $f[1]);"; 	    
+ }
  }
 }
 # fecha se houver um grupo aberto
@@ -105,6 +108,7 @@ sub print_f {
   my $f = shift;
   my ($v,$t,$n) = split /\//, $f;
 
+  print "$VT[$t]\n" if $t;
   print "$VN[$n]\n" if $n;
   print "$V[$v]\n" if $v;
 }
