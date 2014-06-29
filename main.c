@@ -169,6 +169,8 @@ int main(int argc, char * argv[]) {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
 
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(
@@ -176,7 +178,7 @@ int main(int argc, char * argv[]) {
         0, 0, 0,
         0, 1, 0);
     GLfloat lightZeroColor[]  = {0.5, 0.5, 0.5, .5f};
-    GLfloat lightPosition[]  = {0, 30, 10, 1};
+    GLfloat lightPosition[]  = {0, 30, -10, 0};
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightZeroColor);
     // glLightfv(GL_LIGHT0, GL_AMBIENT, lightZeroColor);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, lightZeroColor);

@@ -63,5 +63,9 @@ void renderEnemy(Enemy* enemy) {
     glColor4f(0.5, 0.35, 0.05, 0.9);
     #include "enemy.inc"
     glDisable(GL_TEXTURE_2D);
+
+    glColor4f(0, 0.85, 0.85, 0.35);
+    glutSolidSphere(enemy->radius, 30, 30);　// tirar depois
+
     glPopMatrix();
 }
