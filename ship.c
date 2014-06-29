@@ -63,10 +63,6 @@ void updateVelocity(Ship *sh, unsigned char key) {
                 isOnfocus = TRUE;
             }
             break;
-        //tirar?!?!
-        case 'k':
-            sh->velocity.z = 0;
-            break;
     }
 }
 

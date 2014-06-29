@@ -127,13 +127,13 @@ void renderBackground() {
     glColor4f(1, 1, 1, 1);
     glBegin(GL_QUADS);
     {
-        glTexCoord2f(0, 1);
+        glTexCoord2f(0, 10);
         glVertex3f(-9000, -9000, -5000);
 
-        glTexCoord2f(1, 1);
+        glTexCoord2f(10, 10);
         glVertex3f(9000, -9000, -5000);
 
-        glTexCoord2f(1, 0);
+        glTexCoord2f(10, 0);
         glVertex3f(9000, 9000, -5000);
 
         glTexCoord2f(0, 0);

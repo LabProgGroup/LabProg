@@ -194,7 +194,7 @@ int main(int argc, char * argv[]) {
     if (loadTexture("shipBase.ppm", idShipBase) == 0) 
        fputs("Não carregou a textura da nave\n", stderr);
        
-    if (loadTexture("night.pbm", idBackground) == 0)
+    if (loadTexture("nuvens.pbm", idBackground) == 0)
        fputs("Não carregou a textura do fundo\n", stderr);
     
     if (loadTexture("cox.ppm", idEnemy) == 0)
