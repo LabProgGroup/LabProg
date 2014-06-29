@@ -6,7 +6,8 @@
 
 #include "utils.h"
 
-void renderHud(Velocity velocity, int life, Dimension cenarySize);
+void renderHud(Velocity velocity, int life, int focus, Dimension cenarySize);
 void renderSpeed(Velocity velocity, Dimension cenarySize);
 void renderLife(int life, Dimension cenarySize);
+void renderFocus(int focus, Dimension cenarySize);
 #endif

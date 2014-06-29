@@ -41,7 +41,7 @@ void display (void) {
     glLoadIdentity();
     glDisable(GL_CULL_FACE);
     glClear(GL_DEPTH_BUFFER_BIT);
-    renderHud(sh->velocity, sh->life, cenario->dimension);
+    renderHud(sh->velocity, sh->life, sh->focus, cenario->dimension);
     // Making sure we can render 3d again
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
@@ -56,6 +56,7 @@ void timer(int n) {
     shipPosition = sh->position.z;
 
     updateShipPosition(sh);
+    updateFocus(sh);
     insideKeeper(sh, cenario->dimension);
     refreshCenario(cenario, sh->position);    
 
@@ -114,7 +115,7 @@ int main(int argc, char * argv[]) {
     sh = createShip(createPosition(0, 0, 0), 1);
     shipShotQ = createShotQueue();
     enemyShotQ = createShotQueue();
-    Dimension cenDim = {30, 10, 100000};
+    Dimension cenDim = {40, 20, 100000};
     cenario = createCenario(cenDim);
 
     glutInit(&argc, argv);
