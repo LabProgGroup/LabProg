@@ -149,7 +149,6 @@ void move(int x, int y) {
     mouseP.z = 0;
 }
 
-
 void tecl(unsigned char k, int x, int y) {
     if (gameState == IN_GAME) {
         updateVelocity(sh, k);
@@ -179,6 +178,8 @@ int main(int argc, char * argv[]) {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
 
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(
@@ -186,7 +187,7 @@ int main(int argc, char * argv[]) {
         0, 0, 0,
         0, 1, 0);
     GLfloat lightZeroColor[]  = {0.5, 0.5, 0.5, .5f};
-    GLfloat lightPosition[]  = {0, 30, 10, 1};
+    GLfloat lightPosition[]  = {0, 30, -10, 0};
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightZeroColor);
     // glLightfv(GL_LIGHT0, GL_AMBIENT, lightZeroColor);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, lightZeroColor);
@@ -207,7 +208,7 @@ int main(int argc, char * argv[]) {
     if (loadTexture("shipBase.ppm", idShipBase) == 0) 
        fputs("Não carregou a textura da nave\n", stderr);
        
-    if (loadTexture("night.pbm", idBackground) == 0)
+    if (loadTexture("nuvens.pbm", idBackground) == 0)
        fputs("Não carregou a textura do fundo\n", stderr);
     
     if (loadTexture("cox.ppm", idEnemy) == 0)

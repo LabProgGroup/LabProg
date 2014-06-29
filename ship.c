@@ -63,10 +63,6 @@ void updateVelocity(Ship *sh, unsigned char key) {
                 isOnfocus = TRUE;
             }
             break;
-        //tirar?!?!
-        case 'k':
-            sh->velocity.z = 0;
-            break;
     }
 }
 
@@ -153,18 +149,26 @@ BOOL isShipAlive(Ship* sh) {
 }
 
 void renderShip(Ship* sh) {
+    glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
-    glTranslatef(sh->position.x, sh->position.y, -sh->position.z + shipPosition);
+    glTranslatef(sh->position.x - 2, sh->position.y - 5, -sh->position.z + shipPosition);
     glRotatef(206, 0.0f, 1.0f, 0.0f);
-    glColor4f(0.255, 0.256, 0.208, 0.208);
+    glColor4f(0.255, 0.256, 0.208, 1);
     glScalef(1.5, 1.5, 1.5);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, idShipBase);
     #include "shipBase.inc"
-    glColor4f(1., 1., 1., 0.208);
+    glColor4f(1., 1., 1., 1);
     glBindTexture(GL_TEXTURE_2D, idShipCream);
     #include "shipCream.inc"
     glDisable(GL_TEXTURE_2D);
+
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(sh->position.x, sh->position.y, -sh->position.z + shipPosition);
+    glColor4f(0, 1, 0, 0.3);
+    glutSolidSphere(sh->radius, 30, 30);　// tirar depois
+
     glPopMatrix();
 }
 
