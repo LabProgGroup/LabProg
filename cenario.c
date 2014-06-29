@@ -114,6 +114,7 @@ BOOL verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue, Ship *sh)
     while (shotNode != shotQueue->head) {
         if (distance(shotNode->shot->position, sh->position) < sh->radius) {
             gotDamagedShip(sh, shotNode->shot->damage);
+            removeShotNode(shotNode, shotQueue);
             return TRUE;
         }
         shotNode = shotNode->next;

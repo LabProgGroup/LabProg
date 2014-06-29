@@ -167,7 +167,6 @@ void renderShip(Ship* sh) {
     glPushMatrix();
     glTranslatef(sh->position.x, sh->position.y, -sh->position.z + shipPosition);
     glColor4f(0, 1, 0, 0.3);
-    glutSolidSphere(sh->radius, 30, 30);　// tirar depois
 
     glPopMatrix();
 }
