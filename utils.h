@@ -11,6 +11,8 @@
 #include <GL/glut.h>
 #endif
 
+GLuint idBackground, idShipBase, idShipCream, idEnemy, idWall;
+
 struct coordinates {
     float x; 
     float y;
@@ -29,5 +31,5 @@ Position spaceTimeEquation(Position initialPosition, Velocity v);
 float distance(Position a, Position b);
 Velocity speedTimeEquation(Velocity initialVelocity);
 Position createPosition(double x, double  y, double z); // need???
-int loadTexture(char *f);
+int loadTexture(char *f, GLuint id);
 #endif

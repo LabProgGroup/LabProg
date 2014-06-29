@@ -143,9 +143,27 @@ int main(int argc, char * argv[]) {
     glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightZeroColor);
 
-    if (loadTexture("night.pbm") == 0)
+    
+	
+    
+    glGenTextures(1, &idEnemy);
+    glGenTextures(1, &idBackground);
+    glGenTextures(1, &idShipBase);
+    glGenTextures(1, &idShipCream);
+     
+    if (loadTexture("shipCream.ppm", idShipCream) == 0)
+       fputs("Não carregou a textura da nave\n", stderr);
+       
+    if (loadTexture("shipBase.ppm", idShipBase) == 0) 
+       fputs("Não carregou a textura da nave\n", stderr);
+       
+    if (loadTexture("night.pbm", idBackground) == 0)
+       fputs("Não carregou a textura do fundo\n", stderr);
+    
+    if (loadTexture("cox.ppm", idEnemy) == 0)
         fputs("Não carregou a textura\n", stderr);
-
+    
+    
     glutSetCursor(GLUT_CURSOR_NONE); 
     glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
     glutReshapeFunc(reshape); 
