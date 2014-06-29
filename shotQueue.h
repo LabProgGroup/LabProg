@@ -21,6 +21,7 @@ typedef struct {
 } ShotQueue;
 
 ShotQueue* createShotQueue();
+void freeShotQueue(ShotQueue *queue);
 void removeShotNode(ShotNode *node, ShotQueue *queue);
 
 void enqueueShot(Shot *shot, ShotQueue *queue);

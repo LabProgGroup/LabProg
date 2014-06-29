@@ -27,6 +27,18 @@ void initEnemies(Cenario *cenario) {
     }
 }
 
+void freeCenario(Cenario *cenario) {
+    EnemyNode *node = cenario->enemies->head->next;
+    while (node != cenario->enemies->head) {
+        EnemyNode *kill = node;
+        node = node->next;
+        removeEnemyNode(kill, cenario->enemies);
+    }
+    free(cenario->enemies->head);
+    free(cenario->enemies);
+    free(cenario);
+}
+
 Cenario* createCenario(Dimension dimension) {
     Cenario *cen = malloc (sizeof(Cenario));
     

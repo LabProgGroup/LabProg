@@ -18,6 +18,21 @@ Position mouseP;
 
 float eyex = 0, eyey = 10.5, eyez = 34;//24;
 
+void endGame() {
+    killShip(sh);
+    freeCenario(cenario);
+    freeShotQueue(enemyShotQ);
+    freeShotQueue(shipShotQ);
+}
+
+void startGame() {
+    sh = createShip(createPosition(0, 0, 0), 1);
+    shipShotQ = createShotQueue();
+    enemyShotQ = createShotQueue();
+    Dimension cenDim = {40, 20, 100000};
+    cenario = createCenario(cenDim);
+}
+
 void display (void) { 
     glClearColor(0.9f, 0.2f, .4f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
@@ -74,7 +89,6 @@ void display (void) {
     glutSwapBuffers(); 
 }
 
-
 void timer(int n) {
     if (gameState == IN_GAME) {
         shipPosition = sh->position.z;
@@ -96,10 +110,13 @@ void timer(int n) {
         updateShotQueue(enemyShotQ);
         rmFarShots(enemyShotQ, cenario);
         rmFarShots(shipShotQ, cenario);
-
         n = n + clockTick * 1000;
         if (n > 1000)
             n = 0;
+        if (sh->life <= 0) {
+            endGame();
+            gameState = GAME_OVER;
+        }
     }
 
     glutTimerFunc(clockTick * 1000, timer , n);
@@ -132,13 +149,6 @@ void move(int x, int y) {
     mouseP.z = 0;
 }
 
-void startGame() {
-    sh = createShip(createPosition(0, 0, 0), 1);
-    shipShotQ = createShotQueue();
-    enemyShotQ = createShotQueue();
-    Dimension cenDim = {40, 20, 100000};
-    cenario = createCenario(cenDim);
-}
 
 void tecl(unsigned char k, int x, int y) {
     if (gameState == IN_GAME) {

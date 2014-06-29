@@ -14,6 +14,7 @@ Cenario* createCenario(Dimension dimension);
 void refreshCenario(Cenario *cenario, Position shipPosition);
 void createNewEnemyInInterval(float min, float max, Cenario *cenario);
 void initEnemies(Cenario *cenario);
+void freeCenario(Cenario *cenario);
 
 BOOL verifyShipColision(Ship *ship, Cenario *cenario);
 BOOL verifyShipShotColision(Cenario *cenario, ShotQueue *shotQueue);
