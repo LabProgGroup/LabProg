@@ -16,12 +16,10 @@ void createNewEnemyInInterval(float min, float max, Cenario *cenario);
 void initEnemies(Cenario *cenario);
 
 BOOL verifyShipColision(Ship *ship, Cenario *cenario);
-BOOL isInsideCenario(Position position, Cenario *cenario);
-void renderParedes();
-void renderBackground();
-void renderCenario();
 BOOL verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue);
 void rmFarShots(ShotQueue *shotQ, Cenario *cenario);
+void renderBackground();
+void renderCenario();
 #endif
 
 

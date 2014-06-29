@@ -4,7 +4,7 @@
 #include "utils.h"
 #include "ship.h"
 
-Ship* createShip(Position position) {
+Ship* createShip(Position position, float myradius) {
     Ship* newship = malloc(sizeof (Ship));
     newship->life = 100;
 
@@ -16,7 +16,7 @@ Ship* createShip(Position position) {
     newship->velocity.y = 0;
     newship->velocity.z = INITIAL_VELOCITY;
     
-    newship->radius = 5.5;
+    newship->radius = myradius;
     return newship;
 }
 
@@ -28,26 +28,18 @@ void updateVelocity(Ship *sh, unsigned char key) {
     switch (key) {
         case 'w':
             if (sh->velocity.y < 0) sh->velocity.y = 0;
-            if (sh->velocity.y + MOVING_FACTOR > MAX_XY_ORIENTATION)
-                return;
             sh->velocity.y += MOVING_FACTOR;
             break;
         case 's':
             if (sh->velocity.y > 0) sh->velocity.y = 0;
-            if (sh->velocity.y - MOVING_FACTOR < -MAX_XY_ORIENTATION)
-                return;
             sh->velocity.y -= MOVING_FACTOR;
             break;
         case 'd':
             if (sh->velocity.x < 0) sh->velocity.x = 0;
-            if (sh->velocity.x + MOVING_FACTOR > MAX_XY_ORIENTATION)
-                return;
             sh->velocity.x += MOVING_FACTOR;
             break;
         case 'a':
             if (sh->velocity.x > 0) sh->velocity.x = 0;
-            if (sh->velocity.x - MOVING_FACTOR < -MAX_XY_ORIENTATION)
-                return;
             sh->velocity.x -= MOVING_FACTOR;
             break;
         case ' ':
@@ -62,8 +54,9 @@ void updateVelocity(Ship *sh, unsigned char key) {
             sh->velocity.z -= VELOCITY_FACTOR;
             break;
         case 'm':
-            clockTick = (float)1 / 500;
+            clockTick = 1.0 / 500;
             break;
+        //tirar?!?!
         case 'k':
             sh->velocity.z = 0;
             break;
@@ -143,7 +136,7 @@ BOOL isShipAlive(Ship* sh) {
 void renderShip(Ship* sh) {
     glPushMatrix();
     glTranslatef(sh->position.x, sh->position.y, -sh->position.z + shipPosition);
-    glRotatef(200, 0.0f, 1.0f, 0.0f);
+    glRotatef(206, 0.0f, 1.0f, 0.0f);
     glColor4f(0.2, 0.56, 0., 0.9);
     glScalef(1.5, 1.5, 1.5);
     #include "ship.inc"; 

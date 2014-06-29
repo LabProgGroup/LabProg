@@ -1,8 +1,6 @@
 #include "utils.h"
 
-float clockTick = (float) 1/50;
-Dimension defaultCenarioDim = {20, 20, 2000};
-Dimension defaultEnemyDim = {4, 8, 4};
+float clockTick = 1.0 / 50;
 float shipPosition = 0;
 
 Position spaceTimeEquation(Position initialPosition, Velocity v) {
@@ -28,14 +26,6 @@ Velocity speedTimeEquation(Velocity initialVelocity) {
 float distance(Position a, Position b) { 
     return sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y) + (a.z - b.z)*(a.z - b.z));
 }
-
-/*Oops, não estou usando va e vb pra nada!*/
-// BOOL colisionTest(Position pa, Velocity va, float ra, Position pb, Velocity vb, float rb) {
-// 	if (distance(pa, pb) < ra + rb)
-// 		return TRUE;
-// 	else
-// 		return FALSE;
-// }
 
 Position createPosition(double x, double  y, double z) {
    Position p = {x, y, z};

@@ -6,14 +6,12 @@
 #include <time.h>
 
 void createNewEnemyInInterval(float min, float max, Cenario *cenario) {
-    int precision = rand();
-    
     Position randomPos;
     randomPos.x = (rand() % (2 * (int)cenario->dimension.x)) - cenario->dimension.x;
     randomPos.y = (rand() % (2 * (int)cenario->dimension.y)) - cenario->dimension.y;
     randomPos.z = rand() % (int)(max - min) + min;
     
-    enqueueEnemy(createEnemy(randomPos, 10, precision), cenario->enemies);
+    enqueueEnemy(createEnemy(randomPos, 10), cenario->enemies);
 }
 
 void initEnemies(Cenario *cenario) {
@@ -94,63 +92,17 @@ BOOL verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue) {
      
     return FALSE;
 }
-// void verifyShipShotColision()
 
-BOOL isInsideCenario(Position position, Cenario *cenario) {
-    if (position.x <= -cenario->dimension.x || position.x >= cenario->dimension.x ||
-        position.y <= -cenario->dimension.y || position.y >= cenario->dimension.y ||
-        position.z <= -cenario->dimension.z || position.z >= cenario->dimension.z)
-        return FALSE;
-    return TRUE;
-}
-
-void renderParedes() {
-    glColor4f(0.22, 0.22, 0.3, 0.3);
-    /* Parede direita */
-    GLfloat paredeColor[]  = {0.22, 0.22, 0.22};
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, paredeColor);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,  paredeColor);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,  paredeColor);
-    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 1);
-    
-
-    int p1 = 90;
-    glBegin(GL_QUADS);
-    {
-        glNormal3f(-1, 1, 0);
-        glVertex3f(p1, 0, 0);
-        glVertex3f(p1 / 2, -p1 / 2, 0);
-        glVertex3f(p1 / 2, -p1 / 2, -5000);
-        glVertex3f(p1, 0, -5000);
+void rmFarShots(ShotQueue *shotQ, Cenario *cenario) {
+    if (!isShotQueueEmpty(shotQ)) {
+        ShotNode *stNode = shotQ->head->next;
+        while (stNode != shotQ->head) {
+            if (stNode->shot->position.z - shipPosition > 1000) {
+                removeShotNode(stNode, shotQ);
+            }
+            stNode = stNode->next;
+        }
     }
-    glEnd();
-
-    /* Parede esquerda */
-    glBegin(GL_QUADS);
-    {
-        glNormal3f(1, 1, 0);
-        glVertex3f(-p1, 0, 0);
-        glVertex3f(-p1 / 2, -p1 / 2, 0);
-        glVertex3f(-p1 / 2, -p1 / 2, -5000);
-        glVertex3f(-p1, 0, -5000);
-    }
-    glEnd();
-
-    /* Rio */
-    GLfloat rioColor[]  = {0.43, 0.73, 0.9};
-    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, rioColor);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,  rioColor);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,  rioColor);
-    glColor4f(0.43, 0.73, 0.9, 0.9);
-    glBegin(GL_QUADS);
-    {
-        glNormal3f(0, 1, 0);
-        glVertex3f(-p1 / 2, -p1 / 2, 0);
-        glVertex3f(p1 / 2, -p1 / 2, 0);
-        glVertex3f(p1 / 2, -p1 / 2, -5000);
-        glVertex3f(-p1 / 2, -p1 / 2, -5000);
-    }
-    glEnd();
 }
 
 void renderBackground() {
@@ -176,21 +128,5 @@ void renderBackground() {
 
 void renderCenario(Cenario* cen) {
     renderBackground();
-    // renderParedes();
     renderEnemyQ(cen->enemies);
-}
-
-
-void rmFarShots(ShotQueue *shotQ, Cenario *cenario) {
-    if (!isShotQueueEmpty(shotQ)) {
-        ShotNode *stNode = shotQ->head->next;
-        while (stNode != shotQ->head) {
-            if (stNode->shot->position.z - shipPosition > 1000) {
-                removeShotNode(stNode, shotQ);
-            }
-            //if (!isInsideCenario(stNode->shot->position, cenario))  segFault!!
-            //    removeShotNode(stNode, shotQ);
-            stNode = stNode->next;
-        }
-    }
 }

@@ -14,7 +14,7 @@ struct ship {
     float radius;
 };
 
-Ship* createShip(Position position);
+Ship* createShip(Position position, float myradius);
 void killShip(Ship* sh);
 void updateVelocity(Ship *sh, unsigned char key);
 void clearVelocity(Ship *sh, unsigned char key);

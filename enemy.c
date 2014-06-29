@@ -4,13 +4,11 @@
 
 #include "enemy.h"
 
-Enemy* createEnemy(Position myPosition, float myRadius, int precision) {
+Enemy* createEnemy(Position myPosition, float myRadius) {
     Enemy *newEnemy = malloc(sizeof (Enemy));
     newEnemy->life = 100;
     newEnemy->position = myPosition;
-    // newEnemy->dimension = myDimension;
     newEnemy->radius = myRadius;
-    newEnemy->precision = precision;
 
     return newEnemy;
 }
@@ -54,12 +52,6 @@ BOOL isEnemyAlive(Enemy* en) {
     return en->life > 0;
 }
 
-Position sortEnemyPosition(float shipZ) {
-    Position pos;
-    return pos;
-}
-
-
 void renderEnemy(Enemy* enemy) {
     Position p = enemy->position;
 
@@ -67,8 +59,7 @@ void renderEnemy(Enemy* enemy) {
     glPushMatrix();
     glTranslatef(p.x, p.y, -p.z + shipPosition);
     glColor4f(0.5, 0.35, 0.05, 0.9);
-    glScalef(20.0, 20.0, 20.0);
-    #include "enemy.inc";
+    // glScalef(20.0, 20.0, 20.0);
+    #include "enemy.inc"
     glPopMatrix();
 }
-
