@@ -13,7 +13,7 @@ void createNewEnemyInInterval(float min, float max, Cenario *cenario) {
     randomPos.y = (rand() % (2 * (int)cenario->dimension.y)) - cenario->dimension.y;
     randomPos.z = rand() % (int)(max - min) + min;
     
-    enqueueEnemy(createEnemy(randomPos, 10, precision), cenario->enemies);
+    enqueueEnemy(createEnemy(randomPos, 25, precision), cenario->enemies);
 }
 
 void initEnemies(Cenario *cenario) {

@@ -1,0 +1,141 @@
+#!/usr/bin/perl -- -*- mode:cperl -*-
+# Primeira tentativa de ler um arquivo WaveFront e gerar código OpenGL equivalente.....
+
+use strict;
+
+my @V;							# vértices
+my @VT;							# coordenadas de textura
+my @VN;							# normais
+
+my @f;							# global por eficiência
+
+my %MAT;						# material
+
+# gasta memória mais o código fica mais simples e rápido
+push @V,  "nada";				# para começar do 1
+push @VT, "nada";				# para começar do 1
+push @VN, "nada";				# para começar do 1
+
+my $estado = 0;					# para agrupar trianles e quads
+
+my %Tipo = (
+		   Ka=> 'GL_AMBIENT' ,
+		   Kd=> 'GL_DIFFUSE' ,
+		   Ks=> 'GL_SPECULAR' 
+		   );
+
+# coleta dos dados
+while (<>) {
+ s/^#.*//;
+ next unless /\S/;
+ s/^\s*//;
+ s/\s*$//;
+ @f = split;
+ my $c = shift @f;
+ if ($c eq "mtllib") {
+   read_mtl(shift @f);
+   next;
+ }
+ if ($c eq "usemtl") {
+   my $nmat = shift @f;
+   $nmat = 'nulo' unless $nmat;
+   print $MAT{$nmat};
+   next;
+ }
+ if ($c eq "f") {
+   @f == 3 && do_triangle();
+   @f == 4 && do_quad();
+   @f >  4 && do_poli();
+ }
+ elsif ($c eq "s") {
+   my $sm = shift @f;
+   print "   glShadeModel(GL_". ($sm eq "off" ? 'FLAT' : 'SMOOTH')
+	 . ");\n";
+   next;
+ }
+ else {
+   if ($estado) {
+	   print "glEnd();\n";
+	   $estado = 0;
+   }
+   if ($c eq "v") {
+	 push @V, "       glVertex3f($f[0], $f[1], $f[2]);";
+   }
+   elsif ($c eq "vn") {
+	 push @VN, "       glNormal3f($f[0], $f[1], $f[2]);";
+   }
+ }
+}
+# fecha se houver um grupo aberto
+print "glEnd();\n" if $estado;
+
+sub do_triangle {
+  if ($estado != 3) {
+    print "glEnd();\n" if $estado;
+	print "glBegin(GL_TRIANGLES);\n";
+  }
+  list_f(@f);
+  $estado = 3;
+}
+
+sub do_quad {
+  if ($estado != 4) {
+    print "glEnd();\n" if $estado;
+	print "glBegin(GL_QUADS);\n";
+  }
+  list_f(@f);
+  $estado = 4;
+}
+
+sub do_poli {
+  print "glEnd();\n" if $estado;
+  print "glBegin(GL_POLYGON);\n";
+  list_f(@f);
+  print "glEnd();\n";
+  $estado = 0;					# poli não se acumulam
+}
+
+sub list_f {
+  for my $f (@_) {
+	print_f($f);
+  }
+}
+
+sub print_f {
+  my $f = shift;
+  my ($v,$t,$n) = split /\//, $f;
+
+  print "$VN[$n]\n" if $n;
+  print "$V[$v]\n" if $v;
+}
+
+my $ci;							# color index
+
+my $mat = "nulo";			# nome besta
+
+sub read_mtl {
+  my $arq = shift;
+  open MTL, "<$arq" or die "Não achei $arq";
+  local $_;
+
+  while (<MTL>) {
+	my @m = split;
+	my $m = shift @m;
+	my $alpha = 1.0;
+	if ($m eq 'newmtl') {
+	  $mat = shift @m;
+	  next;
+	}
+	if ($m eq 'd') {
+	  $alpha = shift @m;
+	}
+	elsif ($m =~ /^K/) {
+	  print "GLfloat ci${ci}[4] = {$m[0],$m[1],$m[2],$alpha};\n";
+
+	  $MAT{$mat} .= <<FIM;
+	  glMaterialfv(GL_FRONT_AND_BACK, $Tipo{$m}, ci$ci);
+FIM
+	  $ci++;
+	}
+  }
+}
