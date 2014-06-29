@@ -59,11 +59,14 @@ void renderEnemy(Enemy* enemy) {
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, idEnemy);
-    glTranslatef(p.x, p.y, -p.z + shipPosition);
+    glTranslatef(p.x, p.y - 15, -p.z + shipPosition);
     glColor4f(0.5, 0.35, 0.05, 0.9);
     #include "enemy.inc"
     glDisable(GL_TEXTURE_2D);
 
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(p.x, p.y, -p.z + shipPosition);
     glColor4f(0, 0.85, 0.85, 0.35);
     glutSolidSphere(enemy->radius, 30, 30);　// tirar depois
 

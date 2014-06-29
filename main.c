@@ -133,7 +133,7 @@ void move(int x, int y) {
 }
 
 void startGame() {
-    sh = createShip(createPosition(0, 0, 0), 1);
+    sh = createShip(createPosition(0, 0, 0), 5);
     shipShotQ = createShotQueue();
     enemyShotQ = createShotQueue();
     Dimension cenDim = {40, 20, 100000};
