@@ -16,7 +16,7 @@ main.o: main.c utils.h cenario.h enemyQueue.h enemy.h ship.h  shot.h hud.h
 utils.o: utils.h utils.c configuration.h
 	$(CC) -c utils.c
 
-cenario.o: cenario.h cenario.c enemyQueue.h utils.h ship.h enemy.h 
+cenario.o: cenario.h cenario.c enemyQueue.h utils.h ship.h enemy.h ship.h
 	$(CC) -c cenario.c
 
 enemyQueue.o: enemyQueue.h enemyQueue.c utils.h enemy.h

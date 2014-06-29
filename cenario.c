@@ -1,6 +1,7 @@
 #include "cenario.h"
 #include "enemy.h"
 #include "enemyQueue.h"
+#include "ship.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -60,14 +61,18 @@ BOOL verifyShipColision(Ship *ship, Cenario *cenario) {
     EnemyNode *node = cenario->enemies->head->next;
 
     while (node != cenario->enemies->head) {
-        if (distance(ship->position, node->enemy->position) < ship->radius + node->enemy->radius)
+        if (distance(ship->position, node->enemy->position) < ship->radius + node->enemy->radius) {
+            EnemyNode *kill = node;
+            gotDamagedShip(ship, ENEMY_SHOCK_POWER);
+            removeEnemyNode(kill, cenario->enemies);
             return TRUE;
+        }
         node = node->next;
     }
     return FALSE;
 }
 
-BOOL verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue) {
+BOOL verifyShipShotColision(Cenario *cenario, ShotQueue *shotQueue) {
     EnemyNode *eNode = cenario->enemies->head->next;
     ShotNode *shotNode = shotQueue->head->next;
     
@@ -89,7 +94,18 @@ BOOL verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue) {
         if (!killedEnemy) eNode = eNode->next;
         else killedEnemy = FALSE;
     }
-     
+    return killedEnemy;
+}
+
+BOOL verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue, Ship *sh) {
+    ShotNode *shotNode = shotQueue->head->next;
+    while (shotNode != shotQueue->head) {
+        if (distance(shotNode->shot->position, sh->position) < sh->radius) {
+            gotDamagedShip(sh, shotNode->shot->damage);
+            return TRUE;
+        }
+        shotNode = shotNode->next;
+    }
     return FALSE;
 }
 

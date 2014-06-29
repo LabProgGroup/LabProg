@@ -9,6 +9,12 @@
 
 #define SHOT_DAMAGE 10
 
+#define SPLASH_SCREEN 0
+#define IN_GAME 1
+#define GAME_OVER 2
+
+int gameState = SPLASH_SCREEN;
+
 Ship *sh;
 Shot *shot;
 ShotQueue* shipShotQ;
@@ -18,65 +24,87 @@ Position mouseP;
 
 float eyex = 0, eyey = 10.5, eyez = 34;//24;
 
-void display (void) {  
-    glClearColor(0.99f, 0.5f, 0.99f, 0.5f);
+void display (void) { 
+    glClearColor(0.9f, 0.2f, .4f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
     glEnable(GL_NORMALIZE);
 
-    renderShip(sh);
-    renderCenario(cenario);
-    renderShotQ(enemyShotQ);
-    renderShotQ(shipShotQ);
+    if (gameState == IN_GAME) {
+        renderShip(sh);
+        renderCenario(cenario);
+        renderShotQ(enemyShotQ);
+        renderShotQ(shipShotQ);
+        Velocity aimV = getAimV(mouseP.x, mouseP.y, sh, cenario->dimension.x, cenario->dimension.y);
+        renderAim(sh, aimV, 5);
+        /*Muda de 3D para 2D*/
+        glMatrixMode(GL_PROJECTION);
+        glPushMatrix();
+        glLoadIdentity();
+        glOrtho(0.0, WIN_WIDTH, WIN_HEIGHT, 0.0, -1.0, 1);
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+        glLoadIdentity();
+        glDisable(GL_CULL_FACE);
+        glClear(GL_DEPTH_BUFFER_BIT);
+        renderHud(sh->velocity, sh->life, sh->focus, sh->score, cenario->dimension);
 
-    Velocity aimV = getAimV(mouseP.x, mouseP.y, sh, cenario->dimension.x, cenario->dimension.y);
-    renderAim(sh, aimV, 5);
+        /*Fim da parte 2D*/
+        /*Volta pra 3D */
+        glMatrixMode(GL_PROJECTION);
+        glPopMatrix();
+        glMatrixMode(GL_MODELVIEW);
+        glPopMatrix(); 
+    }
 
-    /*2D part (HUD)*/
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
-    glOrtho(0.0, WIN_WIDTH, WIN_HEIGHT, 0.0, -1.0, 1);
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-    glLoadIdentity();
-    glDisable(GL_CULL_FACE);
-    glClear(GL_DEPTH_BUFFER_BIT);
-    renderHud(sh->velocity, sh->life, sh->focus, cenario->dimension);
-    // Making sure we can render 3d again
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-    glMatrixMode(GL_MODELVIEW);
-    glPopMatrix(); 
-    /*End of 2D part*/
+    if (gameState == SPLASH_SCREEN) {
+        char texto[200];
+        sprintf(texto, "Hello, there!\nPress any key to start the game");
+        glRasterPos2f(-40, 0.);
+        glColor3f(0.f,0.f,0.f);
+        glutBitmapString(GLUT_BITMAP_HELVETICA_18, texto);
+        
+        sprintf(texto, "Hello, there!\nPress any key to start the game");
+        glRasterPos2f(-40.01, 0.01);
+        glColor3f(.9f,.9f,.9f);
+        glutBitmapString(GLUT_BITMAP_HELVETICA_18, texto);
+    }
+
+    if (gameState == GAME_OVER) {
+        
+    }
 
     glutSwapBuffers(); 
 }
 
 void timer(int n) {
-    shipPosition = sh->position.z;
+    if (gameState == IN_GAME) {
+        shipPosition = sh->position.z;
 
-    updateShipPosition(sh);
-    updateFocus(sh);
-    insideKeeper(sh, cenario->dimension);
-    refreshCenario(cenario, sh->position);    
+        updateShipPosition(sh);
+        updateScore(sh);
+        updateFocus(sh);
+        insideKeeper(sh, cenario->dimension);
+        refreshCenario(cenario, sh->position);    
 
-    if (verifyShipColision(sh, cenario))
-        sh->velocity.z /= 2;
-    if (n == 0 && shouldShoot(sh->position, cenario->enemies->first->position))
-        enqueueShot(shootFromEnemy(cenario->enemies->first, sh, 10), enemyShotQ);
+        if (verifyShipColision(sh, cenario))
+            sh->velocity.z /= 2;
+        if (n == 0 && shouldShoot(sh->position, cenario->enemies->first->position))
+            enqueueShot(shootFromEnemy(cenario->enemies->first, sh, 10), enemyShotQ);
 
-    verifyEnemiesShotColision(cenario, shipShotQ);
-    updateShotQueue(shipShotQ);
-    updateShotQueue(enemyShotQ);
-    rmFarShots(enemyShotQ, cenario);
-    rmFarShots(shipShotQ, cenario);
+        verifyShipShotColision(cenario, shipShotQ);
+        verifyEnemiesShotColision(cenario, enemyShotQ, sh);
+        updateShotQueue(shipShotQ);
+        updateShotQueue(enemyShotQ);
+        rmFarShots(enemyShotQ, cenario);
+        rmFarShots(shipShotQ, cenario);
 
-    n = n + clockTick * 1000;
-    if (n > 1000)
-        n = 0;
+        n = n + clockTick * 1000;
+        if (n > 1000)
+            n = 0;
+    }
 
-    glutTimerFunc(clockTick * 1000, timer , n);
-    glutPostRedisplay();
+        glutTimerFunc(clockTick * 1000, timer , n);
+        glutPostRedisplay();
 }
 
 void reshape (int width, int height) { 
@@ -89,11 +117,13 @@ void reshape (int width, int height) {
 
 void mouse(int b, int s, int x, int y)
 {
-    if (b == GLUT_LEFT_BUTTON && (s == GLUT_DOWN)) {
-        Velocity aimV = getAimV(mouseP.x, mouseP.y, sh, cenario->dimension.x, cenario->dimension.y);
-        Shot* shot = shootFromShip(sh, aimV, SHOT_DAMAGE);
-        enqueueShot(shot, shipShotQ);
-        return;
+    if (gameState == IN_GAME) {
+        if (b == GLUT_LEFT_BUTTON && (s == GLUT_DOWN)) {
+            Velocity aimV = getAimV(mouseP.x, mouseP.y, sh, cenario->dimension.x, cenario->dimension.y);
+            Shot* shot = shootFromShip(sh, aimV, SHOT_DAMAGE);
+            enqueueShot(shot, shipShotQ);
+            return;
+        }
     }
 }
 
@@ -104,11 +134,18 @@ void move(int x, int y) {
 }
 
 void tecl(unsigned char k, int x, int y) {
-    updateVelocity(sh, k);
+    if (gameState == IN_GAME) {
+        updateVelocity(sh, k);
+    }
+    else {
+        gameState = IN_GAME;
+    }
 }
 
 void teclUp(unsigned char k, int x, int y) {
-    clearVelocity(sh, k);
+    if (gameState == IN_GAME) {
+        clearVelocity(sh, k);
+    }
 }
 
 int main(int argc, char * argv[]) {

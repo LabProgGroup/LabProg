@@ -10,6 +10,7 @@ Ship* createShip(Position position, float myradius) {
     Ship* newship = malloc(sizeof (Ship));
     newship->life = 100;
     newship->focus = 300;
+    newship->score = 0;
     isOnfocus = FALSE;
 
     newship->position.x = position.x;
@@ -50,7 +51,6 @@ void updateVelocity(Ship *sh, unsigned char key) {
             if (sh->velocity.z + VELOCITY_FACTOR > MAX_VELOCITY)
                 return;
             sh->velocity.z += VELOCITY_FACTOR;
-            printf("\nvelocity: %f", sh->velocity.z);
             break;
         case 'p':
             if (sh->velocity.z - VELOCITY_FACTOR < INITIAL_VELOCITY)
@@ -58,9 +58,10 @@ void updateVelocity(Ship *sh, unsigned char key) {
             sh->velocity.z -= VELOCITY_FACTOR;
             break;
         case 'm':
-            if (sh->focus > 20)
+            if (sh->focus > 20) {
                 clockTick = 1.0 / 500;
-            isOnfocus = TRUE;
+                isOnfocus = TRUE;
+            }
             break;
         //tirar?!?!
         case 'k':
@@ -88,7 +89,6 @@ void clearVelocity(Ship *sh, unsigned char key) {
                 sh->velocity.x = 0;
             break;
         case 'm':
-            
             clockTick = (float)1 / 50;
             isOnfocus = FALSE;
             break;
@@ -100,7 +100,7 @@ void updateShipPosition(Ship* sh) {
 }
 
 void updateScore(Ship* sh) {
-    // traveledDistance = sh->position.z;
+    sh->score++;
 }
 
 void updateFocus(Ship* sh) {
@@ -144,6 +144,8 @@ Shot* shootFromShip(Ship *sh, Position aimV, int power) {
 
 void gotDamagedShip(Ship* sh, int damage) {
     sh->life -= damage;
+    if (sh->life < 0)
+        sh->life = 0;
 }
 
 BOOL isShipAlive(Ship* sh) {

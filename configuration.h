@@ -9,6 +9,7 @@
 #define MAX_SHIP_SHOTS 50
 #define GRAVITY 0//9.80665
 #define DAMAGE_BY_HITTING_ENEMY 50
+#define ENEMY_SHOCK_POWER 10
 
 /* Ship */
 #define INITIAL_VELOCITY 30 

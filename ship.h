@@ -11,7 +11,7 @@ struct ship {
     int focus;
     Position position;  
     Velocity velocity;
-
+    long unsigned int score;
     float radius;
 };
 
