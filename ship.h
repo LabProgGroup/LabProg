@@ -8,6 +8,7 @@
 typedef struct ship Ship;
 struct ship {
     int life;           
+    int focus;
     Position position;  
     Velocity velocity;
 
@@ -25,6 +26,7 @@ Shot* shootFromShip(Ship *sh, Position aimV, int power);
 void gotDamagedShip(Ship* sh, int damage);
 BOOL isShipAlive(Ship* sh);
 void updateScore(Ship* sh);
+void updateFocus(Ship* sh);
 void renderShip(Ship* sh);
 Velocity getAimV(int x, int y, Ship* sh, int cenx, int ceny);
 void renderAim(Ship* sh, Velocity v, int n);

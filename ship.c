@@ -4,9 +4,13 @@
 #include "utils.h"
 #include "ship.h"
 
+static BOOL isOnfocus;
+
 Ship* createShip(Position position) {
     Ship* newship = malloc(sizeof (Ship));
     newship->life = 100;
+    newship->focus = 300;
+    isOnfocus = FALSE;
 
     newship->position.x = position.x;
     newship->position.y = position.y;
@@ -62,7 +66,9 @@ void updateVelocity(Ship *sh, unsigned char key) {
             sh->velocity.z -= VELOCITY_FACTOR;
             break;
         case 'm':
-            clockTick = (float)1 / 500;
+            if (sh->focus > 20)
+                clockTick = (float)1 / 500;
+            isOnfocus = TRUE;
             break;
         case 'k':
             sh->velocity.z = 0;
@@ -89,7 +95,9 @@ void clearVelocity(Ship *sh, unsigned char key) {
                 sh->velocity.x = 0;
             break;
         case 'm':
+            
             clockTick = (float)1 / 50;
+            isOnfocus = FALSE;
             break;
     }
 }
@@ -100,6 +108,15 @@ void updateShipPosition(Ship* sh) {
 
 void updateScore(Ship* sh) {
     // traveledDistance = sh->position.z;
+}
+
+void updateFocus(Ship* sh) {
+    if (isOnfocus && sh->focus > 0)
+        sh->focus--;
+    if (!isOnfocus &&  sh->focus < 300)
+        sh->focus++;
+    if (isOnfocus && sh->focus == 0)
+        clockTick = (float)1 / 50;
 }
 
 void insideKeeper(Ship *sh, Dimension dimension) {

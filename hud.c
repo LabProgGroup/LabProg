@@ -1,8 +1,9 @@
 #include "hud.h"
 
-void renderHud(Velocity velocity, int life, Dimension cenarySize) {
+void renderHud(Velocity velocity, int life, int focus, Dimension cenarySize) {
     renderSpeed(velocity, cenarySize);
     renderLife(life, cenarySize);
+    renderFocus(focus, cenarySize);
 }
 
 void renderSpeed(Velocity velocity, Dimension cenarySize) {
@@ -67,12 +68,21 @@ void renderSpeed(Velocity velocity, Dimension cenarySize) {
 }
 
 void renderLife(int life, Dimension cenarySize) {
-    //desenha a cruz
     int i;
     glPushMatrix();
     float size = WIN_WIDTH / 80;
     
     glTranslatef(WIN_WIDTH - (size + 20), WIN_HEIGHT - 30,0);
+
+    //borda da vida
+    glLineWidth(3);
+    glColor3f(0.7, 0.7, 0.7);
+    glBegin(GL_LINE_LOOP);
+        glVertex2f(-0.8 * size/2, -1.5 * size);
+        glVertex2f(-0.8 * size/2, -15 * size/2);
+        glVertex2f(0.8 * size, -15 * size/2);
+        glVertex2f(0.8 * size, - 1.5 * size);
+    glEnd();
 
     //cruz
     glLineWidth(1);
@@ -100,9 +110,20 @@ void renderLife(int life, Dimension cenarySize) {
         glVertex2f(0.8 * size, - 1.5 * size);
     glEnd();
 
-    //borda da vida
-    glLineWidth(2);
-    glColor3f(0, 0, 0);
+
+    glPopMatrix();
+}   
+
+void renderFocus(int focus, Dimension cenarySize) {
+    int i;
+    glPushMatrix();
+    float size = WIN_WIDTH / 80;
+    
+    glTranslatef(WIN_WIDTH - 2 * (size + 20), WIN_HEIGHT - 30,0);
+
+    //borda do focus
+    glLineWidth(3);
+    glColor3f(0.7, 0.7, 0.7);
     glBegin(GL_LINE_LOOP);
         glVertex2f(-0.8 * size/2, -1.5 * size);
         glVertex2f(-0.8 * size/2, -15 * size/2);
@@ -110,6 +131,14 @@ void renderLife(int life, Dimension cenarySize) {
         glVertex2f(0.8 * size, - 1.5 * size);
     glEnd();
 
+    //barra do foco
+    glColor3f(.1, .1, .9);
+    glBegin(GL_TRIANGLE_FAN);
+        glVertex2f(-0.8 * size/2, -1.5 * size);
+        glVertex2f(-0.8 * size/2, -1.5 * size -12 * size/2 * (focus / 300.0));
+        glVertex2f(0.8 * size, -1.5 * size -12 * size/2 * (focus / 300.0));
+        glVertex2f(0.8 * size, - 1.5 * size);
+    glEnd();
 
     glPopMatrix();
-}   
+}

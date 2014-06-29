@@ -58,7 +58,7 @@ void display (void) {
     glLoadIdentity();
     glDisable(GL_CULL_FACE);
     glClear(GL_DEPTH_BUFFER_BIT);
-    renderHud(sh->velocity, sh->life, cenario->dimension);
+    renderHud(sh->velocity, sh->life, sh->focus, cenario->dimension);
     // Making sure we can render 3d again
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
@@ -71,6 +71,7 @@ void display (void) {
 
 void timer(int n) {
     updateShipPosition(sh);
+    updateFocus(sh);
     insideKeeper(sh, cenario->dimension);
     shipPosition = sh->position.z;
     refreshCenario(cenario, sh->position);
