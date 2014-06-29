@@ -9,12 +9,6 @@
 
 #define SHOT_DAMAGE 10
 
-#define SPLASH_SCREEN 0
-#define IN_GAME 1
-#define GAME_OVER 2
-
-int gameState = SPLASH_SCREEN;
-
 Ship *sh;
 Shot *shot;
 ShotQueue* shipShotQ;
@@ -70,11 +64,16 @@ void display (void) {
     }
 
     if (gameState == GAME_OVER) {
-        
+        char texto[200];
+        sprintf(texto, "Hello, there!\nPress any key to start the game");
+        glRasterPos2f(-40, 0.);
+        glColor3f(0.f,0.f,0.f);
+        glutBitmapString(GLUT_BITMAP_HELVETICA_18, texto);
     }
 
     glutSwapBuffers(); 
 }
+
 
 void timer(int n) {
     if (gameState == IN_GAME) {
@@ -103,8 +102,8 @@ void timer(int n) {
             n = 0;
     }
 
-        glutTimerFunc(clockTick * 1000, timer , n);
-        glutPostRedisplay();
+    glutTimerFunc(clockTick * 1000, timer , n);
+    glutPostRedisplay();
 }
 
 void reshape (int width, int height) { 
@@ -133,11 +132,20 @@ void move(int x, int y) {
     mouseP.z = 0;
 }
 
+void startGame() {
+    sh = createShip(createPosition(0, 0, 0), 1);
+    shipShotQ = createShotQueue();
+    enemyShotQ = createShotQueue();
+    Dimension cenDim = {40, 20, 100000};
+    cenario = createCenario(cenDim);
+}
+
 void tecl(unsigned char k, int x, int y) {
     if (gameState == IN_GAME) {
         updateVelocity(sh, k);
     }
     else {
+        startGame();
         gameState = IN_GAME;
     }
 }
@@ -148,13 +156,8 @@ void teclUp(unsigned char k, int x, int y) {
     }
 }
 
-int main(int argc, char * argv[]) {
-    sh = createShip(createPosition(0, 0, 0), 1);
-    shipShotQ = createShotQueue();
-    enemyShotQ = createShotQueue();
-    Dimension cenDim = {40, 20, 100000};
-    cenario = createCenario(cenDim);
 
+int main(int argc, char * argv[]) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutInitWindowSize(WIN_WIDTH, WIN_HEIGHT);

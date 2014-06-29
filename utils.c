@@ -2,6 +2,7 @@
 
 float clockTick = 1.0 / 50;
 float shipPosition = 0;
+int gameState = SPLASH_SCREEN;
 
 Position spaceTimeEquation(Position initialPosition, Velocity v) {
     Position newPosition = {
