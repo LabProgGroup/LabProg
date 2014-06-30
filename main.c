@@ -16,7 +16,7 @@ ShotQueue* enemyShotQ;
 Cenario* cenario;
 Position mouseP;
 
-float eyex = 0, eyey = 10.5, eyez = 34;//24;
+float eyex = 0, eyey = 10.5, eyez = 34;
 
 void endGame() {
     killShip(sh);
@@ -212,7 +212,6 @@ int main(int argc, char * argv[]) {
     GLfloat lightZeroColor[]  = {0.5, 0.5, 0.5, .5f};
     GLfloat lightPosition[]  = {0, 30, -10, 0};
     glLightfv(GL_LIGHT0, GL_SPECULAR, lightZeroColor);
-    // glLightfv(GL_LIGHT0, GL_AMBIENT, lightZeroColor);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, lightZeroColor);
     glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightZeroColor);

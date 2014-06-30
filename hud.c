@@ -22,7 +22,7 @@ void renderSpeed(Velocity velocity, Dimension cenarySize) {
     glTranslatef(size + 20, WIN_HEIGHT - 20,0);
     
 
-    //ponteiro do velocimetro
+    /* ponteiro do velocimetro */
     glLineWidth(3); 
     glBegin(GL_TRIANGLE_FAN);
     glColor3f(0.5, 0.0, 0.1);
@@ -146,7 +146,7 @@ void renderFocus(int focus, Dimension cenarySize) {
     
     glTranslatef(WIN_WIDTH - 2 * (size + 20), WIN_HEIGHT - 30,0);
 
-    //ampulheta
+    /*ampulheta*/
     glLineWidth(2);
     glColor3f(.1, .1, .9);
     glBegin(GL_LINE_LOOP);

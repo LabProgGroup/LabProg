@@ -29,6 +29,5 @@ Shot* dequeueShot(ShotQueue *queue);
 BOOL isShotQueueEmpty(ShotQueue *queue);
 void updateShotQueue(ShotQueue *shotQueue);
 void renderShotQ(ShotQueue *queue);
-void updateShotQueue(ShotQueue *shotQueue);
 #endif
 

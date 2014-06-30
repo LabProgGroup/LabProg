@@ -200,11 +200,11 @@ void renderAim(Ship* sh, Velocity v, int n) {
     glColor4f(0, 1, 1, 0.5);
     for (i = 3; i < n + 3; i++)
     {   
-        //space time
+        /* space time */
         pos.x = pos.x + v.x * dt * i;
         pos.y = pos.y + v.y * dt * i - (GRAVITY * dt * dt * i * i) / 2;
         pos.z = pos.z + v.z * dt * i;
-        //speed time
+        /* speed time */
         v.x = v.x;
         v.y = v.y - GRAVITY * dt * i;
         v.z = v.z;
