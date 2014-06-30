@@ -149,12 +149,16 @@ BOOL isShipAlive(Ship* sh) {
 }
 
 void renderShip(Ship* sh) {
+    renderShipFinal(sh, 206, 1.5);
+}
+
+void renderShipFinal(Ship* sh, float ang, float scale) {
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
     glTranslatef(sh->position.x - 2, sh->position.y - 5, -sh->position.z + shipPosition);
-    glRotatef(206, 0.0f, 1.0f, 0.0f);
+    glRotatef(ang, 0.0f, 1.0f, 0.0f);
     glColor4f(0.255, 0.256, 0.208, 1);
-    glScalef(1.5, 1.5, 1.5);
+    glScalef(scale, scale, scale);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, idShipBase);
     #include "shipBase.inc"

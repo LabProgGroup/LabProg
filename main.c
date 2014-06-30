@@ -65,26 +65,47 @@ void display (void) {
         glPopMatrix(); 
     }
 
-    if (gameState == SPLASH_SCREEN) {
+     if (gameState == SPLASH_SCREEN) {
+ 
+        renderBackground();
         char texto[200];
-        sprintf(texto, "Hello, there!\nPress any key to start the game");
-        glRasterPos2f(-40, 0.);
-        glColor3f(0.f,0.f,0.f);
+        sprintf(texto, "       Hello, there!\n Welcome to RiverRaid \n\nPress any key to start the game");
+        glRasterPos2f(4.,0.);
+        glColor3f(120.f,198.f,0.5f);
+        GLfloat StringColor[]  = {0.f, 0.f, 1.0f, 1.f};
+        glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, StringColor);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT,  StringColor);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,  StringColor);
+        glRasterPos3f(6., 10.,0.19);
+        glutBitmapString(GLUT_BITMAP_HELVETICA_18, texto);
+        sprintf(texto, "       Hello, there!\n Welcome to RiverRaid \n\nPress any key to start the game");
+        glRasterPos2f(6.,10.);
+        glColor3f(120.f,198.f,0.5f);
         glutBitmapString(GLUT_BITMAP_HELVETICA_18, texto);
         
-        sprintf(texto, "Hello, there!\nPress any key to start the game");
-        glRasterPos2f(-40.01, 0.01);
-        glColor3f(.9f,.9f,.9f);
-        glutBitmapString(GLUT_BITMAP_HELVETICA_18, texto);
+        sh = createShip(createPosition(.0, -10, 0.0), 1);
+        renderShipFinal(sh, 25, 2.7);
+        
+        glPushMatrix();
+        glTranslatef(-30., 20., 0.);
+        glScalef(10, 10, 10);
+        glColor3f(0.8, 0.8, 0);
+        #include "font.inc"
+        glPopMatrix();
+        
     }
 
     if (gameState == GAME_OVER) {
-        char texto[200];
-        sprintf(texto, "Hello, there!\nPress any key to start the game");
-        glRasterPos2f(-40, 0.);
-        glColor3f(0.f,0.f,0.f);
-        glutBitmapString(GLUT_BITMAP_HELVETICA_18, texto);
+        renderBackground();
+        glPushMatrix();
+        glTranslatef(-45., 20., 0.);
+        glScalef(10, 10, 10);
+        glColor3f(0.8, 0.8, 0);
+        #include "gameOver.inc"
+        glPopMatrix();
+        
     }
+
 
     glutSwapBuffers(); 
 }

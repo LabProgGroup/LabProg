@@ -31,4 +31,5 @@ void renderShip(Ship* sh);
 Velocity getAimV(int x, int y, Ship* sh, int cenx, int ceny);
 void renderAim(Ship* sh, Velocity v, int n);
 void DrawArc(Position begin, Velocity v, int n);
+void renderShipFinal(Ship* sh, float ang, float scale);
 #endif

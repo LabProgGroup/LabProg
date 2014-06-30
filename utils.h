@@ -15,7 +15,7 @@
 #define IN_GAME 1
 #define GAME_OVER 2
 
-GLuint idBackground, idShipBase, idShipCream, idEnemy, idWall;
+GLuint idBackground, idShipBase, idShipCream, idEnemy, idWall, idText;
 
 struct coordinates {
     float x; 
