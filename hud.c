@@ -107,7 +107,12 @@ void renderLife(int life, Dimension cenarySize) {
 
     //cruz
     glLineWidth(2);
-    glColor3f(.2, 1, .2);
+    if (life > 50)
+        glColor3f(.2, 1, .2);
+    else if (life > 30)
+        glColor3f(1, 1, .2);
+    else
+        glColor3f(1, .2, .2);
     glBegin(GL_LINE_LOOP); 
         glVertex2f(0, 0);
         glVertex2f(0, size/2);
