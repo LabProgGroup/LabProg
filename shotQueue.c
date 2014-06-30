@@ -16,6 +16,16 @@ ShotQueue* createShotQueue() {
     return shotQueue;
 }
 
+void freeShotQueue(ShotQueue *queue) {
+    ShotNode *actualNode = queue->head;
+    while (!isShotQueueEmpty) {
+        Shot *shot = dequeueShot(queue);
+        freeShot(shot);
+    }
+    free(queue->head);
+    free(queue);
+}
+
 void removeShotNode(ShotNode *node, ShotQueue *st) {
     ShotNode *actualNode = st->head;
     while (actualNode->next != st->head) {
@@ -52,9 +62,11 @@ void enqueueShot(Shot *st, ShotQueue *shotQueue) {
 Shot* dequeueShot(ShotQueue *shotQueue) {
     ShotNode *firstNode = shotQueue->head->next;
     Shot *st = firstNode->shot;
-    
+    ShotNode *deadNode = firstNode;
+
     shotQueue->head->next = firstNode->next;
-    
+    free(deadNode);
+
     shotQueue->first = shotQueue->head->next->shot;
     
     if (firstNode == shotQueue->lastNode) {
