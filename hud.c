@@ -106,7 +106,7 @@ void renderLife(int life, Dimension cenarySize) {
     glEnd();
 
     //cruz
-    glLineWidth(1);
+    glLineWidth(2);
     glColor3f(.2, 1, .2);
     glBegin(GL_LINE_LOOP); 
         glVertex2f(0, 0);
@@ -142,7 +142,7 @@ void renderFocus(int focus, Dimension cenarySize) {
     glTranslatef(WIN_WIDTH - 2 * (size + 20), WIN_HEIGHT - 30,0);
 
     //ampulheta
-    glLineWidth(1);
+    glLineWidth(2);
     glColor3f(.1, .1, .9);
     glBegin(GL_LINE_LOOP);
         glVertex2f(size/4, -size/4);
@@ -187,16 +187,16 @@ void renderScore(long unsigned int score, Dimension cenarySize) {
     char texto[200];
     glPushMatrix();
     sprintf(texto, "Score: %d", score);
-    glColor3f(0, 1, 1);
+    glColor3f(.4, .6, .2);
     glRasterPos2f(500, WIN_HEIGHT - 20);
     glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, texto);
 
     glColor3f(0, 0.3, 0.3);
-    glRasterPos2f(502.1, WIN_HEIGHT - 21);
+    glRasterPos2f(501, WIN_HEIGHT - 21);
     glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, texto);   
 
-    glColor3f(1, 1, 1);
-    glRasterPos2f(499, WIN_HEIGHT - 21);
+    glColor3f(0, .6, .2);
+    glRasterPos2f(501.5, WIN_HEIGHT - 21.1);
     glutBitmapString(GLUT_BITMAP_TIMES_ROMAN_24, texto);   
     glPopMatrix();
 }

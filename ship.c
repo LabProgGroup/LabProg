@@ -178,8 +178,8 @@ Velocity getAimV(int x, int y, Ship* sh, int cenx, int ceny) {
     float zc = sqrt(SHIP_SHOT_NORM * SHIP_SHOT_NORM - (xc * xc + yc * yc));
     float z = zc + sh->velocity.z;
     float correction = z / zc;
-    xc = xc * correction;
-    yc = yc * correction;
+    xc = xc * correction * 2;
+    yc = yc * correction * 2;
     shotV.x =  xc * 1;
     shotV.y =  yc * 2;
     shotV.z = z;
