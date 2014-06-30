@@ -89,14 +89,16 @@ BOOL verifyShipShotColision(Cenario *cenario, ShotQueue *shotQueue) {
     ShotNode *shotNode = shotQueue->head->next;
     
     BOOL killedEnemy = FALSE; 
+    BOOL returnKill = FALSE;
     while (eNode != cenario->enemies->head) {
         while (shotNode != shotQueue->head) {
             if (distance(shotNode->shot->position, eNode->enemy->position) < eNode->enemy->radius) {
-                gotShotEnemy(eNode->enemy, shotNode->shot->damage); 
+                gotShotEnemy(eNode->enemy, shotNode->shot->damage);
             }
             if (!isEnemyAlive(eNode->enemy)) {
                 EnemyNode *kill = eNode;
                 eNode = eNode->next;
+                returnKill = TRUE;
                 killedEnemy = TRUE;
                 removeEnemyNode(kill, cenario->enemies);
             }
@@ -106,7 +108,7 @@ BOOL verifyShipShotColision(Cenario *cenario, ShotQueue *shotQueue) {
         if (!killedEnemy) eNode = eNode->next;
         else killedEnemy = FALSE;
     }
-    return killedEnemy;
+    return returnKill;
 }
 
 BOOL verifyEnemiesShotColision(Cenario *cenario, ShotQueue *shotQueue, Ship *sh) {
