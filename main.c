@@ -90,7 +90,8 @@ void timer(int n) {
         if (n == 0 && shouldShoot(sh->position, cenario->enemies->first->position))
             enqueueShot(shootFromEnemy(cenario->enemies->first, sh, 10), enemyShotQ);
 
-        verifyShipShotColision(cenario, shipShotQ);
+        if (verifyShipShotColision(cenario, shipShotQ))
+            sh->life += 5;
         verifyEnemiesShotColision(cenario, enemyShotQ, sh);
         updateShotQueue(shipShotQ);
         updateShotQueue(enemyShotQ);
